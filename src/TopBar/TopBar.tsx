@@ -51,7 +51,7 @@ export const TopBar = observer(() => {
       clearTimeout(timer.current)
       setState({updateLoading: true})
     }
-    fetch('https://api.github.com/1943time/markdown-writer/releases/latest').then(async res => {
+    fetch('https://api.github.com/repos/1943time/markdown-writer/releases/latest').then(async res => {
       if (!res.ok) throw new Error('net work err')
       const data = await res.json()
       if (data?.tag_name && version.current) {
