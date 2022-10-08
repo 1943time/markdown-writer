@@ -15,6 +15,14 @@ export const i18n = {
     zh: '网络连接失败',
     en: 'network connection failed'
   },
+  latestVersion: {
+    zh: '当前为最新版本',
+    en: 'Currently the latest version'
+  },
+  download: {
+    zh: '下载',
+    en: 'Download'
+  },
   help: {
     zh: '帮助',
     en: 'help'

@@ -3,7 +3,6 @@ import {createMenu} from './menu'
 process.env.DIST = join(__dirname, '../..')
 process.env.PUBLIC = app.isPackaged ? process.env.DIST : join(process.env.DIST, '../public')
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
-
 import {app, BrowserWindow, shell, ipcMain, dialog, webContents, nativeTheme} from 'electron'
 nativeTheme.themeSource = 'dark'
 import { release } from 'os'
@@ -115,7 +114,7 @@ ipcMain.handle('appInfo', (e) => {
     dist: process.env.DIST,
     locale: app.getLocale(),
     version: app.getVersion(),
-    appName: app.getName(),
+    appName: app.getName()
   }
 })
 

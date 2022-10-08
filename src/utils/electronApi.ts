@@ -1,5 +1,5 @@
 import {ipcRenderer, Dialog, clipboard}  from 'electron'
-import {platform} from 'node:process'
+import {platform, arch} from 'node:process'
 import WebviewTag = Electron.WebviewTag
 type DialogMethod = keyof Dialog
 
@@ -8,6 +8,7 @@ export const ElectronApi = {
   dev: import.meta.env.DEV,
   isWin: platform === 'win32',
   isMac: platform === 'darwin',
+  arch: arch,
   openDialog<T extends DialogMethod>(method: T, params: Parameters<Dialog[T]>[0]) {
     return ipcRenderer.invoke('dialog', method, params) as ReturnType<Dialog[T]>
   },

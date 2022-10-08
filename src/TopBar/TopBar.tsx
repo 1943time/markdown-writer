@@ -7,6 +7,7 @@ import {TopBarPrint} from '@/TopBar/Print'
 import {treeStore} from '@/store/tree'
 import {mediaType} from '@/utils/mediaType'
 import {BreadCrumbs} from '@/TopBar/BreadCrumbs'
+import {ipcRenderer} from 'electron'
 import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined'
 import {observer} from 'mobx-react-lite'
 import {createElement, useCallback, useEffect, useMemo, useRef} from 'react'
@@ -21,7 +22,9 @@ import {History} from '@/TopBar/History/History'
 import PublishOutlinedIcon from '@mui/icons-material/PublishOutlined'
 import {useSetState} from 'react-use'
 import {message} from '@/components/message'
-
+import semver from 'semver'
+import {ElectronApi} from '@/utils/electronApi'
+import {Update} from '@/TopBar/Update'
 const VisibleIcons = [
   {name: 'code', icon: CodeOutlinedIcon, key: 'Ctrl 1'},
   {name: 'column', icon: ViewColumnOutlinedIcon, key: 'Ctrl 2'},
@@ -30,8 +33,10 @@ const VisibleIcons = [
 
 export const TopBar = observer(() => {
   const timer = useRef(0)
+  const version = useRef('')
   const [state, setState] = useSetState({
     updateLoading: false,
+    updateVisible: false,
     update: null as null | {
       name: string
       body: string
@@ -41,25 +46,30 @@ export const TopBar = observer(() => {
       }[]
     }
   })
-  const update = useCallback((initiative = false) => {
-    if (initiative) {
+  const update = useCallback((active = false) => {
+    if (active) {
       clearTimeout(timer.current)
       setState({updateLoading: true})
     }
-    fetch('https://api.github.com/repos/1943time/markdown-writer/releases/latest').then(async res => {
+    fetch('https://api.github.com/1943time/markdown-writer/releases/latest').then(async res => {
       if (!res.ok) throw new Error('net work err')
       const data = await res.json()
-      if (data?.name) {
-        setState({
-          update: data
-        })
+      if (data?.tag_name && version.current) {
+        if (semver.lt(version.current, data.tag_name)) {
+          setState({
+            update: data,
+            updateVisible: active
+          })
+        } else if (active) {
+          message(configStore.getI18nText('latestVersion'))
+        }
       }
     }).catch(err => {
-      if (initiative) {
+      if (active) {
         message(configStore.getI18nText('networkErr'), {type: 'error'})
       }
     }).finally(() => {
-      if (initiative) {
+      if (active) {
         setState({updateLoading: false})
       }
     })
@@ -67,6 +77,14 @@ export const TopBar = observer(() => {
   }, [])
   useEffect(() => {
     update()
+    ElectronApi.getInfo().then(res => {
+      version.current = res.version
+    })
+    const activeUpdate = () => update(true)
+    ipcRenderer.on('checkUpdate', activeUpdate)
+    return () => {
+      ipcRenderer.off('checkUpdate', activeUpdate)
+    }
   }, [])
   const tools = useMemo(() => {
     return [
@@ -205,7 +223,14 @@ export const TopBar = observer(() => {
               enterDelay={500}
               placement={'bottom'}
               title={configStore.getI18nText('update')}>
-              <div className={'text-cyan-400 rounded-sm duration-300 cursor-pointer flex items-center hover:bg-gray-100/10 p-0.5'}>
+              <div
+                className={'text-cyan-400 rounded-sm duration-300 cursor-pointer flex items-center hover:bg-gray-100/10 p-0.5'}
+                onClick={() => {
+                  if (!state.updateLoading && state.update) {
+                    setState({updateVisible: true})
+                  }
+                }}
+              >
                 {state.updateLoading ?
                   <CircularProgress size={15} color={'success'}/> :
                   <PublishOutlinedIcon fontSize={'inherit'}/>
@@ -218,6 +243,13 @@ export const TopBar = observer(() => {
       </div>
       <Set/>
       <History/>
+      <Update
+        update={state.update}
+        visible={state.updateVisible}
+        onClose={() => {
+          setState({updateVisible: false})
+        }}
+      />
     </div>
   )
 })

@@ -16,7 +16,10 @@ export const createMenu = (win: BrowserWindow) => {
           }
         },
         {
-          label: 'Check For Updates'
+          label: 'Check For Updates',
+          click: () => {
+            win.webContents.send('checkUpdate')
+          }
         },
         {type: 'separator'},
         {role: 'quit'}
