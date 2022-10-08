@@ -1,0 +1,45 @@
+.tabs{
+  box-shadow: inset 0 0 10px 0 rgba(0,0,0,.2);
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+
+.code-highlight {
+  background-color: #0ea5e9 !important;
+  color: #18181b !important;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+.sub-nav-active{
+  animation-delay: 200ms;
+  animation-duration: 1.5s;
+  animation-name: nav-active;
+  animation-fill-mode: forwards;
+}
+
+@keyframes nav-active {
+  from{
+    background-color: rgba(71, 85, 105, 1);
+  }
+  to {
+    background-color: rgba(71, 85, 105, 0);
+  }
+}
+
+/**::-webkit-scrollbar{*/
+/*  width:5px;*/
+/*}*/
+/*!**::-webkit-scrollbar-track{*!*/
+/*!*  background: rgb(239, 239, 239);*!*/
+/*!*  border-radius:2px;*!*/
+/*!*}*!*/
+/**::-webkit-scrollbar-thumb{*/
+/*  background: #5b5b5b;*/
+/*  border-radius:10px;*/
+/*}*/
+/**::-webkit-scrollbar-thumb:hover{*/
+/*  background: #808080;*/
+/*}*/
