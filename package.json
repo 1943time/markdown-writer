@@ -9,14 +9,14 @@
   "main": "dist/electron/main/index.js",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build:all": "npm run build:vite && npm run build:mac && npm run build:mac:x64 && npm run build:win",
     "build:vite": "tsc && vite build",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "build:win": "npm run build:vite && electron-builder build -w --x64",
-    "build:mac": "npm run build:vite && electron-builder build -m --arm64",
-    "build:mac:x64": "npm run build:vite && electron-builder build -m --x64"
+    "build:win": "electron-builder build -w --x64",
+    "build:mac": "electron-builder build -m --arm64",
+    "build:mac:x64": "electron-builder build -m --x64"
   },
   "engines": {
     "node": "^14.18.0 || >=16.0.0"

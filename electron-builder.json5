@@ -18,7 +18,7 @@
         arch: ["x64"],
       },
     ],
-    artifactName: "${productName}-Windows-${version}-Setup.${ext}",
+    artifactName: "${productName}-Windows-${arch}.${ext}",
   },
   nsis: {
     oneClick: false,
@@ -27,17 +27,9 @@
     deleteAppDataOnUninstall: false,
   },
   mac: {
-    target: ["dmg", "zip"],
-//    target: [
-//      {target: 'dmg', arch: ['arm64', 'x64']},
-//      {target: 'zip', arch: ['arm64', 'x64']}
-//    ],
-    artifactName: "${productName}-Mac-${version}-Installer.${ext}",
+    target: ["zip"],
+    artifactName: "${productName}-Mac-${arch}.${ext}",
   },
-//  linux: {
-//    target: ["AppImage"],
-//    artifactName: "${productName}-Linux-${version}.${ext}",
-//  }
   publish: [
     {
       provider: 'generic',
