@@ -19,6 +19,16 @@ English | [简体中文](README.zh-CN.md)
 - 历史记录与回滚
 - 剪贴板文件直接拷贝入编辑器中
 
+## Mac 系统无法打开
+> 非常抱歉在项目的早期阶段，还没有进行mac 代码签名  
+> 解决方法如下
+```shell
+sudo spctl  --master-disable
+```
+step2
+```shell
+sudo xattr -r -d com.apple.quarantine /Applications/Md\ Writer.app
+```
 ## 截图
 ![](./help/search.png)
 ![](./help/images.png)

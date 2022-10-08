@@ -19,6 +19,18 @@ English | [简体中文](README.zh-CN.md)
 - History and rollback
 - The clipboard file is copied directly to the editor
 
+## Mac can't open app
+> Very sorry that in the early stages of the project, the mac code signing has not been done  
+> The solution is as follows
+step1
+```shell
+sudo spctl  --master-disable
+```
+step2
+```shell
+sudo xattr -r -d com.apple.quarantine /Applications/Md\ Writer.app
+```
+
 ## Screenshot
 ![](./help/search.png)
 ![](./help/images.png)
