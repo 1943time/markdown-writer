@@ -6,7 +6,7 @@ English | [简体中文](README.zh-CN.md)
 ![](./help/img.png)
 
 ## Introduction
-- Using [monaco-editor](https://microsoft.github.io) as the editor, some enhancements have been made on this basis, such as: path completion, link jumping, list indentation, table formatting, etc.
+- Using [monaco-editor](https://microsoft.github.io) as the editor, some enhancements have been made on this basis, such as: code completion, link jumping, list indentation, table formatting, etc.
 - The renderer uses the [vitepress](https://github.com/vuejs/vitepress) style
 
 ## Functions

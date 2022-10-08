@@ -6,7 +6,7 @@ English | [简体中文](README.zh-CN.md)
 ![](./help/img.png)
 
 ## 介绍
-- 使用[monaco-editor](https://microsoft.github.io)作为编辑器，在此基础上做了一定增强，例如：路径补全，链接跳转，列表缩进，表格格式化等
+- 使用[monaco-editor](https://microsoft.github.io)作为编辑器，在此基础上做了一定增强，例如：代码补全，链接跳转，列表缩进，表格格式化等
 - 渲染器使用了[vitepress](https://github.com/vuejs/vitepress)的风格
 
 ## 功能
