@@ -43,9 +43,17 @@ export const i18n = {
     zh: '确认',
     en: 'Ok'
   },
+  installAndRestart: {
+    zh: '安装并重启',
+    en: 'Install And Restart'
+  },
   note: {
     zh: '提示',
     en: 'Note'
+  },
+  updateSuccess: {
+    en: 'The update is complete, do you want to restart now?',
+    zh: '更新已完成，是否立即重启？'
   },
   set: {
     name: {

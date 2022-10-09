@@ -1,5 +1,5 @@
 import {Home} from '@/View/Home'
-import {useEffect, useMemo, useState} from 'react'
+import {useEffect, useState} from 'react'
 import {createTheme, ThemeProvider} from '@mui/material'
 import {configStore} from '@/store/config'
 export const MTheme = createTheme({

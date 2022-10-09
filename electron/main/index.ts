@@ -7,6 +7,7 @@ import {app, BrowserWindow, shell, ipcMain, dialog, webContents, nativeTheme} fr
 nativeTheme.themeSource = 'dark'
 import { release } from 'os'
 import { join } from 'path'
+import {MdUpdate} from './update'
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration()
 
@@ -57,6 +58,9 @@ async function createWindow() {
     return { action: 'deny' }
   })
   createMenu(win)
+  if (process.platform === 'win32') {
+    new MdUpdate(win)
+  }
 }
 
 app.whenReady().then(createWindow)

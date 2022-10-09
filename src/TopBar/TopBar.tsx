@@ -1,5 +1,5 @@
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
-import {CircularProgress, Tooltip} from '@mui/material'
+import {CircularProgress, LinearProgress, Tooltip} from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
 import {stateStore} from '@/store/state'
 import FileDownloadIcon from '@mui/icons-material/FileDownload'
@@ -10,7 +10,7 @@ import {BreadCrumbs} from '@/TopBar/BreadCrumbs'
 import {ipcRenderer} from 'electron'
 import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined'
 import {observer} from 'mobx-react-lite'
-import {createElement, useCallback, useEffect, useMemo, useRef} from 'react'
+import {createElement, useEffect, useMemo, useRef} from 'react'
 import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined'
 import ViewColumnOutlinedIcon from '@mui/icons-material/ViewColumnOutlined'
 import WysiwygOutlinedIcon from '@mui/icons-material/WysiwygOutlined'
@@ -20,11 +20,12 @@ import {configStore} from '@/store/config'
 import {MetaKey} from '@/utils/Widget'
 import {History} from '@/TopBar/History/History'
 import PublishOutlinedIcon from '@mui/icons-material/PublishOutlined'
-import {useSetState} from 'react-use'
+import {useGetSetState} from 'react-use'
 import {message} from '@/components/message'
-import semver from 'semver'
 import {ElectronApi} from '@/utils/electronApi'
 import {Update} from '@/TopBar/Update'
+import IpcRendererEvent = Electron.IpcRendererEvent
+import {ProgressInfo} from 'electron-updater'
 const VisibleIcons = [
   {name: 'code', icon: CodeOutlinedIcon, key: 'Ctrl 1'},
   {name: 'column', icon: ViewColumnOutlinedIcon, key: 'Ctrl 2'},
@@ -32,58 +33,78 @@ const VisibleIcons = [
 ]
 
 export const TopBar = observer(() => {
-  const timer = useRef(0)
   const version = useRef('')
-  const [state, setState] = useSetState({
-    updateLoading: false,
+  const [state, setState] = useGetSetState({
     updateVisible: false,
+    active: false, // manual trigger
+    progress: 0,
+    startUpdate: false,
+    checking: false,
     update: null as null | {
       name: string
       body: string
-      assets: {
-        browser_download_url: string
-        name: string
-      }[]
     }
   })
-  const update = useCallback((active = false) => {
-    if (active) {
-      clearTimeout(timer.current)
-      setState({updateLoading: true})
-    }
-    fetch('https://api.github.com/repos/1943time/markdown-writer/releases/latest').then(async res => {
-      if (!res.ok) throw new Error('net work err')
-      const data = await res.json()
-      if (data?.tag_name && version.current) {
-        if (semver.lt(version.current, data.tag_name)) {
-          setState({
-            update: data,
-            updateVisible: active
-          })
-        } else if (active) {
-          message(configStore.getI18nText('latestVersion'))
-        }
-      }
-    }).catch(err => {
-      if (active) {
-        message(configStore.getI18nText('networkErr'), {type: 'error'})
-      }
-    }).finally(() => {
-      if (active) {
-        setState({updateLoading: false})
-      }
-    })
-    timer.current = window.setTimeout(() => update, 3600000)
-  }, [])
   useEffect(() => {
-    update()
     ElectronApi.getInfo().then(res => {
       version.current = res.version
     })
-    const activeUpdate = () => update(true)
-    ipcRenderer.on('checkUpdate', activeUpdate)
+
+    const checkUpdate = (e:any, data: boolean) => {
+      if (ElectronApi.isMac) {
+        ElectronApi.openDialog('showMessageBox', {
+          title: configStore.getI18nText('note'),
+          message: 'Sorry, the mac system does not support automatic updates for the time being, coming soon'
+        })
+      } else {
+        ipcRenderer.send('checkUpdate')
+        setState({active: data})
+      }
+    }
+
+    const updateMessage = (e:IpcRendererEvent, data: {type: string, value: any}) => {
+      console.log('update message', data)
+      switch (data?.type) {
+        case 'checking':
+          setState({checking: true})
+          break
+        case 'available':
+          if (state().active)
+          setState({startUpdate: true})
+          break
+        case 'not-available':
+          if (state().active) {
+            message(configStore.getI18nText('latestVersion'))
+          }
+          setState({active: false, startUpdate: false, checking: false})
+          break
+        case 'error':
+          message(configStore.getI18nText('networkErr'), {type: 'error'})
+          setState({active: false, startUpdate: false, checking: false})
+          break
+        case 'progress':
+          if (data.value) {
+            const value = data.value as ProgressInfo
+            setState({progress: value.percent, checking: false})
+          }
+          break
+        case 'downloaded':
+          setState({
+            startUpdate: false,
+            updateVisible: true,
+            update: {
+              name: data.value?.releaseName,
+              body: data.value?.releaseNotes
+            }
+          })
+          break
+      }
+    }
+    ipcRenderer.on('checkUpdate', checkUpdate)
+    ipcRenderer.on('updateMessage', updateMessage)
     return () => {
-      ipcRenderer.off('checkUpdate', activeUpdate)
+      ipcRenderer.off('checkUpdate', checkUpdate)
+      ipcRenderer.off('updateMessage', updateMessage)
     }
   }, [])
   const tools = useMemo(() => {
@@ -162,6 +183,12 @@ export const TopBar = observer(() => {
       </div>
       <div>
         <div className={'text-base space-x-2 flex items-center'}>
+          {state().startUpdate &&
+            <div className={'flex items-center w-44 mr-4'}>
+              <span className={'text-xs text-gray-500 mr-2'}>updating...</span>
+              <LinearProgress variant={'determinate'} value={state().progress} className={'flex-1'}/>
+            </div>
+          }
           <div className={'rounded bg-gray-400/10 space-x-2 h-6 flex items-center px-2 text-zinc-400 relative'}>
             {VisibleIcons.map(v =>
               <Tooltip
@@ -218,7 +245,7 @@ export const TopBar = observer(() => {
               </div>
             </Tooltip>
           )}
-          {(state.updateLoading || !!state.update) &&
+          {(!!state().update || state().checking) &&
             <Tooltip
               enterDelay={500}
               placement={'bottom'}
@@ -226,12 +253,10 @@ export const TopBar = observer(() => {
               <div
                 className={'text-cyan-400 rounded-sm duration-300 cursor-pointer flex items-center hover:bg-gray-100/10 p-0.5'}
                 onClick={() => {
-                  if (!state.updateLoading && state.update) {
-                    setState({updateVisible: true})
-                  }
+                  if (!state().checking) setState({updateVisible: true})
                 }}
               >
-                {state.updateLoading ?
+                {state().checking ?
                   <CircularProgress size={15} color={'success'}/> :
                   <PublishOutlinedIcon fontSize={'inherit'}/>
                 }
@@ -244,8 +269,8 @@ export const TopBar = observer(() => {
       <Set/>
       <History/>
       <Update
-        update={state.update}
-        visible={state.updateVisible}
+        update={state().update}
+        visible={state().updateVisible}
         onClose={() => {
           setState({updateVisible: false})
         }}

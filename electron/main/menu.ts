@@ -1,10 +1,10 @@
-import {Menu, app, BrowserWindow, shell, MenuItemConstructorOptions, nativeImage} from 'electron'
+import {Menu, app, BrowserWindow, shell, MenuItemConstructorOptions, nativeImage, ipcMain} from 'electron'
 import {join} from 'path'
 export const createMenu = (win: BrowserWindow) => {
-  const devMenu = app.isPackaged ? [] : [
-    {role: 'reload'},
-    {role: 'toggleDevTools'}
-  ] as MenuItemConstructorOptions[]
+  // const devMenu = [
+  //   {role: 'reload'},
+  //   {role: 'toggleDevTools'}
+  // ] as MenuItemConstructorOptions[]
   const appMenu = Menu.buildFromTemplate([
     {
       label: app.getName(),
@@ -18,7 +18,7 @@ export const createMenu = (win: BrowserWindow) => {
         {
           label: 'Check For Updates',
           click: () => {
-            win.webContents.send('checkUpdate')
+            win.webContents.send('checkUpdate', true)
           }
         },
         {type: 'separator'},
@@ -41,8 +41,14 @@ export const createMenu = (win: BrowserWindow) => {
           click: () => {
             win.webContents.send('openRecent')
           }
-        },
-        ...devMenu
+        }
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        {role: 'reload'},
+        {role: 'toggleDevTools'}
       ]
     },
     {

@@ -2,7 +2,7 @@
  * @see https://www.electron.build/configuration/configuration
  */
 {
-  appId: "Md Writer",
+  appId: "md.writer",
   productName: "Md Writer",
   copyright: "Copyright © 2022 mdwriter@163.com",
   asar: true,
@@ -10,30 +10,36 @@
     output: "release/${version}",
     buildResources: "electron/resources",
   },
-  files: ["dist"],
+  files: [
+    "dist"
+  ],
   win: {
     target: [
       {
         target: "nsis",
-        arch: ["x64"],
+        arch: [
+          "x64"
+        ],
       },
-    ],
-    artifactName: "${productName}-Windows-${arch}.${ext}",
+    ]
   },
+  artifactName: 'Md-Writer-${os}-${arch}-${version}.${ext}',
   nsis: {
     oneClick: false,
     perMachine: false,
     allowToChangeInstallationDirectory: true,
     deleteAppDataOnUninstall: false,
   },
-  mac: {
-    target: ["zip"],
-    artifactName: "${productName}-Mac-${arch}.${ext}",
-  },
   publish: [
     {
-      provider: 'generic',
-      url: 'http://127.0.0.1:5500'
+      provider: 'github',
+      owner: '1943time',
+      repo: 'markdown-writer'
     }
-  ]
+  ],
+  mac: {
+    target: [
+      "zip"
+    ]
+  }
 }

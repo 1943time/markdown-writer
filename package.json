@@ -1,5 +1,5 @@
 {
-  "name": "md_writer",
+  "name": "md.writer",
   "productName": "Md Writer",
   "private": true,
   "version": "0.2.1",
@@ -9,14 +9,13 @@
   "main": "dist/electron/main/index.js",
   "scripts": {
     "dev": "vite",
-    "build:all": "npm run build:vite && npm run build:mac && npm run build:mac:x64 && npm run build:win",
+    "build:all": "npm run build:vite && npm run build:win && npm run build:mac",
     "build:vite": "tsc && vite build",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "build:win": "electron-builder build -w --x64",
-    "build:mac": "electron-builder build -m --arm64",
-    "build:mac:x64": "electron-builder build -m --x64"
+    "build:mac": "electron-builder build -m --arm64 --x64"
   },
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
