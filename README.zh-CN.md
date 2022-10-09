@@ -22,6 +22,8 @@ English | [简体中文](README.zh-CN.md)
 ## Mac 系统无法打开
 > 非常抱歉在项目的早期阶段，还没有进行mac 代码签名  
 > 解决方法如下
+
+step1
 ```shell
 sudo spctl  --master-disable
 ```

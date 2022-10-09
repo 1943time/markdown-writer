@@ -29,7 +29,7 @@ import 'prismjs/components/prism-xml-doc'
 import 'prismjs/components/prism-r'
 import 'prismjs/components/prism-graphql'
 import 'prismjs/components/prism-bash'
-
+import 'prismjs/components/prism-nginx'
 export const highlight = (code: string, lang: string) => {
   return Prism.highlight(code, Prism.languages[lang] || {}, lang)
 }

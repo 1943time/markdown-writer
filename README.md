@@ -22,6 +22,7 @@ English | [简体中文](README.zh-CN.md)
 ## Mac can't open app
 > Very sorry that in the early stages of the project, the mac code signing has not been done  
 > The solution is as follows
+
 step1
 ```shell
 sudo spctl  --master-disable
