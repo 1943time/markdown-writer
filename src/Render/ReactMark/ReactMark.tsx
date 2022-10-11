@@ -12,6 +12,7 @@ export function ReactMark({code, readonly}: {
   const nodes = useMemo(() => {
     return parser.parse(code).children as any[] || []
   }, [code])
+  // console.log('node', nodes)
   useCheckbox(readonly)
   useLink(readonly)
   usePreview(readonly)

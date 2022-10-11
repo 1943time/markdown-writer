@@ -1,6 +1,8 @@
 # Markdown Writer
 A simple markdown technical note **[Download](https://github.com/1943time/markdown-writer/releases)**
 
+**⚠️ Mac os not signed yet**
+
 English | [简体中文](README.zh-CN.md)
 
 ![](./help/img.png)
@@ -14,6 +16,9 @@ English | [简体中文](README.zh-CN.md)
 - print pdf
 - heading map
 - emoji
+- synchronous scrolling
+- custom containers
+- katex and code completion
 - Advanced Search and File lookup
 - Free adjustment of file tree
 - History and rollback
@@ -38,3 +43,5 @@ sudo xattr -r -d com.apple.quarantine /Applications/Md\ Writer.app
 ![](./help/history.png)
 ![](./help/print.png)
 ![](./help/nav.png)
+![](./help/katex.png)
+![](./help/container.png)

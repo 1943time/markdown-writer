@@ -7,6 +7,7 @@ import {Link} from '@/Render/ReactMark/components/Link'
 import {Media} from '@/Render/ReactMark/components/Media'
 import {ListItem} from '@/Render/ReactMark/components/ListItem'
 import {Table} from '@/Render/ReactMark/components/Table'
+import {Katex} from '@/Render/ReactMark/components/Katex/Katex'
 
 export type IRenderNode = {
   type: string
@@ -64,6 +65,10 @@ function RenderNode({node}: {
       return createElement(Table, {node})
     case 'listItem':
       return createElement(ListItem, {node})
+    case 'math':
+      return createElement(Katex, {node})
+    case 'inlineMath':
+      return createElement(Katex, {node})
     default:
       let map = tagMap[node.type]
       if (map instanceof Function) map = map(node)

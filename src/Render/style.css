@@ -126,3 +126,6 @@
 .prose blockquote p:before{
   content: none;
 }
+.prose .inline-math p{
+  display: inline;
+}

@@ -13,7 +13,7 @@ export class MonacoMarkdownExtension {
 
         activateFormatting(textEditor)
         activateListEditing(textEditor)
-        // activateCompletion(textEditor)
+        activateCompletion(textEditor)
         activateTableFormatter(textEditor)
 
         // Allow `*` in word pattern for quick styling

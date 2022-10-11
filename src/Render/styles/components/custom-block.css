@@ -5,6 +5,7 @@
   line-height: 24px;
   font-size: 14px;
   color: var(--vp-c-text-2);
+  margin: 16px 0;
 }
 
 .custom-block.info {

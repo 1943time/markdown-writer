@@ -27,14 +27,13 @@ const findLink = (el: HTMLElement) => {
 export function useLink(readonly?: boolean) {
   useEffect(() => {
     const click = (e: MouseEvent) => {
-      e.preventDefault()
       if (readonly) {
         e.stopPropagation()
         return
       }
       const link = findLink(e.target as HTMLElement)
+      if (link && link.tagName.toLowerCase() === 'a') e.preventDefault()
       if (link && link.getAttribute('href')) {
-        e.preventDefault()
         const url = decodeURIComponent(link.getAttribute('href') || '')
         if (/^https?:\/\//.test(url)) {
           shell.openExternal(url)

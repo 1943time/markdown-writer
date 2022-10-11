@@ -1,7 +1,9 @@
 # Markdown Writer
 一款简单的markdown技术笔记  **[下载](https://github.com/1943time/markdown-writer/releases)**
 
-English | [简体中文](README.zh-CN.md)
+**⚠️ Mac os 暂未签名**
+
+[English](README.md) | 简体中文
 
 ![](./help/img.png)
 
@@ -14,6 +16,9 @@ English | [简体中文](README.zh-CN.md)
 - pdf 导出
 - 标题导航
 - 表情
+- 定制容器
+- katex语法以及代码补全
+- 同步滚动
 - 高级搜索与文件查找
 - 自由调整文件树
 - 历史记录与回滚
@@ -37,3 +42,5 @@ sudo xattr -r -d com.apple.quarantine /Applications/Md\ Writer.app
 ![](./help/history.png)
 ![](./help/print.png)
 ![](./help/nav.png)
+![](./help/katex.png)
+![](./help/container.png)
