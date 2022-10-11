@@ -44,6 +44,9 @@ export const Code = observer(({node}: {node: IRenderNode}) => {
         wrapLongLines={configStore.render_codeWordBreak}
         CodeTag={'div'}
         language={node.lang}
+        codeTagProps={{
+          className: 'inline-block',
+        }}
       />
     </div>
   ) : (
