@@ -8,6 +8,8 @@ import {Media} from '@/Render/ReactMark/components/Media'
 import {ListItem} from '@/Render/ReactMark/components/ListItem'
 import {Table} from '@/Render/ReactMark/components/Table'
 import {Katex} from '@/Render/ReactMark/components/Katex/Katex'
+import {Html} from '@/Render/ReactMark/components/Html'
+import {combineHtml} from '@/Render/ReactMark/utils/combineHtml'
 
 export type IRenderNode = {
   type: string
@@ -34,7 +36,7 @@ export function ReactRenderer({nodes}: {
   if (!nodes?.length) return null
   return (
     <>
-      {nodes.map((n, i) =>
+      {combineHtml(nodes).map((n, i) =>
         <RenderNode node={n} key={i}/>
       )}
     </>
@@ -69,6 +71,8 @@ function RenderNode({node}: {
       return createElement(Katex, {node})
     case 'inlineMath':
       return createElement(Katex, {node})
+    case 'html':
+      return createElement(Html, {node})
     default:
       let map = tagMap[node.type]
       if (map instanceof Function) map = map(node)
