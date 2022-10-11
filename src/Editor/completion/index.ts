@@ -29,7 +29,7 @@ languages.registerCompletionItemProvider('markdown-math', {
       endLineNumber: position.lineNumber,
       endColumn: position.column
     })
-    if (/^:{3}\s*(\w+)?$/.test(lineText)) {
+    if (/^:{3}(\w+)?$/.test(lineText)) {
       return {suggestions: containerCompletion(model, position, lineText)}
     }
 

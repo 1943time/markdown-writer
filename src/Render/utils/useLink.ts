@@ -3,6 +3,7 @@ import {shell} from 'electron'
 import {treeStore} from '@/store/tree'
 import {message} from '@/components/message'
 import {configStore} from '@/store/config'
+import {slugify} from '@/Render/ReactMark/components/Heading'
 
 const findLink = (el: HTMLElement) => {
   let link: null | HTMLElement = null
@@ -23,34 +24,23 @@ const findLink = (el: HTMLElement) => {
   return link
 }
 
-const findHead = (text: string) => {
-  let el: HTMLElement | null = null
-  let level = 1
-  while (!el) {
-    if (level > 5) break
-    el = document.querySelector(`.vp-doc h${level}[id="${text}"]`)
-    level++
-  }
-  return el
-}
-
-export function useLink(pdf: boolean) {
+export function useLink(readonly?: boolean) {
   useEffect(() => {
     const click = (e: MouseEvent) => {
-      if (pdf) {
-        e.preventDefault()
+      e.preventDefault()
+      if (readonly) {
         e.stopPropagation()
         return
       }
       const link = findLink(e.target as HTMLElement)
-      if (link) {
+      if (link && link.getAttribute('href')) {
         e.preventDefault()
         const url = decodeURIComponent(link.getAttribute('href') || '')
         if (/^https?:\/\//.test(url)) {
           shell.openExternal(url)
         } else if(url.startsWith('#') && url.length > 1) {
-          const text = decodeURIComponent(url.slice(1, url.length))
-          const el = findHead(text)
+          const text = slugify(decodeURIComponent(url.slice(1, url.length)))
+          const el = document.querySelector(`#doc-container [id="${text}"]`) as HTMLElement
           if (el) document.querySelector('#doc-container')!.scrollTo({
             top: el.offsetTop
           })

@@ -1,5 +1,3 @@
-import Token from 'markdown-it/lib/token'
-import {stateStore} from '@/store/state'
 export const scrollByLine = () => {
   const lineNodes = (document.querySelector('.margin-view-overlays')?.children || []) as HTMLDivElement[]
   if (!lineNodes.length) return
@@ -8,27 +6,32 @@ export const scrollByLine = () => {
   })
   const line = +relateTopNode.innerText
   const offsetLinePercent = (62 - relateTopNode.getBoundingClientRect().top) / relateTopNode.clientHeight
-  let index: number = 0
-  let currentToken: Token | null = null
+  let currentNode: HTMLElement | null = null
   let outside = false
-  for (let i = 0; i < stateStore.topTokens.length; i++) {
-    const token = stateStore.topTokens[i]
-    if (line <= token.map![1]) {
-      index = i + 1
-      currentToken = token
-      outside = line <= token.map![0]
-      break
+  const topNodes= document.querySelector('#render')!.children || []
+  for (let n of topNodes) {
+    const [start, end] = [Number((<HTMLElement>n).dataset.startLine), Number((<HTMLElement>n).dataset.endLine)]
+    if (start) {
+      if (line < start) {
+        currentNode = n as HTMLElement
+        outside = true
+        break
+      }
+      if (line >= start && line <= end) {
+        currentNode = n as HTMLElement
+        outside = false
+        break
+      }
     }
   }
-  if (currentToken) {
-    const targetEl = (document.querySelector(`[data-index="${index}"]`) as HTMLElement)
-    const [start, end] = currentToken.map!
-    const offsetLinePx = targetEl.clientHeight / (end - start) * offsetLinePercent
+  if (currentNode) {
+    const [start, end] = [Number(currentNode.dataset.startLine), Number(currentNode.dataset.endLine) + 1]
+    const offsetLinePx = currentNode.clientHeight / (end - start) * offsetLinePercent
     if (!outside) {
-      const move = targetEl.offsetTop + targetEl.clientHeight * ((line - start - 1) / (end - start)) + offsetLinePx
+      const move = currentNode.offsetTop + currentNode.clientHeight * ((line - start) / (end - start)) + offsetLinePx
       document.querySelector('#doc-container')!.scroll({top: move - 20})
     } else {
-      document.querySelector('#doc-container')!.scroll({top: targetEl.offsetTop - 20})
+      document.querySelector('#doc-container')!.scroll({top: currentNode.offsetTop - 20})
     }
   }
 }

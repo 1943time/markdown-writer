@@ -72,6 +72,9 @@ export const TopBar = observer(() => {
           if (state().active)
           setState({startUpdate: true})
           break
+        case 'latest':
+          message(configStore.getI18nText('latestVersion'))
+          break
         case 'not-available':
           if (state().active) {
             message(configStore.getI18nText('latestVersion'))
@@ -85,13 +88,14 @@ export const TopBar = observer(() => {
         case 'progress':
           if (data.value) {
             const value = data.value as ProgressInfo
-            setState({progress: value.percent, checking: false})
+            setState({progress: value.percent, checking: false, startUpdate: state().active})
           }
           break
         case 'downloaded':
           setState({
             startUpdate: false,
             updateVisible: true,
+            active: false,
             update: {
               name: data.value?.releaseName,
               body: data.value?.releaseNotes

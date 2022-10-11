@@ -104,6 +104,10 @@ export const i18n = {
       codeBockWordWrap: {
         zh: '代码块自动换行',
         en: 'Code block word warp'
+      },
+      showCodeLines: {
+        zh: '代码块显示行号',
+        en: 'code blocks show line numbers'
       }
     }
   },

@@ -6,8 +6,8 @@ const findClosestMap = (el: HTMLElement) => {
   let map = [0, 0]
   while(el) {
     if (el.parentElement) {
-      if (el.parentElement.dataset.sourceLine) {
-        map = [Number(el.parentElement.dataset.sourceLine), Number(el.parentElement.dataset.sourceLineEnd)]
+      if (el.parentElement.dataset.startLine) {
+        map = [Number(el.parentElement.dataset.startLine), Number(el.parentElement.dataset.endLine)]
         break
       } else {
         el = el.parentElement
@@ -19,14 +19,13 @@ const findClosestMap = (el: HTMLElement) => {
   return map
 }
 
-export function useCheckbox(pdf: boolean) {
-  if (pdf) return
+export function useCheckbox(readonly?: boolean) {
+  if (readonly) return
   useEffect(() => {
     const click = (e: MouseEvent) => {
       const el = e.target as HTMLInputElement
-      if (el.classList.contains('task-list-item-checkbox')) {
+      if (el.type === 'checkbox') {
         let [start, end] = findClosestMap(el) || []
-        start = start + 1
         if (start && end && stateStore.editor) {
           const model = stateStore.editor.getModel()!
           let text = model.getValueInRange({
@@ -35,12 +34,15 @@ export function useCheckbox(pdf: boolean) {
             endLineNumber: end,
             startLineNumber: start
           })
-          text = text.replace(/- \[[\sx]]/, m => {
-            return `- [${el.checked ? 'x' : ' '}]`
+          text = text.replace(/ \[[\sx]]/, m => {
+            return ` [${el.checked ? 'x' : ' '}]`
           })
           EditorUtils.setRange(stateStore.editor!, {
             start: {line: start, column: 0}, end: {line: end, column: model.getLineMaxColumn(end)}
           }, text)
+          setTimeout(() => {
+            stateStore.renderNow$.next(stateStore.editor!.getModel()?.getValue()!)
+          })
         }
       }
     }

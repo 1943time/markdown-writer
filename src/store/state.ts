@@ -2,7 +2,6 @@ import {makeAutoObservable, observable, runInAction} from 'mobx'
 import {Subject} from 'rxjs'
 import {editor} from 'monaco-editor'
 import IStandaloneCodeEditor = editor.IStandaloneCodeEditor
-import Token from 'markdown-it/lib/token'
 import {getClipboardFile} from '@/utils/dom'
 import {ElectronApi} from '@/utils/electronApi'
 import {TreeNode, treeStore} from '@/store/tree'
@@ -19,7 +18,6 @@ export class StateStore {
   changeText$ = new Subject<{path: string, text: string}>()
   editor$ = new Subject<IStandaloneCodeEditor>()
   renderNow$ = new Subject<string>()
-  topTokens: Token[] = []
   currentCode = ''
   editor?:IStandaloneCodeEditor
   editorFocused = false
@@ -35,16 +33,8 @@ export class StateStore {
     this[key] = value
   }
 
-  setTopTokens(tokens: Token[]) {
-    this.topTokens = tokens
-  }
-
   get showSubNav() {
     return this.viewWidth > 1000 || (this.viewState === 'view' && document.body.clientWidth > 1200)
-  }
-
-  get headingTokens() {
-    return this.topTokens.filter(t => t.type === 'heading_open')
   }
 
   setViewState(state: typeof this.viewState) {

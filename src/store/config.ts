@@ -19,6 +19,7 @@ class Config {
   render_syncScroll = true
   render_codeTabSize = 4
   render_codeWordBreak = false
+  render_lineNumber = false
   configMap = new Map<string, 'zh' | 'en'>()
   constructor() {
     makeAutoObservable(this)

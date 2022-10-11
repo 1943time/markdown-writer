@@ -1,7 +1,7 @@
 import {useEffect} from 'react'
 import Viewer from 'viewerjs'
-export function usePreview(pdf: boolean) {
-  if (pdf) return
+export function usePreview(readonly?: boolean) {
+  if (readonly) return
   useEffect(() => {
     const click = (e: MouseEvent) => {
       const el = e.target as HTMLElement

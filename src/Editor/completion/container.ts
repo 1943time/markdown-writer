@@ -1,9 +1,9 @@
 import {ProvideCompletion} from '@/Editor/completion/lang'
-
-const tips = ['tip', 'warning', 'danger', 'details']
 import * as monaco from 'monaco-editor'
 import {languages} from 'monaco-editor'
 import CompletionItem = languages.CompletionItem
+
+const tips = ['tip', 'warning', 'danger', 'details', 'info']
 export const containerCompletion:ProvideCompletion = (model, pos) => {
   const word = model.getWordAtPosition(pos)
   if (word) {

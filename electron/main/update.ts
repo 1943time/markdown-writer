@@ -1,18 +1,19 @@
 import { autoUpdater } from 'electron-updater'
 import log from 'electron-log'
-import {BrowserWindow, ipcMain} from 'electron'
+import {BrowserWindow, ipcMain, app} from 'electron'
 autoUpdater.logger = log
 // @ts-ignore
 autoUpdater.logger.transports.file.level = 'info'
 autoUpdater.setFeedURL({
   provider: 'github',
   owner: '1943time',
-  repo: 'markdown-writer',
+  repo: 'markdown-writer'
 })
-let timer = 0
+autoUpdater.autoInstallOnAppQuit = true
+let timer:any = 0
 const start = () => {
   clearTimeout(timer)
-  timer = window.setTimeout(() => {
+  timer = setTimeout(() => {
     autoUpdater.checkForUpdatesAndNotify()
   },3600 * 1000)
 }
@@ -25,7 +26,11 @@ export class MdUpdate {
     start()
     ipcMain.on('checkUpdate', () => {
       clearTimeout(timer)
-      autoUpdater.checkForUpdatesAndNotify()
+      autoUpdater.checkForUpdatesAndNotify().then(res => {
+        if (!res.updateInfo?.releaseName) {
+          this.win.webContents.send('updateMessage', {type: 'latest'})
+        }
+      })
     })
     ipcMain.on('restart', () => {
       autoUpdater.quitAndInstall()

@@ -94,57 +94,59 @@ export const Set = observer(() => {
           </FormControl>
         </div>
         <Divider className={'pt-2 pb-4'}>{configStore.getI18nText('set.renderer.name')}</Divider>
-        <div className={'space-x-10'}>
-          <FormControl size={'small'} >
-            <FormLabel>{configStore.getI18nText('set.renderer.syncScroll')}</FormLabel>
-            <FormControlLabel control={(
-              <Checkbox
-                size={'small'}
-                checked={configStore.render_syncScroll}
-                onChange={e => {
-                  configStore.setConfig('render_syncScroll', e.target.checked)
-                }}
-              />
-            )} label={configStore.getI18nText('set.turnOn')}/>
-          </FormControl>
-          <FormControl size={'small'}>
-            <FormLabel>{configStore.getI18nText('set.renderer.smoothScroll')}</FormLabel>
-            <FormControlLabel control={(
-              <Checkbox
-                size={'small'}
-                checked={configStore.render_smooth}
-                onChange={e => {
-                  configStore.setConfig('render_smooth', e.target.checked)
-                }}
-              />
-            )} label={configStore.getI18nText('set.turnOn')}/>
-          </FormControl>
-          {/*<FormControl size={'small'}>*/}
-          {/*  <FormLabel>代码块tabSize</FormLabel>*/}
-          {/*  <RadioGroup*/}
-          {/*    row*/}
-          {/*    value={configStore.render.codeTabSize}*/}
-          {/*    onChange={e => {*/}
-          {/*      configStore.setRender('codeTabSize', +e.target.value)*/}
-          {/*    }}*/}
-          {/*    name="codeTabSize"*/}
-          {/*  >*/}
-          {/*    <FormControlLabel value="2" control={<Radio size={'small'}/>} label="2"/>*/}
-          {/*    <FormControlLabel value="4" control={<Radio size={'small'}/>} label="4" />*/}
-          {/*  </RadioGroup>*/}
-          {/*</FormControl>*/}
-          <FormControl size={'small'}>
-            <FormLabel>{configStore.getI18nText('set.renderer.codeBockWordWrap')}</FormLabel>
-            <FormControlLabel control={(
-              <Checkbox
-                size={'small'}
-                checked={configStore.render_codeWordBreak}
-                onChange={e => {
-                  configStore.setConfig('render_codeWordBreak', e.target.checked)
-                }}
-              />
-            )} label={configStore.getI18nText('set.turnOn')}/>
-          </FormControl>
+        <div className={'space-y-5'}>
+          <div className={'space-x-10'}>
+            <FormControl size={'small'} >
+              <FormLabel>{configStore.getI18nText('set.renderer.syncScroll')}</FormLabel>
+              <FormControlLabel control={(
+                <Checkbox
+                  size={'small'}
+                  checked={configStore.render_syncScroll}
+                  onChange={e => {
+                    configStore.setConfig('render_syncScroll', e.target.checked)
+                  }}
+                />
+              )} label={configStore.getI18nText('set.turnOn')}/>
+            </FormControl>
+            <FormControl size={'small'}>
+              <FormLabel>{configStore.getI18nText('set.renderer.smoothScroll')}</FormLabel>
+              <FormControlLabel control={(
+                <Checkbox
+                  size={'small'}
+                  checked={configStore.render_smooth}
+                  onChange={e => {
+                    configStore.setConfig('render_smooth', e.target.checked)
+                  }}
+                />
+              )} label={configStore.getI18nText('set.turnOn')}/>
+            </FormControl>
+          </div>
+          <div className={'space-x-10'}>
+            <FormControl size={'small'}>
+              <FormLabel>{configStore.getI18nText('set.renderer.showCodeLines')}</FormLabel>
+              <FormControlLabel control={(
+                <Checkbox
+                  size={'small'}
+                  checked={configStore.render_lineNumber}
+                  onChange={e => {
+                    configStore.setConfig('render_lineNumber', e.target.checked)
+                  }}
+                />
+              )} label={configStore.getI18nText('set.turnOn')}/>
+            </FormControl>
+            <FormControl size={'small'}>
+              <FormLabel>{configStore.getI18nText('set.renderer.codeBockWordWrap')}</FormLabel>
+              <FormControlLabel control={(
+                <Checkbox
+                  size={'small'}
+                  checked={configStore.render_codeWordBreak}
+                  onChange={e => {
+                    configStore.setConfig('render_codeWordBreak', e.target.checked)
+                  }}
+                />
+              )} label={configStore.getI18nText('set.turnOn')}/>
+            </FormControl>
+          </div>
         </div>
       </DialogContent>
       <DialogActions>
