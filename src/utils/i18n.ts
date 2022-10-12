@@ -87,6 +87,14 @@ export const i18n = {
         zh: '自动换行',
         en: 'Word wrap'
       },
+      notFindLink: {
+        zh: '相关资源不存在',
+        en: 'Related resource does not exist'
+      },
+      sageChangeSeconds: {
+        zh: '变更后自动保存（秒）',
+        en: 'Auto Save after changes (seconds)'
+      }
     },
     renderer: {
       name: {
@@ -203,12 +211,6 @@ export const i18n = {
     toggleList: {
       zh: '切换列表',
       en: 'Toggle List'
-    }
-  },
-  editor: {
-    notFindLink: {
-      zh: '相关资源不存在',
-      en: 'Related resource does not exist'
     }
   },
   state: {

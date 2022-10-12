@@ -12,6 +12,7 @@ import {stateStore} from '@/store/state'
 import {useSubject} from '@/utils/hooks'
 import {$db} from '@/database'
 import ITextModel = monaco.editor.ITextModel
+import {configStore} from '@/store/config'
 
 export let editorInstance: monaco.editor.IStandaloneCodeEditor | null = null
 export const Editor = observer(() => {
@@ -68,7 +69,7 @@ export const Editor = observer(() => {
                 clearTimeout(timer.current)
                 timer.current = window.setTimeout(() => {
                   saveCache()
-                }, 5000)
+                }, configStore.editor_autoSaveTime)
               })
               editorInstance.onDidScrollChange(e => {
                 const cacheNode = modelMap.current.get(cacheRef.current.node!)
@@ -98,9 +99,9 @@ export const Editor = observer(() => {
         }
       }
     })
-    ipcRenderer.on('blur', saveCache)
+    ipcRenderer.on('save', saveCache)
     return () => {
-      ipcRenderer.off('blur', saveCache)
+      ipcRenderer.off('save', saveCache)
       cancel()
     }
   }, [])

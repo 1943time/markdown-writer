@@ -38,7 +38,7 @@ async function createWindow() {
     }
   })
   win.on('blur', () => {
-    win.webContents.send('blur')
+    win.webContents.send('save')
   })
   if (app.isPackaged) {
     win.loadFile(indexHtml)

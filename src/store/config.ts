@@ -15,6 +15,7 @@ class Config {
   editor_fontSize = 13
   editor_miniMap = false
   editor_wordBreak = false
+  editor_autoSaveTime = 5
   render_smooth = true
   render_syncScroll = true
   render_codeTabSize = 4

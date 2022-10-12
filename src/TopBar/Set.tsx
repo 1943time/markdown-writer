@@ -93,6 +93,24 @@ export const Set = observer(() => {
             </RadioGroup>
           </FormControl>
         </div>
+        <div className={'mt-2'}>
+          <FormControl size={'small'}>
+            <FormLabel>{configStore.getI18nText('set.editor.sageChangeSeconds')}</FormLabel>
+            <RadioGroup
+              row
+              name="theme"
+              value={configStore.editor_autoSaveTime}
+              onChange={e => {
+                configStore.setConfig('editor_autoSaveTime', +e.target.value)
+              }}
+            >
+              <FormControlLabel value={3} control={<Radio size={'small'}/>} label="3" />
+              <FormControlLabel value={5} control={<Radio size={'small'}/>} label="5" />
+              <FormControlLabel value={7} control={<Radio size={'small'}/>} label="7" />
+              <FormControlLabel value={10} control={<Radio size={'small'}/>} label="10" />
+            </RadioGroup>
+          </FormControl>
+        </div>
         <Divider className={'pt-2 pb-4'}>{configStore.getI18nText('set.renderer.name')}</Divider>
         <div className={'space-y-5'}>
           <div className={'space-x-10'}>
