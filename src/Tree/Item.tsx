@@ -4,6 +4,7 @@ import {useEffect, useMemo, useState} from 'react'
 import {TreeIcon} from '@/Tree/Icon'
 import {observer} from 'mobx-react-lite'
 import {runInAction} from 'mobx'
+import {stateStore} from '@/store/state'
 export const TreeRender = observer(({node, level}: {
   node: TreeNode,
   level?: number
@@ -39,7 +40,7 @@ export const TreeRender = observer(({node, level}: {
           {node.type === 'folder' &&
             <ArrowForwardIosOutlinedIcon
               style={{
-                transform: `rotate(${node.open ? '90' : '0'}deg)`,
+                transform: `rotate(${stateStore.openKeys.includes(node.path) ? '90' : '0'}deg)`,
                 fontSize: 12
               }}
               fontSize={'inherit'}
@@ -83,7 +84,7 @@ export const TreeRender = observer(({node, level}: {
             </>
           }
         </div>
-        {node.type === 'folder' && !!node.children?.length && !!node.open &&
+        {node.type === 'folder' && !!node.children?.length && stateStore.openKeys.includes(node.path) &&
           <>
             {node.children!.map(n =>
               <TreeRender node={n} level={(level || 1) + 1} key={n.path}/>

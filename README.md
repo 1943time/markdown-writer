@@ -15,6 +15,7 @@ English | [简体中文](README.zh-CN.md)
 - Gfm syntax support
 - print pdf
 - heading map
+- Footnote
 - emoji
 - synchronous scrolling
 - custom containers

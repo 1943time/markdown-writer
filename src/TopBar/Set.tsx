@@ -120,6 +120,18 @@ export const Set = observer(() => {
                 />
               )} label={configStore.getI18nText('set.turnOn')}/>
             </FormControl>
+            <FormControl size={'small'}>
+              <FormLabel>{configStore.getI18nText('set.renderer.renderFootnoteDetail')}</FormLabel>
+              <FormControlLabel control={(
+                <Checkbox
+                  size={'small'}
+                  checked={configStore.render_footnoteDetail}
+                  onChange={e => {
+                    configStore.setConfig('render_footnoteDetail', e.target.checked)
+                  }}
+                />
+              )} label={configStore.getI18nText('set.turnOn')}/>
+            </FormControl>
           </div>
           <div className={'space-x-10'}>
             <FormControl size={'small'}>

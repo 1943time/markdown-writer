@@ -53,8 +53,7 @@ export function useLink(readonly?: boolean) {
         }
       }
     }
-    const box = document.querySelector('#doc-container') as HTMLDivElement
-    box?.addEventListener('click', click)
-    return () => box?.removeEventListener('click', click)
+    window.addEventListener('click', click)
+    return () => window.removeEventListener('click', click)
   }, [])
 }

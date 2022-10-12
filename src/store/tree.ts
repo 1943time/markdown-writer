@@ -1,4 +1,4 @@
-import {makeAutoObservable, observable, runInAction} from 'mobx'
+import {makeAutoObservable, observable, observe, runInAction} from 'mobx'
 import {basename, join, sep} from 'path'
 import {appendFile, lstat, mkdir, readdir, rename, stat} from 'fs/promises'
 import {Subject} from 'rxjs'
@@ -17,7 +17,6 @@ export type TreeNode = {
   root?: boolean
   mode?: 'add' | 'edit'
   rename?: string
-  open?: boolean
 }
 class TreeStore {
   tree: TreeNode[] = []
@@ -29,8 +28,11 @@ class TreeStore {
   nodeMap = new Map<string, TreeNode>()
   change$ = new Subject<string>()
   constructor() {
-    makeAutoObservable(this, {
+    const data = makeAutoObservable(this, {
       nodeMap: false
+    })
+    observe(data, 'activePath', e => {
+      if (e.newValue) localStorage.setItem(`${this.root?.path}:activePath`, e.newValue as string)
     })
   }
   get activeNode() {
@@ -120,7 +122,9 @@ class TreeStore {
       parentPath: node.path,
       path: String(Date.now())
     })
-    node.open = true
+    if (!stateStore.openKeys.includes(node.path)) {
+      stateStore.toggleOpenKeys(node.path)
+    }
     node.children!.unshift(addNode)
     this.nodeMap.set(addNode.path, addNode)
     this.change$.next(node.path)
@@ -152,9 +156,34 @@ class TreeStore {
     await stat(node.path).catch(e => {
       message(configStore.getI18nText('tree.fileNotExist'), {type: 'waring'})
       this.nodeMap.get(node.parentPath)!.children! = this.nodeMap.get(node.parentPath)!.children!.filter(c => c !== node)
-      if (this.tabs.includes(node)) this.removeTab(node)
+      if (this.tabs.includes(node)) {
+        this.removeTab(node)
+        this.cacheTabs()
+      }
       throw new Error('file path not find')
     })
+  }
+  cacheTabs() {
+    localStorage.setItem(`${this.root?.path}:tabs`, this.tabs.map(t => t.path).join(','))
+  }
+  resetTabs() {
+    const tabs = localStorage.getItem(`${this.root?.path}:tabs`)
+    const activePath = localStorage.getItem(`${this.root?.path}:activePath`)
+    if (tabs) {
+      tabs.split(',').forEach(tab => {
+        if (this.nodeMap.get(tab)) {
+          this.tabs.push(this.nodeMap.get(tab)!)
+        }
+      })
+    }
+    if (activePath && this.nodeMap.get(activePath)) {
+      if (!this.tabs.find(t => t.path === activePath)) {
+        this.tabs.push(this.nodeMap.get(activePath)!)
+      }
+      this.activePath = activePath
+    } else {
+      this.activePath = this.tabs[0]?.path
+    }
   }
   async selectNode(node: TreeNode) {
     await this.checkExist(node)
@@ -168,8 +197,10 @@ class TreeStore {
           }
           this.tabs.push(node)
         }
+        this.cacheTabs()
       } else {
-        node.open = node.root || !node.open
+        // node.open = node.root || !node.open
+        stateStore.toggleOpenKeys(node.path)
       }
     })
   }
@@ -308,6 +339,7 @@ class TreeStore {
       this.removeTab(node)
       this.change$.next(node.path)
       $db.docRecord.where('path').equals('path').delete()
+      stateStore.clearOpenKeys(path)
     })
   }
 
@@ -322,6 +354,7 @@ class TreeStore {
         this.activePath = this.tabs[index === 0 ? 0 : index - 1]?.path
       }
     }
+    this.cacheTabs()
   }
   setActivePath(path?: string) {
     this.activePath = path
@@ -349,6 +382,8 @@ class TreeStore {
       this.root!.children = children
     })
     localStorage.setItem('lastOpenDir', path)
+    stateStore.initialOpenKeys()
+    this.resetTabs()
     await $db.recentFolder.where('path').equals(path).delete()
     await $db.recentFolder.add({path})
   }

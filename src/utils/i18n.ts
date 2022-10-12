@@ -107,7 +107,11 @@ export const i18n = {
       },
       showCodeLines: {
         zh: '代码块显示行号',
-        en: 'code blocks show line numbers'
+        en: 'Code blocks show line numbers'
+      },
+      renderFootnoteDetail: {
+        zh: '渲染脚注详情',
+        en: 'Render Footnote Details'
       }
     }
   },

@@ -5,15 +5,16 @@ import {useMemo} from 'react'
 import {parser} from '@/Render/ReactMark/utils/parser'
 import {ReactRenderer} from '@/Render/ReactMark/Renderer'
 import {useFootnote} from '@/Render/utils/useFootnote'
+import {footnoteMap} from '@/Render/ReactMark/components/FootNote'
 
 export function ReactMark({code, readonly}: {
   code: string
   readonly?: boolean
 }) {
   const nodes = useMemo(() => {
+    footnoteMap.clear()
     return parser.parse(code).children as any[] || []
   }, [code])
-  console.log('node', nodes)
   useCheckbox(readonly)
   useLink(readonly)
   usePreview(readonly)

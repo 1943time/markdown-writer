@@ -1,21 +1,61 @@
 import {IRenderNode, ReactRenderer} from '@/Render/ReactMark/Renderer'
-import ReplyAllOutlinedIcon from '@mui/icons-material/ReplyAllOutlined';
-export function FootNote({node}: {
+import ReplyAllOutlinedIcon from '@mui/icons-material/ReplyAllOutlined'
+import {observer} from 'mobx-react-lite'
+import {configStore} from '@/store/config'
+import {ClickAwayListener, Paper, Tooltip} from '@mui/material'
+import {getPosAttr} from '@/Render/ReactMark/utils'
+import {useState} from 'react'
+
+export const footnoteMap = new Map<string, IRenderNode[]>()
+export const FootNote = observer(({node}: {
   node: IRenderNode
-}) {
+}) => {
+  const [openTip, setOpenTip] = useState(false)
   if (node.type === 'footnoteReference') {
+    if (configStore.render_footnoteDetail) {
+      return (
+        <sup
+          className={'text-indigo-500 duration-200 hover:text-indigo-700 cursor-pointer'}
+          data-mode={'fr'}
+          data-label={node.identifier}>
+          [{node.identifier}]
+        </sup>
+      )
+    } else {
+      return (
+        <ClickAwayListener
+          onClickAway={() => {
+            setOpenTip(false)
+          }}
+        >
+          <Tooltip
+            disableFocusListener
+            disableHoverListener
+            disableTouchListener
+            components={{
+              Tooltip: Paper
+            }}
+            open={openTip}
+            title={openTip ? <div className={'py-2 px-3 max-w-[300px] f13 text-gray-300 prose'}><ReactRenderer nodes={footnoteMap.get(node.identifier) || []}/></div> : ''}
+          >
+            <sup
+              onClick={(e) => {
+                e.stopPropagation()
+                e.nativeEvent.stopPropagation()
+                setOpenTip(true)
+              }}
+              className={'text-indigo-500 duration-200 hover:text-indigo-700 cursor-pointer'}
+              data-mode={'fr'}
+              data-label={node.identifier}>
+              [{node.identifier}]
+            </sup>
+          </Tooltip>
+        </ClickAwayListener>
+      )
+    }
+  } else if (configStore.render_footnoteDetail) {
     return (
-      <sup
-        className={'text-indigo-500 duration-200 hover:text-indigo-700 cursor-pointer'}
-        title={'footnote'}
-        data-mode={'fr'}
-        data-label={node.identifier}>
-        [{node.identifier}]
-      </sup>
-    )
-  } else {
-    return (
-      <div className={'ft-define text-sm leading-6 indent-2 text-slate-300'} data-define={node.identifier}>
+      <div className={'ft-define text-sm leading-6 indent-2 text-slate-300'} data-define={node.identifier} {...getPosAttr(node)}>
         <span className={'mr-1 text-indigo-500'} title={'footnote'}>{'>'} {node.identifier}:</span>
         <ReactRenderer nodes={node.children}/>
         <span className={'duration-200 ml-2 text-blue-500 hover:text-blue-700 cursor-pointer'} data-source={node.identifier} data-mode={'fd'}>
@@ -23,5 +63,7 @@ export function FootNote({node}: {
         </span>
       </div>
     )
+  } else {
+    return null
   }
-}
+})

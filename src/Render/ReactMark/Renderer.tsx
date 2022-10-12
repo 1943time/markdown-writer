@@ -10,7 +10,7 @@ import {Table} from '@/Render/ReactMark/components/Table'
 import {Katex} from '@/Render/ReactMark/components/Katex/Katex'
 import {Html} from '@/Render/ReactMark/components/Html'
 import {combineHtml} from '@/Render/ReactMark/utils/combineHtml'
-import {FootNote} from '@/Render/ReactMark/components/FootNote'
+import {FootNote, footnoteMap} from '@/Render/ReactMark/components/FootNote'
 
 export type IRenderNode = {
   type: string
@@ -77,6 +77,7 @@ function RenderNode({node}: {
     case 'footnoteReference':
       return createElement(FootNote, {node})
     case 'footnoteDefinition':
+      footnoteMap.set(node.identifier, node.children)
       return createElement(FootNote, {node})
     default:
       let map = tagMap[node.type]

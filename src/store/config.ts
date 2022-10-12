@@ -20,6 +20,7 @@ class Config {
   render_codeTabSize = 4
   render_codeWordBreak = false
   render_lineNumber = false
+  render_footnoteDetail = false
   configMap = new Map<string, 'zh' | 'en'>()
   constructor() {
     makeAutoObservable(this)

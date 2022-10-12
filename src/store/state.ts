@@ -1,18 +1,20 @@
 import {makeAutoObservable, observable, runInAction} from 'mobx'
 import {Subject} from 'rxjs'
 import {editor} from 'monaco-editor'
-import IStandaloneCodeEditor = editor.IStandaloneCodeEditor
 import {getClipboardFile} from '@/utils/dom'
 import {ElectronApi} from '@/utils/electronApi'
 import {TreeNode, treeStore} from '@/store/tree'
-import {extname, join, basename, dirname, sep} from 'path'
-import {writeFile, copyFile} from 'fs/promises'
+import {basename, dirname, extname, join, sep} from 'path'
+import {copyFile, writeFile} from 'fs/promises'
 import {message} from '@/components/message'
 import {EditorUtils} from '@/Editor/method'
 import {mediaType} from '@/utils/mediaType'
 import {configStore} from '@/store/config'
+import IStandaloneCodeEditor = editor.IStandaloneCodeEditor
+
 export class StateStore {
   openSearch = false
+  openKeys:string[] = []
   moveToLine$ = new Subject<number>()
   revertText$ = new Subject<string>()
   changeText$ = new Subject<{path: string, text: string}>()
@@ -32,9 +34,24 @@ export class StateStore {
   setStatusVisible(key: 'treeOpen' | 'recentRecordVisible' | 'openSearch' | 'finderVisible' | 'printVisible' | 'configVisible' | 'historyVisible', value: boolean) {
     this[key] = value
   }
-
   get showSubNav() {
     return this.viewWidth > 1000 || (this.viewState === 'view' && document.body.clientWidth > 1200)
+  }
+  initialOpenKeys() {
+    const keys = localStorage.getItem(`${treeStore.root!.path}:openKeys`)
+    this.openKeys = keys ? keys.split(',') : [treeStore.root!.path]
+  }
+  clearOpenKeys(path: string) {
+    if (this.openKeys.includes(path)) this.openKeys = this.openKeys.filter(key => key !== path)
+    localStorage.setItem(`${treeStore.root!.path}:openKeys`, this.openKeys.join(','))
+  }
+  toggleOpenKeys(path: string) {
+    if (this.openKeys.includes(path)) {
+      this.openKeys = this.openKeys.filter(key => key !== path)
+    } else {
+      this.openKeys.push(path)
+    }
+    localStorage.setItem(`${treeStore.root!.path}:openKeys`, this.openKeys.join(','))
   }
 
   setViewState(state: typeof this.viewState) {

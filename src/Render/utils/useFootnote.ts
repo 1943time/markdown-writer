@@ -1,10 +1,11 @@
 import {useEffect} from 'react'
+import {configStore} from '@/store/config'
 
 export const useFootnote = (readonly?: boolean) => {
   useEffect(() => {
     if (readonly) return
-
     const click = (e: MouseEvent) => {
+      if (!configStore.render_footnoteDetail) return
       const el = e.target as HTMLElement
       if (el.dataset.mode === 'fr') {
         const label = el.dataset.label
