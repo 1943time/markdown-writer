@@ -55,6 +55,12 @@ export const i18n = {
     en: 'The update is complete, do you want to restart now?',
     zh: '更新已完成，是否立即重启？'
   },
+  editor: {
+    notFindLink: {
+      zh: '相关资源不存在',
+      en: 'Related resource does not exist'
+    },
+  },
   set: {
     name: {
       zh: '设置',
@@ -86,10 +92,6 @@ export const i18n = {
       wordWrap: {
         zh: '自动换行',
         en: 'Word wrap'
-      },
-      notFindLink: {
-        zh: '相关资源不存在',
-        en: 'Related resource does not exist'
       },
       sageChangeSeconds: {
         zh: '变更后自动保存（秒）',
