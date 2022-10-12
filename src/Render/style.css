@@ -126,6 +126,10 @@
 .prose blockquote p:before{
   content: none;
 }
-.prose .inline-math p{
+.prose .inline-math > p{
+  display: inline;
+}
+
+.prose .ft-define > p{
   display: inline;
 }

@@ -15,7 +15,7 @@
 
 .sub-nav-active{
   animation-delay: 200ms;
-  animation-duration: 1.5s;
+  animation-duration: 2s;
   animation-name: nav-active;
   animation-fill-mode: forwards;
 }

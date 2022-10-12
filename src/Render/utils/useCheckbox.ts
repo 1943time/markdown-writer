@@ -20,8 +20,8 @@ const findClosestMap = (el: HTMLElement) => {
 }
 
 export function useCheckbox(readonly?: boolean) {
-  if (readonly) return
   useEffect(() => {
+    if (readonly) return
     const click = (e: MouseEvent) => {
       const el = e.target as HTMLInputElement
       if (el.type === 'checkbox') {

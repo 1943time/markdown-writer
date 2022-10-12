@@ -9,7 +9,7 @@ export function Media({node}: {
 }) {
   const type = mediaType(node.url)
   const n = treeStore.findNodeByPath(node.url)
-  if (type === 'audio') return <div className={'my-8'}><audio controls={true} src={n?.path} {...getPosAttr(node)}/></div>
-  if (type === 'video') return <div className={'my-8'}><video controls={true} src={n?.path} {...getPosAttr(node)}/></div>
+  if (type === 'audio') return <audio controls={true} className={'my-8'} src={n?.path} {...getPosAttr(node)}/>
+  if (type === 'video') return <video controls={true} className={'my-8'} src={n?.path} {...getPosAttr(node)}/>
   return <img alt={node.alt} src={getUrl(n?.path)} {...getPosAttr(node)}/>
 }

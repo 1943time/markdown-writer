@@ -1,8 +1,8 @@
 import {useEffect} from 'react'
 import Viewer from 'viewerjs'
 export function usePreview(readonly?: boolean) {
-  if (readonly) return
   useEffect(() => {
+    if (readonly) return
     const click = (e: MouseEvent) => {
       const el = e.target as HTMLElement
       if (el.tagName.toLowerCase() === 'img') {

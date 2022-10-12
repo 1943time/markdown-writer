@@ -86,7 +86,7 @@ export const DocList = observer(() => {
     el.classList.add('sub-nav-active')
     setTimeout(() => {
       el.classList.remove('sub-nav-active')
-    }, 1800)
+    }, 2100)
   }, [])
 
   useEffect(() => {
