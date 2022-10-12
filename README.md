@@ -15,7 +15,7 @@ English | [简体中文](README.zh-CN.md)
 - Gfm syntax support
 - print pdf
 - heading map
-- Footnote
+- [Footnote](https://github.blog/changelog/2021-09-30-footnotes-now-supported-in-markdown-fields/)
 - emoji
 - synchronous scrolling
 - custom containers

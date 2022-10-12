@@ -39,6 +39,7 @@ export const download = (data: Blob | Uint8Array, fileName: string) => {
   const link = document.createElement('a')
   if (link.download !== undefined) {
     const url = URL.createObjectURL(data)
+    link.addEventListener('click', e => e.stopPropagation())
     link.setAttribute('href', url)
     link.setAttribute('download', fileName)
     link.style.visibility = 'hidden'

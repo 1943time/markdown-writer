@@ -15,7 +15,7 @@
 - Gfm 语法支持
 - pdf 导出
 - 标题导航
-- 脚注
+- [脚注](https://github.blog/changelog/2021-09-30-footnotes-now-supported-in-markdown-fields/)
 - 表情
 - 定制容器
 - katex语法以及代码补全

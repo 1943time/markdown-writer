@@ -18,6 +18,7 @@ export const Keymap = observer(() => {
     {key: ['cmd', 'shift', 'L'], desc: 'Recent Project'},
     {key: ['cmd', 'shift', 'F'], desc: 'Search'},
     {key: ['cmd', 'P'], desc: 'Go to File'},
+    {key: ['cmd', 'W'], desc: 'close current tab'},
     {key: ['cmd', 'shift', 'H'], desc: 'History'},
     {key: ['cmd', ','], desc: 'Setting'},
     {key: ['cmd', 'shift', 'T'], desc: 'Toggle Tree View'},

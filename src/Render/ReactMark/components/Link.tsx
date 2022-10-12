@@ -5,7 +5,10 @@ export function Link({node}: {
   node: IRenderNode
 }) {
   return (
-    <a {...getPosAttr(node)} href={node.url}>
+    <a
+      {...getPosAttr(node)}
+      href={node.url}
+    >
       <ReactRenderer nodes={node.children}/>
     </a>
   )

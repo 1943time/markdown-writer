@@ -48,7 +48,7 @@ export function useLink(readonly?: boolean) {
           if (node) {
             treeStore.selectNode(node)
           } else {
-            message(configStore.getI18nText('editor.notFindLink'), {type: 'waring'})
+            if (document.querySelector(`#doc-container`)?.contains(link)) message(configStore.getI18nText('editor.notFindLink'), {type: 'waring'})
           }
         }
       }

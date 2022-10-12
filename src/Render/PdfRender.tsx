@@ -23,7 +23,7 @@ const Render = observer(() => {
   }, [])
   return (
     <div className={`bg-[#242424] w-full pdf ${configStore.render_codeTabSize === 4 ? 'tab4' : 'tab2'}`}>
-      <div className={'w-[700px] mx-auto py-4 px-5'}>
+      <div className={'w-[700px] mx-auto py-4 px-5 min-h-screen'}>
         <ReactMark code={code} readonly={true}/>
       </div>
     </div>
