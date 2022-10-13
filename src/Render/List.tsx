@@ -23,7 +23,7 @@ export const DocList = observer(() => {
 
   const show = useCallback(() => {
     window.setTimeout(() => {
-      const box = document.querySelector('#doc-container')!.children[0]!
+      const box = document.querySelector('#doc-container')?.children[0]!
       const rect = box?.getClientRects()?.[0]
       if (!rect) return
       if (stateStore.showSubNav) {

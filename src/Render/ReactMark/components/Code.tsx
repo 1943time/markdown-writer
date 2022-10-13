@@ -3,7 +3,7 @@ import {oneDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined'
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined'
 import {ElectronApi} from '@/utils/electronApi'
-import {useEffect, useLayoutEffect, useState} from 'react'
+import {useEffect, useLayoutEffect, useRef, useState} from 'react'
 import {IRenderNode} from '@/Render/ReactMark/Renderer'
 import {getPosAttr} from '@/Render/ReactMark/utils'
 import {observer} from 'mobx-react-lite'
@@ -16,24 +16,32 @@ mermaid.initialize({
 
 import {useGetSetState} from 'react-use'
 export const Code = observer(({node}: {node: IRenderNode}) => {
+  const timer = useRef(0)
   const [state, setState] = useGetSetState({
     copied: false,
     mermaidStr: '',
     lang: [] as string[]
   })
   useLayoutEffect(() => {
+    clearTimeout(timer.current)
     if (node.lang) {
       let lang = node.lang.split('.')
       setState({
         lang: lang
       })
       if (lang[0] === 'mermaid' && lang[1] === 'shape') {
-        mermaid.mermaidAPI.render('m' + node.position.start.line, node.value, (svgCode) => {
-          setState({mermaidStr: svgCode})
-        })
+        timer.current = window.setTimeout(() => {
+          try {
+            mermaid.mermaidAPI.render('m' + node.position.start.line, node.value, (svgCode) => {
+              setState({mermaidStr: svgCode})
+            })
+          } catch (e) {
+            console.log('syntax error')
+          }
+        }, 300)
       }
     }
-  }, [])
+  }, [node.value])
   if (state().lang[0] === 'mermaid' && state().lang[1] === 'shape') {
     return (
       <div
