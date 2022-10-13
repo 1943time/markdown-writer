@@ -12,11 +12,13 @@ import mermaid from 'mermaid'
 // import yaml from 'js-yaml'
 
 mermaid.initialize({
-  theme:'dark'
+  theme: 'dark'
 })
 
 import {useGetSetState} from 'react-use'
-export const Code = observer(({node}: {node: IRenderNode}) => {
+import {stateStore} from '@/store/state'
+
+export const Code = observer(({node}: { node: IRenderNode }) => {
   const timer = useRef(0)
   const [state, setState] = useGetSetState({
     copied: false,
@@ -65,24 +67,29 @@ export const Code = observer(({node}: {node: IRenderNode}) => {
   }
   return state().lang.length ? (
     <div className={`my-4 relative language-${state().lang[0]}`} {...getPosAttr(node)}>
-      <span className={'absolute text-xs text-gray-600 right-2 top-0.5'}>{state().lang[0]}<span className={'px-1'}>|</span>
-        <span
-          className={`duration-200 cursor-pointer font-semibold ${!state().copied ? 'text-blue-500 hover:text-blue-700' : 'text-green-500'}`}
-          onClick={(e) => {
-            if (state().copied) return
-            ElectronApi.clipboard(node.value)
-            setState({copied: true})
-            setTimeout(() => {
-              setState({copied: false})
-            }, 2000)
-          }}
-        >
-          {!state().copied ?
-            <ContentCopyOutlinedIcon fontSize={'inherit'} className={'mr-0.5'}/> :
-            <CheckOutlinedIcon fontSize={'inherit'} className={'mr-0.5'}/>
-          }
-          {state().copied ? 'copied' : 'copy'}
-        </span>
+      <span className={'absolute text-xs text-gray-600 right-2 top-0.5'}>{state().lang[0]}
+        {!stateStore.printing &&
+          <>
+            <span className={'px-1'}>|</span>
+            <span
+              className={`duration-200 cursor-pointer font-semibold ${!state().copied ? 'text-blue-500 hover:text-blue-700' : 'text-green-500'}`}
+              onClick={(e) => {
+                if (state().copied) return
+                ElectronApi.clipboard(node.value)
+                setState({copied: true})
+                setTimeout(() => {
+                  setState({copied: false})
+                }, 2000)
+              }}
+            >
+              {!state().copied ?
+                <ContentCopyOutlinedIcon fontSize={'inherit'} className={'mr-0.5'}/> :
+                <CheckOutlinedIcon fontSize={'inherit'} className={'mr-0.5'}/>
+              }
+              {state().copied ? 'copied' : 'copy'}
+            </span>
+          </>
+        }
       </span>
       <SyntaxHighlighter
         children={node.value}

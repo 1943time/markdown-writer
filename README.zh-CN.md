@@ -1,5 +1,5 @@
 # Markdown Writer
-一款简单的markdown技术笔记  **[下载](https://github.com/1943time/markdown-writer/releases)**
+一款易用优雅的markdown技术笔记  **[下载](https://github.com/1943time/markdown-writer/releases)**
 
 **⚠️ Mac os 暂未签名**
 

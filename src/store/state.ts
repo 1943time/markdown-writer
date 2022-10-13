@@ -13,6 +13,7 @@ import {configStore} from '@/store/config'
 import IStandaloneCodeEditor = editor.IStandaloneCodeEditor
 
 export class StateStore {
+  printing = false
   openSearch = false
   openKeys:string[] = []
   moveToLine$ = new Subject<number>()

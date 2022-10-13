@@ -1,5 +1,5 @@
 # Markdown Writer
-A simple markdown technical note **[Download](https://github.com/1943time/markdown-writer/releases)**
+An easy-to-use and elegant markdown technical note **[Download](https://github.com/1943time/markdown-writer/releases)**
 
 **⚠️ Mac os not signed yet**
 

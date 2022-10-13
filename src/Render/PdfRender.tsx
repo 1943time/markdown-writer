@@ -5,6 +5,8 @@ import {readFile} from 'fs/promises'
 import {configStore} from '@/store/config'
 import {ReactMark} from '@/Render/ReactMark/ReactMark'
 import './style.css'
+import {runInAction} from 'mobx'
+import {stateStore} from '@/store/state'
 export const printParams = {
   path: '',
   root: ''
@@ -13,6 +15,9 @@ const Render = observer(() => {
   const [query] = useSearchParams()
   const [code, setCode] = useState('')
   useEffect(() => {
+    runInAction(() => {
+      stateStore.printing = true
+    })
     if (query.get('path')) {
       printParams.path = query.get('path')!
       printParams.root = query.get('root') || ''
