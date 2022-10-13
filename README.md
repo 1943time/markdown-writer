@@ -53,12 +53,13 @@ sudo xattr -r -d com.apple.quarantine /Applications/Md\ Writer.app
 use .shape suffix to render
 
 ```
-```mermaid.shaep
+```mermaid.shape
 flowchart LR
 A[Hard] -->|Text| B(Round)
 B --> C{Decision}
 C -->|One| D[Result 1]
 C -->|Two| E[Result 2]
-\```
 ```
+```
+
 ![](./help/mermaid.png)

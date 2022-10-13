@@ -52,12 +52,12 @@ sudo xattr -r -d com.apple.quarantine /Applications/Md\ Writer.app
 ### mermaid
 使用 .shape 后缀渲染图形
 ```
-```mermaid.shaep
+```mermaid.shape
 flowchart LR
 A[Hard] -->|Text| B(Round)
 B --> C{Decision}
 C -->|One| D[Result 1]
 C -->|Two| E[Result 2]
-\```
+```
 ```
 ![](./help/mermaid.png)
