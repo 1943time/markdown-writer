@@ -9,6 +9,7 @@ import {getPosAttr} from '@/Render/ReactMark/utils'
 import {observer} from 'mobx-react-lite'
 import {configStore} from '@/store/config'
 import mermaid from 'mermaid'
+// import yaml from 'js-yaml'
 
 mermaid.initialize({
   theme:'dark'
@@ -20,7 +21,8 @@ export const Code = observer(({node}: {node: IRenderNode}) => {
   const [state, setState] = useGetSetState({
     copied: false,
     mermaidStr: '',
-    lang: [] as string[]
+    lang: [] as string[],
+    // chartJson: {} as any
   })
   useLayoutEffect(() => {
     clearTimeout(timer.current)
@@ -36,10 +38,21 @@ export const Code = observer(({node}: {node: IRenderNode}) => {
               setState({mermaidStr: svgCode})
             })
           } catch (e) {
-            console.log('syntax error')
+            console.warn('mermaid syntax error')
           }
         }, 300)
       }
+      // if (lang[0] === 'yaml' && lang[1] === 'chart') {
+      //   timer.current = window.setTimeout(() => {
+      //     try {
+      //       const json = yaml.load(node.value)
+      //       console.log('json', json)
+      //       setState({chartJson: json})
+      //     } catch (e) {
+      //       console.warn('chart yaml parse error')
+      //     }
+      //   }, 300)
+      // }
     }
   }, [node.value])
   if (state().lang[0] === 'mermaid' && state().lang[1] === 'shape') {
@@ -52,7 +65,7 @@ export const Code = observer(({node}: {node: IRenderNode}) => {
   }
   return state().lang.length ? (
     <div className={`my-4 relative language-${state().lang[0]}`} {...getPosAttr(node)}>
-      <span className={'absolute text-xs text-gray-600 right-3 top-1'}>{node.lang}<span className={'px-1'}>|</span>
+      <span className={'absolute text-xs text-gray-600 right-3 top-1'}>{state().lang[0]}<span className={'px-1'}>|</span>
         <span
           className={`duration-200 cursor-pointer font-semibold ${!state().copied ? 'text-blue-500 hover:text-blue-700' : 'text-green-500'}`}
           onClick={(e) => {
@@ -82,7 +95,7 @@ export const Code = observer(({node}: {node: IRenderNode}) => {
         }}
         wrapLongLines={configStore.render_codeWordBreak}
         CodeTag={'div'}
-        language={node.lang}
+        language={state().lang[0]}
         codeTagProps={{
           className: 'inline-block',
         }}
