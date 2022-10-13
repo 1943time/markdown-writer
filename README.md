@@ -20,6 +20,7 @@ English | [简体中文](README.zh-CN.md)
 - synchronous scrolling
 - custom containers
 - katex and code completion
+- [mermaid](#mermaid)
 - Advanced Search and File lookup
 - Free adjustment of file tree
 - History and rollback
@@ -37,6 +38,9 @@ step2
 ```shell
 sudo xattr -r -d com.apple.quarantine /Applications/Md\ Writer.app
 ```
+## mermaid
+use .shape suffix to render
+![](./help/mermaid.png)
 
 ## Screenshot
 ![](./help/search.png)

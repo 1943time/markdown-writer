@@ -1,12 +1,16 @@
 import * as monaco from 'monaco-editor'
+// @ts-ignore
+import initEditor from 'monaco-mermaid'
 import ITextModel = monaco.editor.ITextModel
 import CompletionItem = monaco.languages.CompletionItem
 import CompletionItemKind = monaco.languages.CompletionItemKind
 import CompletionItemInsertTextRule = monaco.languages.CompletionItemInsertTextRule
-
+initEditor(monaco)
 export type ProvideCompletion = (model: ITextModel, pos: monaco.Position, lineText: string) => any[]
 
 export const languages = [
+  'mermaid',
+  'mermaid.shape',
   'abap',
   'aes',
   'apex',
