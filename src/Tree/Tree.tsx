@@ -27,7 +27,7 @@ export const Tree = observer(() => {
         className={'pb-20 border-gray-600 border-r border-solid overflow-auto h-[calc(100%_-_28px)]'}
         onClick={(e) => {
           if ((e.target as HTMLElement).getAttribute('id') === 'tree' && treeStore.root) {
-            treeStore.selectNode(treeStore.root)
+            treeStore.selectNode(treeStore.root, true)
           }
         }}
         id={'tree'}

@@ -17,8 +17,8 @@
 - 标题导航
 - [脚注](https://github.blog/changelog/2021-09-30-footnotes-now-supported-in-markdown-fields/)
 - 表情
-- 定制容器
-- katex语法以及代码补全
+- [定制容器](#containers)
+- [katex语法以及代码补全](#katex)
 - [mermaid 画图](#mermaid)   相关链接 [github](https://github.com/mermaid-js/mermaid)
 - 同步滚动
 - 高级搜索与文件查找
@@ -39,7 +39,17 @@ step2
 sudo xattr -r -d com.apple.quarantine /Applications/Md\ Writer.app
 ```
 
-## mermaid
+## 截图
+![](./help/search.png)
+![](./help/images.png)
+![](./help/history.png)
+![](./help/print.png)
+![](./help/nav.png)
+### katex
+![](./help/katex.png)
+### containers
+![](./help/container.png)
+### mermaid
 使用 .shape 后缀渲染图形
 ```
 ```mermaid.shaep
@@ -51,12 +61,3 @@ C -->|Two| E[Result 2]
 \```
 ```
 ![](./help/mermaid.png)
-
-## 截图
-![](./help/search.png)
-![](./help/images.png)
-![](./help/history.png)
-![](./help/print.png)
-![](./help/nav.png)
-![](./help/katex.png)
-![](./help/container.png)

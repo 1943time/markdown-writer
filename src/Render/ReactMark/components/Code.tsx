@@ -65,7 +65,7 @@ export const Code = observer(({node}: {node: IRenderNode}) => {
   }
   return state().lang.length ? (
     <div className={`my-4 relative language-${state().lang[0]}`} {...getPosAttr(node)}>
-      <span className={'absolute text-xs text-gray-600 right-3 top-1'}>{state().lang[0]}<span className={'px-1'}>|</span>
+      <span className={'absolute text-xs text-gray-600 right-2 top-0.5'}>{state().lang[0]}<span className={'px-1'}>|</span>
         <span
           className={`duration-200 cursor-pointer font-semibold ${!state().copied ? 'text-blue-500 hover:text-blue-700' : 'text-green-500'}`}
           onClick={(e) => {
@@ -91,7 +91,8 @@ export const Code = observer(({node}: {node: IRenderNode}) => {
         showLineNumbers={configStore.render_lineNumber}
         customStyle={{
           fontSize: 14,
-          margin:0
+          margin: 0,
+          paddingTop: 16
         }}
         wrapLongLines={configStore.render_codeWordBreak}
         CodeTag={'div'}

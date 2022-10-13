@@ -18,8 +18,8 @@ English | [简体中文](README.zh-CN.md)
 - [Footnote](https://github.blog/changelog/2021-09-30-footnotes-now-supported-in-markdown-fields/)
 - emoji
 - synchronous scrolling
-- custom containers
-- katex and code completion
+- [custom containers](#containers)
+- [katex and code completion](#katex)
 - [mermaid diagrams](#mermaid)   Related Links [github](https://github.com/mermaid-js/mermaid)
 - Advanced Search and File lookup
 - Free adjustment of file tree
@@ -38,6 +38,17 @@ step2
 ```shell
 sudo xattr -r -d com.apple.quarantine /Applications/Md\ Writer.app
 ```
+
+## Screenshot
+![](./help/search.png)
+![](./help/images.png)
+![](./help/history.png)
+![](./help/print.png)
+![](./help/nav.png)
+### katex
+![](./help/katex.png)
+### containers
+![](./help/container.png)
 ## mermaid
 use .shape suffix to render
 
@@ -51,12 +62,3 @@ C -->|Two| E[Result 2]
 \```
 ```
 ![](./help/mermaid.png)
-
-## Screenshot
-![](./help/search.png)
-![](./help/images.png)
-![](./help/history.png)
-![](./help/print.png)
-![](./help/nav.png)
-![](./help/katex.png)
-![](./help/container.png)

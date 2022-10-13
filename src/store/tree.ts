@@ -182,13 +182,15 @@ class TreeStore {
       }
       this.activePath = activePath
       setTimeout(() => {
-        this.selectPath = activePath
+        runInAction(() => {
+          this.selectPath = activePath
+        })
       }, 300)
     } else {
       this.activePath = this.tabs[0]?.path
     }
   }
-  async selectNode(node: TreeNode) {
+  async selectNode(node: TreeNode, view = false) {
     await this.checkExist(node)
     runInAction(() => {
       this.selectPath = node.path
@@ -202,7 +204,7 @@ class TreeStore {
         }
         this.cacheTabs()
       } else {
-        stateStore.toggleOpenKeys(node.path)
+        if (!view) stateStore.toggleOpenKeys(node.path)
       }
     })
   }
