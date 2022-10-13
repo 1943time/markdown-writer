@@ -19,6 +19,7 @@
 - 表情
 - 定制容器
 - katex语法以及代码补全
+- [mermaid 画图](#mermaid)   相关链接 [github](https://github.com/mermaid-js/mermaid)
 - 同步滚动
 - 高级搜索与文件查找
 - 自由调整文件树
@@ -37,6 +38,20 @@ step2
 ```shell
 sudo xattr -r -d com.apple.quarantine /Applications/Md\ Writer.app
 ```
+
+## mermaid
+使用 .shape 后缀渲染图形
+```
+```mermaid.shaep
+flowchart LR
+A[Hard] -->|Text| B(Round)
+B --> C{Decision}
+C -->|One| D[Result 1]
+C -->|Two| E[Result 2]
+\```
+```
+![](./help/mermaid.png)
+
 ## 截图
 ![](./help/search.png)
 ![](./help/images.png)

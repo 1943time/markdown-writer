@@ -181,6 +181,9 @@ class TreeStore {
         this.tabs.push(this.nodeMap.get(activePath)!)
       }
       this.activePath = activePath
+      setTimeout(() => {
+        this.selectPath = activePath
+      }, 300)
     } else {
       this.activePath = this.tabs[0]?.path
     }
@@ -199,7 +202,6 @@ class TreeStore {
         }
         this.cacheTabs()
       } else {
-        // node.open = node.root || !node.open
         stateStore.toggleOpenKeys(node.path)
       }
     })

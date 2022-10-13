@@ -20,7 +20,7 @@ English | [简体中文](README.zh-CN.md)
 - synchronous scrolling
 - custom containers
 - katex and code completion
-- [mermaid](#mermaid)
+- [mermaid diagrams](#mermaid)   Related Links [github](https://github.com/mermaid-js/mermaid)
 - Advanced Search and File lookup
 - Free adjustment of file tree
 - History and rollback
@@ -40,6 +40,16 @@ sudo xattr -r -d com.apple.quarantine /Applications/Md\ Writer.app
 ```
 ## mermaid
 use .shape suffix to render
+
+```
+```mermaid.shaep
+flowchart LR
+A[Hard] -->|Text| B(Round)
+B --> C{Decision}
+C -->|One| D[Result 1]
+C -->|Two| E[Result 2]
+\```
+```
 ![](./help/mermaid.png)
 
 ## Screenshot
