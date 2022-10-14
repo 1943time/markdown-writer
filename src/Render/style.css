@@ -113,7 +113,10 @@
 .prose h5 > code{
   font-size: 0.9em;
 }
-
+.prose h2 {
+  border-bottom: 1px solid #494949;
+  padding-bottom: 8px;
+}
 .prose a > code {
   color: var(--vp-c-brand);
   transition: color 0.25s;
@@ -132,4 +135,8 @@
 
 .prose .ft-define > p{
   display: inline;
+}
+.prose input[type="checkbox"] {
+  position: relative;
+  top:1.5px;
 }

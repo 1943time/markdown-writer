@@ -5,7 +5,6 @@ import {treeStore} from '@/store/tree'
 import {stateStore} from '@/store/state'
 import {message} from '@/components/message'
 import {configStore} from '@/store/config'
-const http = /https?:\/\/(\w|=|\?|\.|\/|&|-)+/g
 
 monaco.languages.registerLinkProvider('markdown-math', {
   provideLinks: (model, token) => {
@@ -34,7 +33,7 @@ monaco.languages.registerLinkProvider('markdown-math', {
     if (stateStore.openSearch) return null
     let text = stateStore.editor!.getModel()?.getValueInRange(link.range)
     if (text) {
-      if (http.test(text)) {
+      if (/https?:\/\/(\w|=|\?|\.|\/|&|-)+/.test(text)) {
         shell.openExternal(text)
       } else if (text.startsWith('#')) {
         const id = text.slice(1, text.length)
