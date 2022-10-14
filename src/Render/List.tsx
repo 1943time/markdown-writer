@@ -23,13 +23,15 @@ export const DocList = observer(() => {
 
   const show = useCallback(() => {
     window.setTimeout(() => {
-      const box = document.querySelector('#doc-container')?.children[0]!
-      const rect = box?.getClientRects()?.[0]
-      if (!rect) return
-      if (stateStore.showSubNav) {
-        setState({visible: true, left: rect.left + rect.width, top: 120})
-      } else {
-        setState({visible: true, left: rect.left + rect.width - 40, top: 80})
+      const box = document.querySelector('#doc-container')! as HTMLElement
+      const content = document.querySelector('#content')! as HTMLElement
+      if (box && content) {
+        const rect = box?.getClientRects()?.[0]
+        if (stateStore.showSubNav) {
+          setState({visible: true, left: rect.left + content.offsetLeft + content.clientWidth - 120, top: 120})
+        } else {
+          setState({visible: true, left: rect.left + content.offsetLeft + content.clientWidth - 40, top: 80})
+        }
       }
     }, 16)
   }, [])

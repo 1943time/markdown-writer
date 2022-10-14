@@ -47,6 +47,10 @@ export const createMenu = (win: BrowserWindow) => {
     {
       label: 'View',
       submenu: [
+        {role: 'zoom'},
+        {role: 'zoomIn'},
+        {role: 'zoomOut'},
+        {type: 'separator'},
         {role: 'reload'},
         {role: 'toggleDevTools'}
       ]

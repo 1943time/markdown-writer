@@ -69,7 +69,7 @@ export const Editor = observer(() => {
                 clearTimeout(timer.current)
                 timer.current = window.setTimeout(() => {
                   saveCache()
-                }, configStore.editor_autoSaveTime)
+                }, configStore.editor_autoSaveTime * 1000)
               })
               editorInstance.onDidScrollChange(e => {
                 const cacheNode = modelMap.current.get(cacheRef.current.node!)

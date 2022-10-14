@@ -1,11 +1,13 @@
-import {ReactNode, useCallback, useEffect, useRef} from 'react'
+import {CSSProperties, ReactNode, useCallback, useEffect, useRef} from 'react'
 import {useGetSetState} from 'react-use'
-export function ScrollBox({children, className, mode, containerId, smooth}: {
+export function ScrollBox({children, className, mode, containerId, smooth, verticalBarStyle, horizontalBarStyle}: {
   children: ReactNode
   mode: 'x' | 'y' | 'xy'
   className?: string
   containerId?: string
   smooth?: boolean
+  verticalBarStyle?: CSSProperties
+  horizontalBarStyle?: CSSProperties
 }) {
   const contentRef = useRef<HTMLDivElement>(null)
   const boxRef = useRef<HTMLDivElement>(null)
@@ -55,18 +57,20 @@ export function ScrollBox({children, className, mode, containerId, smooth}: {
         <div
           style={{
             height: state().thumbHeight,
-            transform: `translateY(${state().moveTop}px)`
+            transform: `translateY(${state().moveTop}px)`,
+            ...verticalBarStyle
           }}
-          className={'w-[6px] rounded-full bg-gray-500/70 absolute z-50 right-0 top-0 h-5 opacity-0 transition-opacity duration-500 group-hover:opacity-100'}
+          className={`w-[6px] rounded-full bg-gray-500/70 absolute z-50 right-[1px] top-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
         />
       }
       {mode !== 'y' && state().thumbWidth > 0 &&
         <div
           style={{
             width: state().thumbWidth,
-            transform: `translateX(${state().moveLeft}px)`
+            transform: `translateX(${state().moveLeft}px)`,
+            ...horizontalBarStyle
           }}
-          className={'h-[6px] rounded bg-gray-500/70 absolute z-50 left-0 bottom-0 h-5 opacity-0 transition-opacity duration-500 group-hover:opacity-100'}
+          className={`h-[6px] rounded bg-gray-500/70 absolute z-50 left-0 bottom-[1px] opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
         />
       }
       <div
