@@ -57,7 +57,7 @@ export const Finder = observer(() => {
   if (!stateStore.finderVisible) return null
   return (
     <div className={'fixed left-1/2 top-10 -translate-x-1/2 z-10 w-[600px] z-50'} id={'quick-files'}>
-      <div className={'w-full h-full shadow-lg bg-zinc-900 shadow-black/30 py-1'}>
+      <div className={'w-full h-full shadow-lg dark:bg-zinc-900 bg-slate-100 dark:shadow-black/30 shadow-black/10 py-1'}>
         <div className={'px-2 py-1 px-2'}>
           <div className={'flex items-center border border-blue-400'}>
             <KeyboardArrowRightOutlinedIcon fontSize={'small'}/>
@@ -75,14 +75,14 @@ export const Finder = observer(() => {
         <div className={'overflow-y-auto max-h-[300px]'}>
           {state.filterNodes.map(n =>
             <div
-              className={`flex h-5 px-2 items-center cursor-pointer duration-100 ${n === treeStore.activeNode ? 'bg-gray-700/30' : 'hover:bg-gray-500/20'}`}
+              className={`flex h-5 px-2 items-center cursor-pointer duration-100 ${n === treeStore.activeNode ? 'dark:bg-gray-700/30 bg-gray-500/20' : 'dark:hover:bg-gray-500/20 hover:bg-gray-400/20'}`}
               onClick={() => {
                 treeStore.selectNode(n)
                 close()
               }}
               key={n.path}>
               <TreeIcon node={n}/>
-              <span className={'text-gray-300 ml-1 truncate max-w-[200px]'} style={{fontSize: 13}}>{n.name}</span>
+              <span className={'dark:text-gray-300 text-gray-700 ml-1 truncate max-w-[200px]'} style={{fontSize: 13}}>{n.name}</span>
               <span className={'text-xs ml-2 text-gray-500 truncate max-w-[400px]'}>
                 {n.path.replace(treeStore.root!.path, treeStore.root!.name)}
               </span>

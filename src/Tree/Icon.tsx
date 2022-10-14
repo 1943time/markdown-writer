@@ -16,7 +16,7 @@ export function TreeIcon(props: {
 }) {
   if (props.node.type === 'folder') {
     return (
-      <FolderIcon fontSize={'inherit'} className={'text-blue-400'}/>
+      <FolderIcon fontSize={'inherit'} className={'dark:text-blue-400 text-blue-500'}/>
     )
   }
   const type = useMemo(() => mediaType(props.node.name), [props.node.name])

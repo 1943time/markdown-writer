@@ -113,11 +113,11 @@ export const TreeMark = observer((props: {
       />
       <div
         style={{transform: `translateY(${state.selectedTop}px)`}}
-        className={`left-0 top-0 pointer-events-none absolute w-full bg-blue-400/10 h-[22px] ${treeStore.selectPath &&  state.selectedVisible ? '' : 'hidden'}`}
+        className={`left-0 top-0 pointer-events-none absolute w-full dark:bg-blue-400/10 bg-blue-400/30 h-[22px] ${treeStore.selectPath &&  state.selectedVisible ? '' : 'hidden'}`}
       />
       <div
         style={{transform: `translateY(${state.dragTargetTop}px)`, height: state.dragTargetHeight}}
-        className={`left-0 top-0 pointer-events-none absolute w-full bg-green-400/10 h-[22px] ${state.dragMarkVisible ? '' : 'hidden'}`}
+        className={`left-0 top-0 pointer-events-none absolute w-full dark:bg-green-400/10 bg-green-400/30 h-[22px] ${state.dragMarkVisible ? '' : 'hidden'}`}
       />
     </>
   )

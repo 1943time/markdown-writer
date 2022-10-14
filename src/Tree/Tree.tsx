@@ -22,11 +22,11 @@ export const Tree = observer(() => {
   }, [])
 
   return (
-    <div className={'h-full bg-[#22252A]'}>
+    <div className={'h-full dark:bg-zinc-800 bg-gray-100'}>
       <FolderBar/>
       <ScrollBox
         mode={'xy'}
-        className={'border-gray-600 border-r border-solid h-[calc(100%_-_28px)]'}
+        className={'border-black/10 dark:border-gray-600 border-r border-solid h-[calc(100%_-_28px)]'}
       >
         <div
           className={'pb-20'}

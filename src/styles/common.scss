@@ -1,5 +1,13 @@
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
 .tabs{
-  box-shadow: inset 0 0 10px 0 rgba(0,0,0,.2);
+  //box-shadow: inset 0 0 10px 0 rgba(0,0,0,.2);
 }
 .hide-scrollbar::-webkit-scrollbar {
   display: none;

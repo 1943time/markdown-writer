@@ -121,13 +121,13 @@ export const TopBar = observer(() => {
             <span>F</span>
           </div>
         ),
-        className: 'text-sky-400',
+        className: 'dark:text-sky-400 text-sky-600',
         type: 'search',
         icon: <SearchOutlinedIcon fontSize={'inherit'}/>
       },
       {
         title: 'pdf',
-        className: 'text-yellow-300',
+        className: 'dark:text-yellow-300 text-yellow-500',
         icon: <FileDownloadIcon fontSize={'inherit'}/>,
         type: 'print'
       },
@@ -139,7 +139,7 @@ export const TopBar = observer(() => {
             <span>H</span>
           </div>
         ),
-        className: 'text-indigo-400',
+        className: 'dark:text-indigo-400 text-indigo-600',
         icon: <HistoryOutlinedIcon fontSize={'inherit'}/>,
         type: 'history'
       },
@@ -150,7 +150,7 @@ export const TopBar = observer(() => {
             <span>,</span>
           </div>
         ),
-        className: 'text-gray-400',
+        className: 'dark:text-gray-400 text-gray-500',
         type: 'set',
         icon: <SettingsIcon fontSize={'inherit'}/>
       }
@@ -177,7 +177,7 @@ export const TopBar = observer(() => {
           placement={'bottom'}>
           <AccountTreeOutlinedIcon
             fontSize={'inherit'}
-            className={`${stateStore.treeOpen ? `text-sky-500` : `text-zinc-400`} mr-1 text-sm cursor-pointer`}
+            className={`${stateStore.treeOpen ? `dar:text-sky-500 text-sky-600` : `dark:text-zinc-400 text-zinc-500`} mr-1 text-sm cursor-pointer`}
             onClick={() => {
               stateStore.setStatusVisible('treeOpen', !stateStore.treeOpen)
             }}
@@ -193,7 +193,9 @@ export const TopBar = observer(() => {
               <LinearProgress variant={'determinate'} value={state().progress} className={'flex-1'}/>
             </div>
           }
-          <div className={'rounded bg-gray-400/10 space-x-2 h-6 flex items-center px-2 text-zinc-400 relative'}>
+          <div
+            className={'rounded dark:bg-gray-400/10 bg-slate-300 space-x-2 h-6 flex items-center px-2 dark:text-zinc-400 relative text-zinc-600'}
+          >
             {VisibleIcons.map(v =>
               <Tooltip
                 enterDelay={500}
@@ -202,7 +204,7 @@ export const TopBar = observer(() => {
                 placement={'bottom'}>
                 {createElement(v.icon, {
                   key: v.name,
-                  className: `cursor-pointer relative z-10 ${stateStore.viewState === v.name ? 'text-sky-500' : ''}`,
+                  className: `cursor-pointer relative z-10 ${stateStore.viewState === v.name ? 'dark:text-sky-500 text-sky-600' : ''}`,
                   fontSize: 'inherit',
                   onClick: () => {
                     stateStore.setViewState(v.name as any)
@@ -214,7 +216,7 @@ export const TopBar = observer(() => {
               style={{
                 transform: `translateX(${stateStore.viewState === 'code' ? -4 : stateStore.viewState === 'column' ? 20 : 44}px)`,
               }}
-              className={'duration-200 rounded-sm absolute bg-black/30 left-0 h-5 top-0.5 w-6'}
+              className={'bg-white/80 duration-200 rounded-sm absolute dark:bg-black/30 left-0 h-5 top-0.5 w-6'}
             />
           </div>
           {tools.filter(t => {

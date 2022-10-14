@@ -14,12 +14,12 @@ export const BreadCrumbs = observer(() => {
     return path
   }, [treeStore.activePath])
   return (
-    <div className={'leading-6 text-zinc-400 w-full overflow-x-auto hide-scrollbar'} style={{fontSize: 13}}>
+    <div className={'leading-6 dark:text-zinc-400 text-zinc-700 w-full overflow-x-auto hide-scrollbar'} style={{fontSize: 13}}>
       <span className={'font-semibold inline-block'}>{treeStore.root?.name || 'NoteBook'}</span>
       {path.map((n, i) =>
         <Fragment key={n.path}>
           <span className={'px-0.5'}><NavigateNextOutlinedIcon fontSize={'inherit'}/></span>
-          <span className={`${i === path.length - 1 ? 'text-cyan-500' : ''}`}>{n.name}</span>
+          <span className={`${i === path.length - 1 ? 'dark:text-cyan-500 text-cyan-700' : ''}`}>{n.name}</span>
         </Fragment>
       )}
     </div>

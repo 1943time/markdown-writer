@@ -80,8 +80,9 @@ export function TreeContext() {
   if (!state.visible) return null
   return (
     <div
-      className={`select-none divide-gray-300/20 divide-y text-gray-300/70 text-xs flex flex-col border-[1px]
-        border-gray-300/10  border-solid shadow-black/30 shadow fixed z-20 w-32 py-1 px-2 bg-[#1d1f21]
+      className={`select-none dark:divide-gray-300/20 divide-gray-300/50 divide-y dark:text-gray-300/70 text-gray-600 text-xs flex flex-col border-[1px]
+        border-gray-300/10  border-solid dark:shadow-black/30 shadow-black/10 shadow fixed z-20 w-32 py-1 px-2 dark:bg-zinc-900
+        bg-slate-100
       `}
       ref={container}
       style={{
