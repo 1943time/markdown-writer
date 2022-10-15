@@ -79,6 +79,10 @@ export const i18n = {
         zh: '语言',
         en: 'Languages'
       },
+      theme: {
+        en: 'Theme',
+        zh: '主题'
+      }
     },
     editor: {
       name: {

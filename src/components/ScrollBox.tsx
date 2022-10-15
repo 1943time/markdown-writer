@@ -60,7 +60,7 @@ export function ScrollBox({children, className, mode, containerId, smooth, verti
             transform: `translateY(${state().moveTop}px)`,
             ...verticalBarStyle
           }}
-          className={`w-[6px] rounded-full bg-gray-500/70 absolute z-50 right-[1px] top-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
+          className={`w-[6px] rounded-full bg-gray-500/70 absolute z-20 right-[1px] top-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
         />
       }
       {mode !== 'y' && state().thumbWidth > 0 &&
@@ -70,7 +70,7 @@ export function ScrollBox({children, className, mode, containerId, smooth, verti
             transform: `translateX(${state().moveLeft}px)`,
             ...horizontalBarStyle
           }}
-          className={`h-[6px] rounded bg-gray-500/70 absolute z-50 left-0 bottom-[1px] opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
+          className={`h-[6px] rounded bg-gray-500/70 absolute z-20 left-0 bottom-[1px] opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
         />
       }
       <div

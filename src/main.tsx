@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
+import './styles/var.scss'
+import './styles/color.scss'
 import '@/styles/tailwind.css'
 import '@/styles/common.scss'
 import '@/Render/styles/vars.css'

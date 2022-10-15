@@ -5,7 +5,7 @@ import {$db} from '@/database'
 
 type GetField<T extends object> = {
   [P in keyof T & string]: T[P] extends Function ? never :
-    P extends 'configMap' | 'visible' ? never : P
+    P extends 'configMap' | 'visible' | 'theme' ? never : P
 }[keyof T & string]
 
 class Config {
@@ -39,7 +39,15 @@ class Config {
       this[key] = value
     })
   }
-
+  setTheme(theme: 'dark' | 'light', save = true) {
+    this.theme = theme
+    if (this.theme === 'dark') {
+      document.querySelector('html')!.classList.add('dark')
+    } else {
+      document.querySelector('html')!.classList.remove('dark')
+    }
+    if (save) ElectronApi.setStore('theme', theme)
+  }
   getI18nText(path: I18nPath) {
     const paths = path.split('.')
     let value: any = i18n
@@ -61,6 +69,7 @@ class Config {
             this[key] = value
           }
           this.i18n = this.configMap.get('i18n') || (config.locale === 'zh-CN' ? 'zh' : 'en')
+          this.setTheme(config.theme)
           resolve(null)
         })
       } catch (e) {

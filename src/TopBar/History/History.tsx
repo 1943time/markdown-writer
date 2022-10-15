@@ -108,9 +108,9 @@ export const History = observer(() => {
   }, [state.selectId, state.history, state.mode, state.lang])
 
   return createPortal(
-    <div className={`w-4/5 fixed top-14 left-1/2 -translate-x-1/2 z-10 h-[calc(100vh_-_124px)] ${stateStore.historyVisible ? '' : 'hidden'}`} ref={container}>
-      <div className={'bg-zinc-900 w-full h-full shadow shadow-black/10 border-[1px] border-solid border-black/30 text-gray-300'}>
-        <div className={'text-base text-gray-200 leading-7 px-2 border-b border-gray-700 flex justify-between items-center'}>
+    <div className={`w-4/5 fixed top-14 left-1/2 -translate-x-1/2 z-50 h-[calc(100vh_-_124px)] ${stateStore.historyVisible ? '' : 'hidden'}`} ref={container}>
+      <div className={'dark:bg-zinc-900 bg-slate-100 w-full h-full shadow shadow-black/10 border-[1px] border-solid dark:border-black/30 border-black/10 dark:text-gray-300 text-gray-600'}>
+        <div className={'text-base dark:text-gray-200 text-gray-600 leading-7 px-2 border-b dark:border-gray-700 border-black/20 flex justify-between items-center'}>
           <div className={'flex items-center w-[300px]'}>
             <BlockOutlinedIcon
               fontSize={'inherit'}
@@ -133,13 +133,13 @@ export const History = observer(() => {
             </span>
             <span className={'text-xs text-gray-500 ml-2'}>({state.history.length}) {configStore.getI18nText('history.tip')}</span>
           </div>
-          <div className={'flex h-6 text-xs text-sky-600 border rounded-sm border-sky-800 px-1 flex items-center ml-3'}>
+          <div className={'flex h-6 text-xs dark:text-sky-600 text-zinc-500 border rounded-sm dark:border-sky-800 border-gray-400 px-1 flex items-center ml-3'}>
               <span
-                className={`rounded-sm duration-200 px-2 cursor-pointer ${state.mode === 'content' ? 'bg-gray-400/20 text-sky-400' : ''}`}
+                className={`rounded-sm duration-200 px-2 cursor-pointer ${state.mode === 'content' ? 'bg-gray-400/30 dark:text-sky-400 text-zinc-700' : ''}`}
                 onClick={() => setMode('content')}
               >{configStore.getI18nText('history.content')}</span>
             <span
-              className={`rounded-sm duration-200 px-2 cursor-pointer ${state.mode === 'diff' ? 'bg-gray-400/20 text-sky-400' : ''}`}
+              className={`rounded-sm duration-200 px-2 cursor-pointer ${state.mode === 'diff' ? 'bg-gray-400/20 dark:text-sky-400 text-zinc-700' : ''}`}
               onClick={() => setMode('diff')}
             >{configStore.getI18nText('history.diff')}</span>
           </div>
@@ -164,10 +164,10 @@ export const History = observer(() => {
           </div>
         </div>
         <div className={'flex h-[calc(100%_-_28px)]'}>
-          <div className={'w-60 text-gray-400 text-sm font-semibold leading-7 h-full overflow-y-auto py-1 border-r border-gray-700 flex-shrink-0'}>
+          <div className={'w-60 text-gray text-sm font-semibold leading-7 h-full overflow-y-auto py-1 border-r border-1 flex-shrink-0'}>
             {state.history.map((h, i) =>
               <div
-                className={`group relative flex items-center space-x-1 cursor-pointer duration-200 ${state.selectId === h.id! ? 'text-gray-400 bg-zinc-700/50' : 'hover:text-gray-300 hover:bg-zinc-800/50'} px-2`}
+                className={`group relative flex items-center space-x-1 cursor-pointer duration-200 ${state.selectId === h.id! ? 'dark:bg-gray-700/30 bg-gray-500/20' : 'dark:hover:bg-gray-500/20 hover:bg-gray-400/20'} px-2`}
                 key={h.id!}
                 onClick={() => {
                   setState({selectId: h.id!})
@@ -191,7 +191,7 @@ export const History = observer(() => {
                 >
                   <DeleteOutlinedIcon
                     fontSize={'inherit'}
-                    className={'text-red-700 absolute right-1 top-1/2 -translate-y-1/2 hover:text-red-500 duration-200'}
+                    className={'dark:text-red-700 text-red-500 absolute right-1 top-1/2 -translate-y-1/2 dark:hover:text-red-500 hover:text-red-400 duration-200'}
                   />
                 </span>
               </div>

@@ -4,7 +4,14 @@ process.env.DIST = join(__dirname, '../..')
 process.env.PUBLIC = app.isPackaged ? process.env.DIST : join(process.env.DIST, '../public')
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 import {app, BrowserWindow, shell, ipcMain, dialog, webContents, nativeTheme} from 'electron'
-nativeTheme.themeSource = 'dark'
+import Store from 'electron-store'
+const store = new Store()
+const theme = store.get('theme')
+if (theme) {
+  nativeTheme.themeSource = theme === 'dark' ? 'dark' : 'light'
+} else {
+  nativeTheme.themeSource = nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
+}
 import { release } from 'os'
 import { join } from 'path'
 import {MdUpdate} from './update'
@@ -118,7 +125,8 @@ ipcMain.handle('appInfo', (e) => {
     dist: process.env.DIST,
     locale: app.getLocale(),
     version: app.getVersion(),
-    appName: app.getName()
+    appName: app.getName(),
+    theme: nativeTheme.themeSource
   }
 })
 
@@ -126,4 +134,15 @@ ipcMain.handle('printPdf', (e, id: string) => {
   return webContents.fromId(+id).printToPDF({
     printBackground: true
   })
+})
+
+ipcMain.handle('saveStore', (e, key, value) => {
+  if (key === 'theme') {
+    nativeTheme.themeSource = value
+  }
+  store.set(key, value)
+})
+
+ipcMain.handle('getStore', (e, key) => {
+  return store.get(key)
 })

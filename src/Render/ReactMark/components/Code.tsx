@@ -65,7 +65,7 @@ export const Code = observer(({node}: {node: IRenderNode}) => {
   }
   return (
     <div className={`my-4 relative language-${state().lang[0]}`} {...getPosAttr(node)}>
-      <span className={'absolute text-xs text-gray-600 right-2 top-0.5'}>{state().lang[0] || 'text'}<span className={'px-1'}>|</span>
+      <span className={'absolute text-xs text-gray-500 right-2 top-0.5'}>{state().lang[0] || 'text'}<span className={'px-1'}>|</span>
         <span
           className={`duration-200 cursor-pointer font-semibold ${!state().copied ? 'text-blue-500 hover:text-blue-700' : 'text-green-500'}`}
           onClick={(e) => {

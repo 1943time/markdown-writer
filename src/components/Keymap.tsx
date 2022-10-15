@@ -52,10 +52,10 @@ export const Keymap = observer(() => {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <span className={'text-gray-300'}>Hot Key</span>
+                  <span className={'text-gray'}>Hot Key</span>
                 </TableCell>
                 <TableCell>
-                  <span className={'text-gray-300'}>Description</span>
+                  <span className={'text-gary'}>Description</span>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -68,12 +68,12 @@ export const Keymap = observer(() => {
                   <TableCell>
                     <div className={'leading-5 text-xs space-x-1'}>
                       {k.key.map((key, j) =>
-                        <span className={'px-2 bg-zinc-700 rounded py-0.5'} key={j}>{key}</span>
+                        <span className={'px-2 dark:bg-zinc-700 bg-slate-200 rounded py-0.5'} key={j}>{key}</span>
                       )}
                     </div>
                   </TableCell>
                   <TableCell>
-                  <span className={'text-sm text-gray-400'}>
+                  <span className={'text-sm dark:text-gray-400 text-gray-500'}>
                     {k.desc}
                   </span>
                   </TableCell>

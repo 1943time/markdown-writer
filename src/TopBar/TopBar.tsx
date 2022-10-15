@@ -121,13 +121,13 @@ export const TopBar = observer(() => {
             <span>F</span>
           </div>
         ),
-        className: 'dark:text-sky-400 text-sky-600',
+        className: 'text-sky',
         type: 'search',
         icon: <SearchOutlinedIcon fontSize={'inherit'}/>
       },
       {
         title: 'pdf',
-        className: 'dark:text-yellow-300 text-yellow-500',
+        className: 'text-yellow',
         icon: <FileDownloadIcon fontSize={'inherit'}/>,
         type: 'print'
       },
@@ -139,7 +139,7 @@ export const TopBar = observer(() => {
             <span>H</span>
           </div>
         ),
-        className: 'dark:text-indigo-400 text-indigo-600',
+        className: 'text-indigo',
         icon: <HistoryOutlinedIcon fontSize={'inherit'}/>,
         type: 'history'
       },
@@ -150,7 +150,7 @@ export const TopBar = observer(() => {
             <span>,</span>
           </div>
         ),
-        className: 'dark:text-gray-400 text-gray-500',
+        className: 'text-light-gray',
         type: 'set',
         icon: <SettingsIcon fontSize={'inherit'}/>
       }
@@ -177,7 +177,7 @@ export const TopBar = observer(() => {
           placement={'bottom'}>
           <AccountTreeOutlinedIcon
             fontSize={'inherit'}
-            className={`${stateStore.treeOpen ? `dar:text-sky-500 text-sky-600` : `dark:text-zinc-400 text-zinc-500`} mr-1 text-sm cursor-pointer`}
+            className={`${stateStore.treeOpen ? `text-sky` : `text-gray`} mr-1 text-sm cursor-pointer`}
             onClick={() => {
               stateStore.setStatusVisible('treeOpen', !stateStore.treeOpen)
             }}
@@ -204,7 +204,7 @@ export const TopBar = observer(() => {
                 placement={'bottom'}>
                 {createElement(v.icon, {
                   key: v.name,
-                  className: `cursor-pointer relative z-10 ${stateStore.viewState === v.name ? 'dark:text-sky-500 text-sky-600' : ''}`,
+                  className: `cursor-pointer relative z-10 ${stateStore.viewState === v.name ? 'text-sky' : ''}`,
                   fontSize: 'inherit',
                   onClick: () => {
                     stateStore.setViewState(v.name as any)

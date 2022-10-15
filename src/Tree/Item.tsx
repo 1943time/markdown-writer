@@ -35,7 +35,7 @@ export const TreeRender = observer(({node, level}: {
           }}
           className={`
                 cursor-pointer flex items-center space-x-1 text-sm py-0.5 h-[22px]
-                ${node.path === treeStore.selectPath ? 'dark:text-stone-200 text-stone-800' : 'dark:text-stone-300 text-stone-700'}`}
+                ${node.path === treeStore.selectPath ? 'text-weight-gray' : 'text-gray'}`}
           style={{paddingLeft: plWidth + (node.type === 'file' ? 16 : 0)}}>
           {node.type === 'folder' &&
             <ArrowForwardIosOutlinedIcon

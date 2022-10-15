@@ -1,10 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body{
-  /*background-color: #22252A;*/
-  @apply dark:bg-zinc-800 bg-gray-200;
-}
 
 a{
   @apply duration-200 cursor-pointer;

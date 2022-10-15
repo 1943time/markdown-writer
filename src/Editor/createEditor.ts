@@ -15,8 +15,9 @@ export const createEditor = (el: HTMLDivElement, model: ITextModel, readonly = f
   const editor = monaco.editor.create(el, {
     value: '',
     fontSize: configStore.editor_fontSize,
-    theme: '',
+    theme: configStore.theme === 'dark' ? 'vs-dark' : 'vs',
     readOnly: readonly,
+    renderLineHighlight: 'none',
     tabSize: configStore.editor_tabSize,
     wordWrap: configStore.editor_wordBreak ? 'on' : 'off',
     minimap: {enabled: configStore.editor_miniMap},
@@ -49,6 +50,11 @@ export const createEditor = (el: HTMLDivElement, model: ITextModel, readonly = f
       case 'editor_wordBreak':
         editor.updateOptions({
           wordWrap: value ? 'on' : 'off'
+        })
+        break
+      case 'theme':
+        editor.updateOptions({
+          theme: value === 'dark' ? 'vs-dark' : 'vs'
         })
         break
     }

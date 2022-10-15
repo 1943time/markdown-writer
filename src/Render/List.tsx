@@ -118,17 +118,17 @@ export const DocList = observer(() => {
       }
       <div
         className={`${state().fixed || stateStore.showSubNav ? '' : 'scale-0'} origin-top-right max-w-[200px]
-         ${!stateStore.showSubNav ? 'absolute shadow shadow-black/20 group-hover:scale-100 duration-200 bg-zinc-900' : ''}
+         ${!stateStore.showSubNav ? 'absolute shadow shadow-black/20 group-hover:scale-100 duration-200 ctx' : ''}
           right-0 top-0 rounded pr-4 py-4 text-sm leading-6 pl-6
         `}
       >
-        <div className={'font-bold text-gray-300 flex justify-between items-center'}>
-          <span>
+        <div className={'font-bold flex justify-between items-center'}>
+          <span className={'text-gray'}>
             On this Page
           </span>
           {!stateStore.showSubNav &&
             <span
-              className={`ml-2 origin-center w-5 h-5 cursor-pointer duration-200 ${state().fixed ? 'fill-blue-500 rotate-0' : 'fill-gray-300 rotate-45 hover:fill-blue-500'}`}
+              className={`ml-2 origin-center w-5 h-5 cursor-pointer duration-200 ${state().fixed ? 'fill-blue-500 rotate-0' : 'dark:fill-gray-300 fill-gray-500 rotate-45 hover:fill-blue-500'}`}
               onClick={() => setState({fixed: !state().fixed})}
             >
             <Fixed className={'w-5 h-4'}/>
@@ -139,13 +139,13 @@ export const DocList = observer(() => {
           <div
             key={i}
             onClick={() => selectHead(i)}
-            className={`truncate font-semibold cursor-pointer duration-200 ${state().selectIndex === i ? 'text-gray-200' : 'text-gray-400 hover:text-gray-200'}`}>
+            className={`truncate font-semibold cursor-pointer duration-200 ${state().selectIndex === i ? 'dark:text-gray-200 text-sky-500' : 'text-gray-500 dark:hover:text-gray-200 hover:text-sky-400'}`}>
             <span
-              className={'text-gray-500 mr-1'}>{e.tagName.toLowerCase()}</span>{e.getAttribute('id')?.replace(/^_/, '')}
+              className={'mr-1'}>{e.tagName.toLowerCase()}</span>{e.getAttribute('id')?.replace(/^_/, '')}
           </div>
         )}
-        <div className={'absolute w-[1px] left-3 top-3 h-[calc(100%_-_24px)] bg-gray-500'}/>
-        <div className={'absolute z-10 w-[1px] left-3 top-4 bg-teal-500 h-5 duration-200'} style={{
+        <div className={'absolute w-[1px] left-3 top-3 h-[calc(100%_-_24px)] dark:bg-gray-500 bg-gray-300'}/>
+        <div className={'absolute z-10 w-[1px] left-3 top-4 dark:bg-teal-500 bg-sky-500 h-5 duration-200'} style={{
           transform: `translateY(${(state().selectIndex + 1) * 24}px)`
         }}/>
       </div>

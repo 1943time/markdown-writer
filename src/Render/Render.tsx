@@ -17,7 +17,7 @@ export const Render = observer(() => {
         }}
       >
         <div
-          className={`text-center pt-4 pb-20 bg-[#242424] relative ${configStore.render_smooth ? 'scroll-smooth' : ''}`}>
+          className={`text-center pt-4 pb-20 vp-doc relative ${configStore.render_smooth ? 'scroll-smooth' : ''}`}>
           <div
             className={`relative px-10 max-w-[780px] w-full inline-block text-left min-h-screen
             ${configStore.render_codeTabSize === 4 ? 'tab4' : 'tab2'} ${configStore.render_codeWordBreak ? 'pre-wrap' : ''}`}
