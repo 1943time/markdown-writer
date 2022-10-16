@@ -189,7 +189,7 @@ export const TopBar = observer(() => {
         <div className={'text-base space-x-2 flex items-center'}>
           {state().startUpdate &&
             <div className={'flex items-center w-44 mr-4'}>
-              <span className={'text-xs text-gray-500 mr-2'}>updating...</span>
+              <span className={'text-xs text-gray mr-2'}>updating...</span>
               <LinearProgress variant={'determinate'} value={state().progress} className={'flex-1'}/>
             </div>
           }
