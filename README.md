@@ -6,14 +6,14 @@ A simple markdown technical note **[Download](https://github.com/1943time/markdo
 English | [简体中文](README.zh-CN.md)
 
 ![](./help/img.png)
-
+![](./help/img_light.png)
 ## Introduction
 - Using [monaco-editor](https://microsoft.github.io) as the editor, some enhancements have been made on this basis, such as: code completion, link jumping, list indentation, table formatting, etc.
 - The renderer uses the [vitepress](https://github.com/vuejs/vitepress) style
 
 ## Functions
 - Gfm syntax support
-- print pdf
+- dark and light theme
 - heading map
 - [Footnote](https://github.blog/changelog/2021-09-30-footnotes-now-supported-in-markdown-fields/)
 - emoji
@@ -21,6 +21,7 @@ English | [简体中文](README.zh-CN.md)
 - [custom containers](#containers)
 - [katex and code completion](#katex)
 - [mermaid diagrams](#mermaid)   Related Links [github](https://github.com/mermaid-js/mermaid)
+- print pdf
 - Advanced Search and File lookup
 - Free adjustment of file tree
 - History and rollback

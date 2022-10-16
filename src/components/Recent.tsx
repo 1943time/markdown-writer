@@ -11,6 +11,7 @@ import {message} from '@/components/message'
 import {configStore} from '@/store/config'
 import {stateStore} from '@/store/state'
 import {$db} from '@/database'
+import {ScrollBox} from '@/components/ScrollBox'
 
 export const Recent = observer(() => {
   const [state, setState] = useSetState({
@@ -41,7 +42,7 @@ export const Recent = observer(() => {
     <div className={'fixed left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10'} id={'recent'}>
       <div className={'w-full ctx overflow-auto w-64'}>
         <div className={'leading-5 bg-gray-700 text-xs text-center text-gray-300'}>Recent Books</div>
-        <div className={'overflow-y-auto h-72'}>
+        <ScrollBox mode={'y'} className={'h-72'}>
           {!state.recent.length &&
             <div className={'text-center mt-10 text-base text-light-gray'}>
               {configStore.getI18nText('noOpenRecords')}
@@ -53,7 +54,7 @@ export const Recent = observer(() => {
               key={i}
               onClick={() => {
                 if (!existsSync(r)) {
-                  message(configStore.getI18nText('folderEmpty'),{type: 'error'})
+                  message(configStore.getI18nText('folderEmpty'), {type: 'error'})
                 } else {
                   treeStore.openDir(r)
                   close()
@@ -83,7 +84,7 @@ export const Recent = observer(() => {
               </div>
             </div>
           )}
-        </div>
+        </ScrollBox>
       </div>
     </div>
   )

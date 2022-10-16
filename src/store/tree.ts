@@ -371,6 +371,7 @@ class TreeStore {
     if (!existsSync(path)) return
     this.tabs = []
     this.tree = []
+    this.nodeMap.clear()
     this.activePath = undefined
     this.selectPath = undefined
     this.root = observable({

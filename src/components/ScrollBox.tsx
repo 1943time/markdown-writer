@@ -1,6 +1,6 @@
 import {CSSProperties, ReactNode, useCallback, useEffect, useRef} from 'react'
 import {useGetSetState} from 'react-use'
-export function ScrollBox({children, className, mode, containerId, smooth, verticalBarStyle, horizontalBarStyle}: {
+export function ScrollBox({children, className, mode, containerId, smooth, verticalBarStyle, horizontalBarStyle, scrollBoxStyle}: {
   children: ReactNode
   mode: 'x' | 'y' | 'xy'
   className?: string
@@ -8,6 +8,7 @@ export function ScrollBox({children, className, mode, containerId, smooth, verti
   smooth?: boolean
   verticalBarStyle?: CSSProperties
   horizontalBarStyle?: CSSProperties
+  scrollBoxStyle?: CSSProperties
 }) {
   const contentRef = useRef<HTMLDivElement>(null)
   const boxRef = useRef<HTMLDivElement>(null)
@@ -76,6 +77,7 @@ export function ScrollBox({children, className, mode, containerId, smooth, verti
       <div
         ref={boxRef}
         id={containerId}
+        style={scrollBoxStyle}
         className={`hide-scrollbar ${mode === 'x' ? 'overflow-x-auto' : mode === 'y' ? 'overflow-y-auto' : 'overflow-auto'} h-full w-full ${smooth ? 'scroll-smooth' : ''}`}
         onScroll={scroll}
       >

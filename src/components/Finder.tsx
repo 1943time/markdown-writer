@@ -7,6 +7,7 @@ import {TreeIcon} from '@/Tree/Icon'
 import {configStore} from '@/store/config'
 import {stateStore} from '@/store/state'
 import {useObserveKey} from '@/utils/hooks'
+import {ScrollBox} from '@/components/ScrollBox'
 
 export const Finder = observer(() => {
   const [state, setState] = useSetState({
@@ -40,7 +41,7 @@ export const Finder = observer(() => {
       }
     }
     if (treeStore.activeNode) nodes.unshift(treeStore.activeNode)
-    setState({nodes})
+    setState({nodes, filterNodes: nodes.filter(n => n.name.includes(state.query))})
     window.addEventListener('click', close)
     setTimeout(() => {
       input.current?.focus()
@@ -72,7 +73,9 @@ export const Finder = observer(() => {
             />
           </div>
         </div>
-        <div className={'overflow-y-auto max-h-[300px]'}>
+        <ScrollBox mode={'y'} scrollBoxStyle={{
+          maxHeight: 350
+        }}>
           {state.filterNodes.map(n =>
             <div
               className={`flex h-5 px-2 items-center cursor-pointer duration-100 ${n === treeStore.activeNode ? 'dark:bg-gray-700/30 bg-gray-500/20' : 'dark:hover:bg-gray-500/20 hover:bg-gray-400/20'}`}
@@ -88,7 +91,7 @@ export const Finder = observer(() => {
               </span>
             </div>
           )}
-        </div>
+        </ScrollBox>
       </div>
     </div>
   )

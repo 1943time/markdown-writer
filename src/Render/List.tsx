@@ -25,8 +25,8 @@ export const DocList = observer(() => {
     window.setTimeout(() => {
       const box = document.querySelector('#doc-container')! as HTMLElement
       const content = document.querySelector('#content')! as HTMLElement
-      if (box && content) {
-        const rect = box?.getClientRects()?.[0]
+      const rect = box?.getClientRects()?.[0]
+      if (box && content && rect) {
         if (stateStore.showSubNav) {
           setState({visible: true, left: rect.left + content.offsetLeft + content.clientWidth - 120, top: 120})
         } else {

@@ -18,6 +18,7 @@ import {mediaType} from '@/utils/mediaType'
 import {extname} from 'path'
 import BlockOutlinedIcon from '@mui/icons-material/BlockOutlined'
 import {configStore} from '@/store/config'
+import {ScrollBox} from '@/components/ScrollBox'
 
 export const History = observer(() => {
   const editorElRef = useRef<HTMLDivElement>(null)

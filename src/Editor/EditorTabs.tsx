@@ -5,32 +5,10 @@ import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import {Tooltip} from '@mui/material'
 import {MetaKey} from '@/utils/Widget'
 import {stateStore} from '@/store/state'
-import {useCallback, useEffect} from 'react'
-import {useObserveKey} from '@/utils/hooks'
-import {useSetState} from 'react-use'
+
 export const EditorTabs = observer((props: {
   treeWidth: number
 }) => {
-  const [state, setState] = useSetState({
-    activeMarkLeft: 0,
-    activeMarkWidth: 0
-  })
-  const setMarkPos = useCallback(() => {
-    if (treeStore.activePath) {
-      const tab = document.querySelector(`[data-tab="${treeStore.activePath}"]`) as HTMLDivElement
-      setState({
-        activeMarkLeft: tab.offsetLeft,
-        activeMarkWidth: tab.clientWidth
-      })
-    }
-  }, [])
-  useObserveKey(treeStore, 'activePath', e => {
-    if (e.newValue) {
-      setTimeout(() => {
-        setMarkPos()
-      })
-    }
-  })
   return (
     <div className={'h-7 w-full relative'}>
       <div

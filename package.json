@@ -2,7 +2,7 @@
   "name": "md.writer",
   "productName": "Md Writer",
   "private": true,
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "a markdown note",
   "author": "1943time <mdwriter@163.com>",
   "license": "AGPL-3.0",
