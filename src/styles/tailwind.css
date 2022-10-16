@@ -2,16 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  background-color: #22252A;
-}
-
 a{
   @apply duration-200 cursor-pointer;
 }
+
 a:hover{
   @apply text-blue-500;
 }
+
 .highlight {
   @apply text-sky-500 font-bold italic;
 }

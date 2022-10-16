@@ -45,15 +45,15 @@ export const FolderBar = observer(() => {
     }
   }, [state.menuVisible])
   return (
-    <div className={'w-full flex bg-white/10 h-7 px-1 text-gray-300 justify-between'}>
+    <div className={'w-full flex high-panel h-7 px-1 text-gray justify-between border-1 border-t border-b border-r dark:border-none'}>
       <div className={'flex items-center pl-2 cursor-pointer relative'} ref={box} onClick={() => setState({menuVisible: true})}>
-        <FolderCopyOutlinedIcon fontSize={'inherit'} className={'text-cyan-500'}/>
-        <span className={'ml-2 text-sm'}>Project</span>
+        <FolderCopyOutlinedIcon fontSize={'inherit'} className={'text-cyan'}/>
+        <span className={'ml-2 text-sm font-semibold'}>Project</span>
         <KeyboardArrowDownOutlinedIcon fontSize={'small'} className={'ml-2'}/>
         {state.menuVisible &&
-          <div className={'absolute z-10 left-0 top-7 w-56 bg-gray-900 shadow shadow-black/20 py-1 f13 rounded-sm leading-6 text-gray-300'}>
+          <div className={'absolute z-10 left-0 top-7 w-56 ctx py-1 f13 rounded-sm leading-6 text-gray'}>
             <div
-              className={'px-3 flex items-center justify-between duration-200 hover:bg-sky-500 text-gray-100 group'}
+              className={'px-3 flex items-center justify-between duration-200 dark:hover:bg-sky-500 hover:bg-sky-300 dark:text-gray-100 group text-gray-600'}
               onClick={action((e) => {
                 stateStore.recentRecordVisible = true
                 e.stopPropagation()
@@ -66,7 +66,7 @@ export const FolderBar = observer(() => {
                 {configStore.getI18nText('treeTopBar.openRecentFolder')}
               </span>
               </div>
-              <div className={'text-gray-500 text-xs flex items-center space-x-1 group-hover:text-gray-200'}>
+              <div className={'text-gray text-xs flex items-center space-x-1 opacity-60'}>
                 {ElectronApi.isWin ?
                   <span>ctrl</span> :
                   <KeyboardCommandKeyOutlinedIcon fontSize={'inherit'}/>
@@ -76,7 +76,7 @@ export const FolderBar = observer(() => {
               </div>
             </div>
             <div
-              className={'px-3 flex items-center justify-between duration-200 hover:bg-sky-500 text-gray-100 group'}
+              className={'px-3 flex items-center justify-between duration-200 dark:hover:bg-sky-500 hover:bg-sky-300 dark:text-gray-100 text-gray-600 group'}
               onClick={(e) => {
                 e.stopPropagation()
                 setState({menuVisible: false})

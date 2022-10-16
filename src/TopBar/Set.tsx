@@ -11,7 +11,10 @@ import {
   FormControlLabel,
   FormLabel,
   Radio,
-  RadioGroup
+  RadioGroup,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@mui/material'
 import {configStore} from '@/store/config'
 import {stateStore} from '@/store/state'
@@ -24,20 +27,36 @@ export const Set = observer(() => {
       <DialogTitle>{configStore.getI18nText('set.name')}</DialogTitle>
       <DialogContent className={'w-[600px]'}>
         <Divider className={'pt-2 pb-4'}>{configStore.getI18nText('set.system.name')}</Divider>
-        <FormControl size={'small'}>
-          <FormLabel>{configStore.getI18nText('set.system.language')}</FormLabel>
-          <RadioGroup
-            row
-            value={configStore.i18n}
-            onChange={e => {
-              configStore.setConfig('i18n', e.target.value as any)
-            }}
-            name="theme"
-          >
-            <FormControlLabel value="en" control={<Radio size={'small'}/>} label="English"/>
-            <FormControlLabel value="zh" control={<Radio size={'small'}/>} label="中文" />
-          </RadioGroup>
-        </FormControl>
+        <div className={'space-x-10'}>
+          <FormControl size={'small'}>
+            <FormLabel>{configStore.getI18nText('set.system.language')}</FormLabel>
+            <RadioGroup
+              row
+              value={configStore.i18n}
+              onChange={e => {
+                configStore.setConfig('i18n', e.target.value as any)
+              }}
+              name="theme"
+            >
+              <FormControlLabel value="en" control={<Radio size={'small'}/>} label="English"/>
+              <FormControlLabel value="zh" control={<Radio size={'small'}/>} label="中文" />
+            </RadioGroup>
+          </FormControl>
+          <FormControl size={'small'}>
+            <FormLabel>{configStore.getI18nText('set.system.theme')}</FormLabel>
+            <RadioGroup
+              row
+              value={configStore.theme}
+              onChange={e => {
+                configStore.setTheme(e.target.value as any)
+              }}
+              name="theme"
+            >
+              <FormControlLabel value="dark" control={<Radio size={'small'}/>} label="dark"/>
+              <FormControlLabel value="light" control={<Radio size={'small'}/>} label="light" />
+            </RadioGroup>
+          </FormControl>
+        </div>
         <Divider className={'pt-2 pb-4'}>{configStore.getI18nText('set.editor.name')}</Divider>
         <div className={'space-x-10'}>
           <FormControl size={'small'}>
@@ -175,6 +194,22 @@ export const Set = observer(() => {
                   }}
                 />
               )} label={configStore.getI18nText('set.turnOn')}/>
+            </FormControl>
+          </div>
+          <div>
+            <FormControl variant="standard" className={'w-48'}>
+              <InputLabel>{configStore.getI18nText('set.renderer.codeTheme')}</InputLabel>
+              <Select
+                value={configStore.codeTheme}
+                onChange={e => {
+                  configStore.setConfig('codeTheme', e.target.value as any)
+                }}
+                label={configStore.getI18nText('set.renderer.codeTheme')}
+              >
+                {Object.keys(configStore.codeThemes).map(k =>
+                  <MenuItem value={k} key={k}>{k}</MenuItem>
+                )}
+              </Select>
             </FormControl>
           </div>
         </div>

@@ -1,5 +1,6 @@
-import {Menu, app, BrowserWindow, shell, MenuItemConstructorOptions, nativeImage, ipcMain} from 'electron'
+import {app, BrowserWindow, Menu, nativeImage, shell} from 'electron'
 import {join} from 'path'
+
 export const createMenu = (win: BrowserWindow) => {
   // const devMenu = [
   //   {role: 'reload'},
@@ -47,6 +48,10 @@ export const createMenu = (win: BrowserWindow) => {
     {
       label: 'View',
       submenu: [
+        {role: 'zoom'},
+        {role: 'zoomIn'},
+        {role: 'zoomOut'},
+        {type: 'separator'},
         {role: 'reload'},
         {role: 'toggleDevTools'}
       ]

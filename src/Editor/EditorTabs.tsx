@@ -5,33 +5,43 @@ import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import {Tooltip} from '@mui/material'
 import {MetaKey} from '@/utils/Widget'
 import {stateStore} from '@/store/state'
+
 export const EditorTabs = observer((props: {
   treeWidth: number
 }) => {
   return (
-    <div className={'h-7 border-b-[1px] border-t-[1px] border-gray-300/10 tabs w-full relative'}>
-      <div className={'w-full whitespace-nowrap flex overflow-x-auto hide-scrollbar'} style={{width: `calc(100vw - ${props.treeWidth}px - 24px)`}}>
-        {treeStore.tabs.map((node) =>
-          <div
-            key={node.path}
-            onClick={() => {
-              treeStore.setActivePath(node.path)
-            }}
-            className={`cursor-pointer ${treeStore.activePath === node.path ? 'bg-gray-300/10 hover:bg-gray-300/10 text-cyan-500' : 'hover:bg-gray-500/10 text-cyan-600'}`}>
-            <div className={'flex items-center px-3 h-7'} style={{fontSize: 12}}>
-              <span>{node.name}</span>
+    <div className={'h-7 w-full relative'}>
+      <div
+        className={'w-full overflow-x-auto hide-scrollbar h-full whitespace-nowrap'}>
+        <div className={'h-full border-b border-t border-1 whitespace-nowrap inline-block pr-7 min-w-full'}>
+          <div className={'flex h-full'}>
+            {treeStore.tabs.map((node) =>
               <div
-                onClick={(e) => {
-                  e.stopPropagation()
-                  treeStore.removeTab(node)
+                key={node.path}
+                onClick={() => {
+                  treeStore.setActivePath(node.path)
                 }}
-                className={'flex items-center ml-2 hover:bg-blue-500 rounded-full hover:text-gray-800'}
-                style={{padding: '0.5px'}}>
-                <CloseOutlinedIcon fontSize={'inherit'}/>
+                data-tab={node.path}
+                className={`text-cyan flex-shrink-0 h-full relative cursor-pointer ${treeStore.activePath === node.path ? 'dark:bg-zinc-700 bg-white/80' : 'tab'}`}>
+                <div className={'flex items-center px-3 h-full'} style={{fontSize: 12}}>
+                  <span>{node.name}</span>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      treeStore.removeTab(node)
+                    }}
+                    className={'flex items-center ml-2 dark:hover:bg-blue-500 rounded-full dark:hover:text-gray-800 hover:bg-blue-400 hover:text-white/60'}
+                    style={{padding: '0.5px'}}>
+                    <CloseOutlinedIcon fontSize={'inherit'}/>
+                  </div>
+                </div>
+                <div
+                  className={`absolute left-0 bottom-[-1px] w-full h-0.5 ${node.path === treeStore.activePath ? 'bg-blue-500' : ''}`}
+                />
               </div>
-            </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
       <Tooltip
         enterDelay={500}
@@ -43,13 +53,13 @@ export const EditorTabs = observer((props: {
         )}
         placement={'bottom-end'}>
         <div
-          className={'shadow shadow-black/20 cursor-pointer items-center justify-center w-6 h-7 absolute z-10 right-0 top-[-1px] flex'}
+          className={'border-1 border-l border-t border-b top-0 cursor-pointer items-center justify-center w-7 h-full absolute z-10 right-0 flex tab'}
           onClick={(e) => {
             e.stopPropagation()
             stateStore.setStatusVisible('finderVisible', true)
           }}
         >
-          <div className={'w-full h-full hover:bg-zinc-600/30 duration-200 text-violet-500 h-6 flex items-center justify-center'}>
+          <div className={'w-full h-full duration-200 text-violet-500 h-full flex items-center justify-center'}>
             <FilterAltOutlinedIcon fontSize={'inherit'}/>
           </div>
         </div>

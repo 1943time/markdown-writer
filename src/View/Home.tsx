@@ -123,7 +123,7 @@ export const Home = observer(() => {
           {!!treeStore.root &&
             <>
               <EditorTabs treeWidth={state.treeWidth}/>
-              <div className={`bg-[#1E1E1E] pt-0.5 flex h-[calc(100%_-_30px)] ${!['markdown', 'lang'].includes(mediaType(treeStore.activeNode?.name)) ? 'hidden' : ''}`}>
+              <div className={`flex h-[calc(100%_-_30px)] ${!['markdown', 'lang'].includes(mediaType(treeStore.activeNode?.name)) ? 'hidden' : ''}`}>
                 <div
                   className={`flex-1 h-full ${stateStore.viewState === 'view' ? 'hidden' : ''}`}>
                   <Editor/>
@@ -131,7 +131,7 @@ export const Home = observer(() => {
                 <div
                   style={{width: stateStore.viewState === 'view' ? '' : stateStore.viewWidth}}
                   id={'view'}
-                  className={`h-full border-gray-600 border-solid overflow-hidden ${stateStore.viewState === 'view' && mediaType(treeStore.activeNode?.name) !== 'lang' ? 'flex-1' : 'border-l'}`}
+                  className={`h-full border-1 border-solid overflow-hidden ${stateStore.viewState === 'view' && mediaType(treeStore.activeNode?.name) !== 'lang' ? 'flex-1' : 'border-l'}`}
                   hidden={(!treeStore.activeNode || mediaType(treeStore.activeNode.name) !== 'markdown' || stateStore.viewState === 'code')}>
                   <Render/>
                 </div>

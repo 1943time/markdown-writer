@@ -33,7 +33,10 @@
   line-height: 32px;
   font-size: 24px;
 }
-
+.vp-doc li > p {
+  display: inline-block;
+  margin: 0;
+}
 .vp-doc h3 {
   margin: 28px 0 0;
   letter-spacing: -0.01em;
@@ -303,39 +306,6 @@
 .vp-doc.pre-wrap code{
   white-space: pre-wrap !important;
 }
-.vp-doc [class*='language-'] pre,
-.vp-doc [class*='language-'] code {
-  /*text-align: left;*/
-  /*white-space: pre;*/
-  /*word-spacing: normal;*/
-  /*word-break: normal;*/
-  /*word-wrap: normal;*/
-  /*-webkit-hyphens: none;*/
-  /*-moz-hyphens: none;*/
-  /*-ms-hyphens: none;*/
-  /*hyphens: none;*/
-}
-
-.vp-doc [class*='language-'] pre {
-  position: relative;
-  /*z-index: 1;*/
-  /*margin: 0;*/
-  /*padding: 16px 0;*/
-  /*background: transparent;*/
-  /*overflow-x: auto;*/
-  /*width: 100%;*/
-}
-
-.vp-doc [class*='language-'] code {
-  /*display: block;*/
-  /*padding: 0 24px;*/
-  /*width: fit-content;*/
-  /*min-width: 100%;*/
-  /*line-height: var(--vp-code-line-height);*/
-  /*font-size: var(--vp-code-font-size);*/
-  /*color: var(--vp-code-block-color);*/
-  /*transition: color 0.5s;*/
-}
 
 .vp-doc [class*='language-'] code .highlighted {
   background-color: var(--vp-code-line-highlight-color);
@@ -459,4 +429,12 @@
 .vp-doc .VPTeamMembers.medium.count-1 .container {
   margin: 0 !important;
   max-width: calc((100% - 24px) / 2) !important;
+}
+
+.vp-doc .inline-math > p{
+  display: inline;
+}
+
+.vp-doc .ft-define > p{
+  display: inline;
 }

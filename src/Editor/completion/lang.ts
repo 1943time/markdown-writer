@@ -95,6 +95,19 @@ export const languages = [
   'xml',
   'yaml'
 ]
+const getInsertText = (lang: string) => {
+  if (lang === 'mermaid.shape') {
+    return `${lang}
+flowchart LR
+A[Hard] -->|Text| B(Round)
+B --> C{Decision}
+C -->|One| D[Result 1]
+C -->|Two| E[Result 2]
+\`\`\``
+  } else {
+    return `${lang}\n\$\{1\}\n\`\`\``
+  }
+}
 export const langCompletion:ProvideCompletion = (model, position) => {
   let suggestions:CompletionItem[] = []
   const word = model.getWordAtPosition(position)
@@ -109,7 +122,7 @@ export const langCompletion:ProvideCompletion = (model, position) => {
       return {
         label: `${l}`,
         kind: CompletionItemKind.Function,
-        insertText: `${l}\n\$\{1\}\n\`\`\``,
+        insertText: getInsertText(l),
         insertTextRules: CompletionItemInsertTextRule.InsertAsSnippet,
         range: range
       }

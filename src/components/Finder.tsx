@@ -7,6 +7,7 @@ import {TreeIcon} from '@/Tree/Icon'
 import {configStore} from '@/store/config'
 import {stateStore} from '@/store/state'
 import {useObserveKey} from '@/utils/hooks'
+import {ScrollBox} from '@/components/ScrollBox'
 
 export const Finder = observer(() => {
   const [state, setState] = useSetState({
@@ -40,7 +41,7 @@ export const Finder = observer(() => {
       }
     }
     if (treeStore.activeNode) nodes.unshift(treeStore.activeNode)
-    setState({nodes})
+    setState({nodes, filterNodes: nodes.filter(n => n.name.includes(state.query))})
     window.addEventListener('click', close)
     setTimeout(() => {
       input.current?.focus()
@@ -57,7 +58,7 @@ export const Finder = observer(() => {
   if (!stateStore.finderVisible) return null
   return (
     <div className={'fixed left-1/2 top-10 -translate-x-1/2 z-10 w-[600px] z-50'} id={'quick-files'}>
-      <div className={'w-full h-full shadow-lg bg-zinc-900 shadow-black/30 py-1'}>
+      <div className={'w-full h-full ctx py-1 rounded-sm'}>
         <div className={'px-2 py-1 px-2'}>
           <div className={'flex items-center border border-blue-400'}>
             <KeyboardArrowRightOutlinedIcon fontSize={'small'}/>
@@ -72,23 +73,25 @@ export const Finder = observer(() => {
             />
           </div>
         </div>
-        <div className={'overflow-y-auto max-h-[300px]'}>
+        <ScrollBox mode={'y'} scrollBoxStyle={{
+          maxHeight: 350
+        }}>
           {state.filterNodes.map(n =>
             <div
-              className={`flex h-5 px-2 items-center cursor-pointer duration-100 ${n === treeStore.activeNode ? 'bg-gray-700/30' : 'hover:bg-gray-500/20'}`}
+              className={`flex h-5 px-2 items-center cursor-pointer duration-100 ${n === treeStore.activeNode ? 'dark:bg-gray-700/30 bg-gray-500/20' : 'dark:hover:bg-gray-500/20 hover:bg-gray-400/20'}`}
               onClick={() => {
                 treeStore.selectNode(n)
                 close()
               }}
               key={n.path}>
               <TreeIcon node={n}/>
-              <span className={'text-gray-300 ml-1 truncate max-w-[200px]'} style={{fontSize: 13}}>{n.name}</span>
+              <span className={'text-gray ml-1 truncate max-w-[200px]'} style={{fontSize: 13}}>{n.name}</span>
               <span className={'text-xs ml-2 text-gray-500 truncate max-w-[400px]'}>
                 {n.path.replace(treeStore.root!.path, treeStore.root!.name)}
               </span>
             </div>
           )}
-        </div>
+        </ScrollBox>
       </div>
     </div>
   )

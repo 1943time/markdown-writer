@@ -2,10 +2,11 @@ import {makeAutoObservable, runInAction} from 'mobx'
 import {ElectronApi} from '@/utils/electronApi'
 import {i18n, I18nPath} from '@/utils/i18n'
 import {$db} from '@/database'
-
+import mermaid from 'mermaid'
+import * as codeThemes from 'react-syntax-highlighter/dist/esm/styles/prism'
 type GetField<T extends object> = {
   [P in keyof T & string]: T[P] extends Function ? never :
-    P extends 'configMap' | 'visible' ? never : P
+    P extends 'configMap' | 'visible' | 'theme' ? never : P
 }[keyof T & string]
 
 class Config {
@@ -15,9 +16,11 @@ class Config {
   editor_fontSize = 13
   editor_miniMap = false
   editor_wordBreak = false
-  editor_autoSaveTime = 5
+  editor_autoSaveTime = 3
   render_smooth = true
   render_syncScroll = true
+  codeThemes = codeThemes
+  codeTheme:keyof typeof codeThemes= 'oneDark'
   render_codeTabSize = 4
   render_codeWordBreak = false
   render_lineNumber = false
@@ -27,6 +30,9 @@ class Config {
     makeAutoObservable(this)
   }
 
+  get curCodeTheme() {
+    return this.codeThemes[this.codeTheme]
+  }
   async setConfig<T extends GetField<typeof this>>(key: T, value: any) {
     if (!await $db.config.where('key').equals(key).count()) {
       await $db.config.add({key, value})
@@ -39,7 +45,18 @@ class Config {
       this[key] = value
     })
   }
-
+  setTheme(theme: 'dark' | 'light', save = true) {
+    this.theme = theme
+    mermaid.initialize({
+      theme: theme === 'dark' ? 'dark' : 'default'
+    })
+    if (this.theme === 'dark') {
+      document.querySelector('html')!.classList.add('dark')
+    } else {
+      document.querySelector('html')!.classList.remove('dark')
+    }
+    if (save) ElectronApi.setStore('theme', theme)
+  }
   getI18nText(path: I18nPath) {
     const paths = path.split('.')
     let value: any = i18n
@@ -61,8 +78,11 @@ class Config {
             this[key] = value
           }
           this.i18n = this.configMap.get('i18n') || (config.locale === 'zh-CN' ? 'zh' : 'en')
-          resolve(null)
+          this.setTheme(config.theme)
         })
+        setTimeout(() => {
+          resolve(null)
+        }, 200)
       } catch (e) {
         console.error('config err', e)
         resolve(null)

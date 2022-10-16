@@ -3,7 +3,7 @@ import {oneDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined'
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined'
 import {ElectronApi} from '@/utils/electronApi'
-import {useEffect, useLayoutEffect, useRef, useState} from 'react'
+import {useLayoutEffect, useRef} from 'react'
 import {IRenderNode} from '@/Render/ReactMark/Renderer'
 import {getPosAttr} from '@/Render/ReactMark/utils'
 import {observer} from 'mobx-react-lite'
@@ -11,14 +11,9 @@ import {configStore} from '@/store/config'
 import mermaid from 'mermaid'
 // import yaml from 'js-yaml'
 
-mermaid.initialize({
-  theme: 'dark'
-})
-
 import {useGetSetState} from 'react-use'
-import {stateStore} from '@/store/state'
-
-export const Code = observer(({node}: { node: IRenderNode }) => {
+import {treeStore} from '@/store/tree'
+export const Code = observer(({node}: {node: IRenderNode}) => {
   const timer = useRef(0)
   const [state, setState] = useGetSetState({
     copied: false,
@@ -56,7 +51,7 @@ export const Code = observer(({node}: { node: IRenderNode }) => {
       //   }, 300)
       // }
     }
-  }, [node.value])
+  }, [node.value, configStore.theme])
   if (state().lang[0] === 'mermaid' && state().lang[1] === 'shape') {
     return (
       <div
@@ -65,10 +60,13 @@ export const Code = observer(({node}: { node: IRenderNode }) => {
       />
     )
   }
-  return state().lang.length ? (
+  return (
     <div className={`my-4 relative language-${state().lang[0]}`} {...getPosAttr(node)}>
-      <span className={'absolute text-xs text-gray-600 right-2 top-0.5'}>{state().lang[0]}
-        {!stateStore.printing &&
+      <span className={'absolute text-xs text-gray-500 right-2 top-0.5'}>
+        <span>
+          {state().lang[0] || 'text'}
+        </span>
+        {!!treeStore.activePath &&
           <>
             <span className={'px-1'}>|</span>
             <span
@@ -87,14 +85,14 @@ export const Code = observer(({node}: { node: IRenderNode }) => {
                 <CheckOutlinedIcon fontSize={'inherit'} className={'mr-0.5'}/>
               }
               {state().copied ? 'copied' : 'copy'}
-            </span>
+              </span>
           </>
         }
       </span>
       <SyntaxHighlighter
         children={node.value}
         // @ts-ignore
-        style={oneDark}
+        style={configStore.curCodeTheme}
         showLineNumbers={configStore.render_lineNumber}
         customStyle={{
           fontSize: 14,
@@ -103,15 +101,11 @@ export const Code = observer(({node}: { node: IRenderNode }) => {
         }}
         wrapLongLines={configStore.render_codeWordBreak}
         CodeTag={'div'}
-        language={state().lang[0]}
+        language={state().lang[0] || 'text'}
         codeTagProps={{
           className: 'inline-block',
         }}
       />
     </div>
-  ) : (
-    <code {...getPosAttr(node)}>
-      {node.value}
-    </code>
   )
 })

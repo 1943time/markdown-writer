@@ -11,6 +11,7 @@ import {message} from '@/components/message'
 import {configStore} from '@/store/config'
 import {stateStore} from '@/store/state'
 import {$db} from '@/database'
+import {ScrollBox} from '@/components/ScrollBox'
 
 export const Recent = observer(() => {
   const [state, setState] = useSetState({
@@ -39,21 +40,21 @@ export const Recent = observer(() => {
   if (!stateStore.recentRecordVisible) return null
   return (
     <div className={'fixed left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10'} id={'recent'}>
-      <div className={'w-full bg-zinc-900 shadow shadow-black/30 overflow-auto w-64'}>
+      <div className={'w-full ctx overflow-auto w-64'}>
         <div className={'leading-5 bg-gray-700 text-xs text-center text-gray-300'}>Recent Books</div>
-        <div className={'overflow-y-auto h-72'}>
+        <ScrollBox mode={'y'} className={'h-72'}>
           {!state.recent.length &&
-            <div className={'text-center mt-10 text-base text-gray-400'}>
+            <div className={'text-center mt-10 text-base text-light-gray'}>
               {configStore.getI18nText('noOpenRecords')}
             </div>
           }
           {state.recent.map((r, i) =>
             <div
-              className={'flex items-center px-2 py-2 cursor-pointer duration-200 hover:bg-gray-700/20'}
+              className={'flex items-center px-2 py-2 cursor-pointer duration-200 dark:hover:bg-gray-700/20 hover:bg-gray-400/20'}
               key={i}
               onClick={() => {
                 if (!existsSync(r)) {
-                  message(configStore.getI18nText('folderEmpty'),{type: 'error'})
+                  message(configStore.getI18nText('folderEmpty'), {type: 'error'})
                 } else {
                   treeStore.openDir(r)
                   close()
@@ -65,11 +66,11 @@ export const Recent = observer(() => {
               </div>
               <div className={'flex-1 ml-3 flex items-center'}>
                 <div className={'flex flex-col flex-1'}>
-                  <span className={'text-gray-300 truncate w-48 truncate'} style={{fontSize: 13}}>{basename(r)}</span>
-                  <span className={'text-xs scale-90 origin-left text-gray-400 truncate w-48'}>{r}</span>
+                  <span className={'text-gray truncate w-48 truncate'} style={{fontSize: 13}}>{basename(r)}</span>
+                  <span className={'text-xs scale-90 origin-left text-light-gray truncate w-48'}>{r}</span>
                 </div>
                 <span
-                  className={'text-sm text-red-800 duration-200 hover:text-red-500'}
+                  className={'text-sm dark:text-red-800 duration-200 dark:hover:text-red-500 text-red-600 hover:text-red-400'}
                   onClick={e => {
                     e.stopPropagation()
                     treeStore.removeRecent(r)
@@ -83,7 +84,7 @@ export const Recent = observer(() => {
               </div>
             </div>
           )}
-        </div>
+        </ScrollBox>
       </div>
     </div>
   )

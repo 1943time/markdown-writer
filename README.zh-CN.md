@@ -6,14 +6,14 @@
 [English](README.md) | 简体中文
 
 ![](./help/img.png)
-
+![](./help/img_light.png)
 ## 介绍
 - 使用[monaco-editor](https://microsoft.github.io)作为编辑器，在此基础上做了一定增强，例如：代码补全，链接跳转，列表缩进，表格格式化等
 - 渲染器使用了[vitepress](https://github.com/vuejs/vitepress)的风格
 
 ## 功能
 - Gfm 语法支持
-- pdf 导出
+- 暗黑和明亮主题
 - 标题导航
 - [脚注](https://github.blog/changelog/2021-09-30-footnotes-now-supported-in-markdown-fields/)
 - 表情
@@ -25,6 +25,7 @@
 - 自由调整文件树
 - 历史记录与回滚
 - 剪贴板文件直接拷贝入编辑器中
+- pdf 导出
 
 ## Mac 系统无法打开
 > 非常抱歉在项目的早期阶段，还没有进行mac 代码签名  

@@ -1,14 +1,17 @@
 import {Home} from '@/View/Home'
-import {useEffect, useState} from 'react'
+import {useEffect, useMemo, useState} from 'react'
 import {createTheme, ThemeProvider} from '@mui/material'
 import {configStore} from '@/store/config'
-export const MTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  }
-})
-export default function App() {
+import {observer} from 'mobx-react-lite'
+const App = observer(() => {
   const [ready, setReady] = useState(false)
+  const MTheme = useMemo(() => {
+    return createTheme({
+      palette: {
+        mode: configStore.theme,
+      }
+    })
+  }, [configStore.theme])
   useEffect(() => {
     configStore.ready().then(() => {
       setReady(true)
@@ -20,4 +23,6 @@ export default function App() {
       <Home/>
     </ThemeProvider>
   )
-}
+})
+
+export default App

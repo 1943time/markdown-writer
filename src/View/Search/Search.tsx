@@ -8,6 +8,7 @@ import {Button} from '@mui/material'
 import {action} from 'mobx'
 import {SearchCode} from '@/View/Search/Code'
 import {configStore} from '@/store/config'
+import {ScrollBox} from '@/components/ScrollBox'
 
 export const Search = observer(() => {
   const timer = useRef(0)
@@ -91,7 +92,7 @@ export const Search = observer(() => {
       stateStore.setStatusVisible('openSearch', false)
     }}>
       <div
-        className={'-translate-x-1/2 absolute left-1/2 shadow shadow-black/10 bg-zinc-900 border-[1px] border-solid border-black/30 w-[70%] mt-20 text-gray-300'}
+        className={'shadow-black/5 border-black/10 bg-slate-100 -translate-x-1/2 absolute left-1/2 shadow dark:shadow-black/10 dark:bg-zinc-900 border-[1px] border-solid dark:border-black/30 w-[70%] mt-20 dark:text-gray-300 text-gray-600'}
         onClick={e => {
           e.stopPropagation()
         }}>
@@ -100,7 +101,7 @@ export const Search = observer(() => {
             {configStore.getI18nText('search.name')}
           </span>
         </div>
-        <div className={'flex items-center bg-zinc-800 px-3 py-1'}>
+        <div className={'flex items-center dark:bg-zinc-800 bg-white px-3 py-1'}>
           <SearchOutlinedIcon fontSize={'small'}/>
           <div className={'flex-1 ml-1'}>
             <input
@@ -116,36 +117,38 @@ export const Search = observer(() => {
             />
           </div>
         </div>
-        <div className={'bg-zinc-900 h-1'}></div>
-        <div className={'max-h-40 min-h-[100px] bg-zinc-800 relative overflow-y-auto'}>
-          {!state.results.length && !state.searching &&
-            <span className={'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs text-zinc-500'}>
+        <div className={'dark:bg-zinc-900 h-1 bg-slate-100'}></div>
+        <div className={'max-h-40 min-h-[100px] dark:bg-zinc-800 bg-white relative'}>
+          <ScrollBox mode={'y'} scrollBoxStyle={{maxHeight: 160, minHeight: 100}}>
+            {!state.results.length && !state.searching &&
+              <span className={'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs text-zinc-500'}>
               {state.query ? configStore.getI18nText('search.notFind') : configStore.getI18nText('search.tip')}
             </span>
-          }
-          {state.results.map((r, i) =>
-            <div
-              className={`leading-5 py-1 text-sm flex justify-between px-3 cursor-pointer ${i == state.selectIndex ? 'bg-gray-500/10': ''}`}
-              onClick={(e) => {
-                if (e.detail === 1) {
-                  state.setIndex(i)
-                }
-                if (e.detail === 2) {
-                  state.openNote()
-                }
-              }}
-              key={i}>
-              <div className={'flex-1'} dangerouslySetInnerHTML={{__html: state.highlight(r.lineText, r.matchText)}}></div>
-              <div className={'font-semibold text-xs text-gray-500 leading-5 ml-2'}>
+            }
+            {state.results.map((r, i) =>
+              <div
+                className={`leading-5 py-1 text-sm flex justify-between px-3 cursor-pointer ${i == state.selectIndex ? 'bg-gray-500/10': ''}`}
+                onClick={(e) => {
+                  if (e.detail === 1) {
+                    state.setIndex(i)
+                  }
+                  if (e.detail === 2) {
+                    state.openNote()
+                  }
+                }}
+                key={i}>
+                <div className={'flex-1'} dangerouslySetInnerHTML={{__html: state.highlight(r.lineText, r.matchText)}}></div>
+                <div className={'font-semibold text-xs text-gray-500 leading-5 ml-2'}>
                 <span>
                   {r.node.name}
                 </span>
-                <span className={'ml-2'}>
+                  <span className={'ml-2'}>
                   {r.line}
                 </span>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </ScrollBox>
         </div>
         <div className={`${!state.selected ? 'hidden' : ''}`}>
           <div className={'px-3 text-gray-600 text-xs leading-6'}>{state.selected?.node.path}</div>

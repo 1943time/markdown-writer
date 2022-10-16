@@ -18,6 +18,12 @@ export const ElectronApi = {
   clipboard(text: string) {
     clipboard.writeText(text)
   },
+  setStore(key: string, value: any) {
+    return ipcRenderer.invoke('saveStore', key, value)
+  },
+  getStore(key: string) {
+    return ipcRenderer.invoke('getStore', key)
+  },
   printPdf(webview: WebviewTag) {
     return ipcRenderer.invoke('printPdf', webview.getWebContentsId())
   },
@@ -28,7 +34,8 @@ export const ElectronApi = {
       dist: string,
       locale: string,
       version: string,
-      appName: string
+      appName: string,
+      theme: 'light' | 'dark'
     }>
   }
 }

@@ -7,7 +7,7 @@ export function ListItem({node}: {
   return (
     <li {...getPosAttr(node)}>
       {typeof node.checked === 'boolean' &&
-        <span className={'pr-2'}>
+        <span className={'pr-2 relative top-0.5'}>
           <input type={'checkbox'} checked={node.checked} readOnly={true}/>
         </span>
       }
