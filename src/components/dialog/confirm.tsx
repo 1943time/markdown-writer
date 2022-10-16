@@ -9,13 +9,14 @@ import {
 } from '@mui/material'
 import {useMemo, useState} from 'react'
 import {configStore} from '@/store/config'
+import {observer} from 'mobx-react-lite'
 
-export function DialogConfirm(props: {
+export const DialogConfirm = observer((props: {
   onClose: () => void
   onConfirm: () => void
   title: string
   description: string
-}) {
+}) => {
   const [open, setOpen] = useState(true)
   const close = () => {
     setOpen(false)
@@ -23,9 +24,9 @@ export function DialogConfirm(props: {
   }
   const darkTheme = useMemo(() => createTheme({
     palette: {
-      mode: 'dark',
+      mode: configStore.theme,
     },
-  }), [])
+  }), [configStore.theme])
   return (
     <ThemeProvider theme={darkTheme}>
       <Dialog
@@ -52,4 +53,4 @@ export function DialogConfirm(props: {
       </Dialog>
     </ThemeProvider>
   )
-}
+})

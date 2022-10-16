@@ -194,7 +194,7 @@ export const TopBar = observer(() => {
             </div>
           }
           <div
-            className={'rounded dark:bg-gray-400/10 bg-slate-300 space-x-2 h-6 flex items-center px-2 dark:text-zinc-400 relative text-zinc-600'}
+            className={'rounded dark:bg-gray-400/10 bg-gray-200 space-x-2 h-6 flex items-center px-2 dark:text-zinc-400 relative text-zinc-600'}
           >
             {VisibleIcons.map(v =>
               <Tooltip
@@ -245,7 +245,7 @@ export const TopBar = observer(() => {
                     stateStore.setStatusVisible('historyVisible', true)
                   }
                 }}
-                className={`rounded-sm duration-300 cursor-pointer flex items-center hover:bg-gray-100/10 p-0.5 ${t.className}`}
+                className={`rounded-sm duration-300 cursor-pointer flex items-center dark:hover:bg-gray-100/10 hover:bg-gray-200 p-0.5 ${t.className}`}
               >
                 {t.icon}
               </div>

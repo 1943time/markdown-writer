@@ -103,6 +103,10 @@ export const i18n = {
       }
     },
     renderer: {
+      codeTheme: {
+        zh: '代码块主题',
+        en: 'Code Block Theme'
+      },
       name: {
         zh: '渲染器',
         en: 'Renderer'
@@ -121,7 +125,7 @@ export const i18n = {
       },
       showCodeLines: {
         zh: '代码块显示行号',
-        en: 'Code blocks show line numbers'
+        en: 'Code block show line numbers'
       },
       renderFootnoteDetail: {
         zh: '渲染脚注详情',

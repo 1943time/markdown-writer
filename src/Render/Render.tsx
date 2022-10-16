@@ -4,7 +4,6 @@ import {configStore} from '@/store/config'
 import {DocList} from '@/Render/List'
 import {stateStore} from '@/store/state'
 import {ReactMark} from '@/Render/ReactMark/ReactMark'
-import './style.css'
 import {ScrollBox} from '@/components/ScrollBox'
 export const Render = observer(() => {
   const code = useEditorChange()

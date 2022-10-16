@@ -30,7 +30,7 @@ export const DocList = observer(() => {
         if (stateStore.showSubNav) {
           setState({visible: true, left: rect.left + content.offsetLeft + content.clientWidth - 120, top: 120})
         } else {
-          setState({visible: true, left: rect.left + content.offsetLeft + content.clientWidth - 40, top: 80})
+          setState({visible: true, left: rect.left + content.offsetLeft + content.clientWidth - 35, top: 80})
         }
       }
     }, 16)

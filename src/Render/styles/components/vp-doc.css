@@ -430,3 +430,11 @@
   margin: 0 !important;
   max-width: calc((100% - 24px) / 2) !important;
 }
+
+.vp-doc .inline-math > p{
+  display: inline;
+}
+
+.vp-doc .ft-define > p{
+  display: inline;
+}

@@ -34,56 +34,58 @@ export const EditorTabs = observer((props: {
   return (
     <div className={'h-7 w-full relative'}>
       <div
-        className={'w-full overflow-x-auto hide-scrollbar h-full'}>
-        <div className={'h-full border-b border-t border-1 whitespace-nowrap flex'}>
-          {treeStore.tabs.map((node) =>
-            <div
-              key={node.path}
-              onClick={() => {
-                treeStore.setActivePath(node.path)
-              }}
-              data-tab={node.path}
-              className={`text-cyan h-full relative cursor-pointer ${treeStore.activePath === node.path ? 'dark:bg-zinc-700 bg-white/80' : 'tab'}`}>
-              <div className={'flex items-center px-3 h-full'} style={{fontSize: 12}}>
-                <span>{node.name}</span>
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    treeStore.removeTab(node)
-                  }}
-                  className={'flex items-center ml-2 dark:hover:bg-blue-500 rounded-full dark:hover:text-gray-800 hover:bg-blue-400 hover:text-white/60'}
-                  style={{padding: '0.5px'}}>
-                  <CloseOutlinedIcon fontSize={'inherit'}/>
-                </div>
-              </div>
+        className={'w-full overflow-x-auto hide-scrollbar h-full whitespace-nowrap'}>
+        <div className={'h-full border-b border-t border-1 whitespace-nowrap inline-block pr-7 min-w-full'}>
+          <div className={'flex h-full'}>
+            {treeStore.tabs.map((node) =>
               <div
-                className={`absolute left-0 bottom-[-1px] w-full h-0.5 ${node.path === treeStore.activePath ? 'bg-blue-500' : ''}`}
-              />
-            </div>
-          )}
+                key={node.path}
+                onClick={() => {
+                  treeStore.setActivePath(node.path)
+                }}
+                data-tab={node.path}
+                className={`text-cyan flex-shrink-0 h-full relative cursor-pointer ${treeStore.activePath === node.path ? 'dark:bg-zinc-700 bg-white/80' : 'tab'}`}>
+                <div className={'flex items-center px-3 h-full'} style={{fontSize: 12}}>
+                  <span>{node.name}</span>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      treeStore.removeTab(node)
+                    }}
+                    className={'flex items-center ml-2 dark:hover:bg-blue-500 rounded-full dark:hover:text-gray-800 hover:bg-blue-400 hover:text-white/60'}
+                    style={{padding: '0.5px'}}>
+                    <CloseOutlinedIcon fontSize={'inherit'}/>
+                  </div>
+                </div>
+                <div
+                  className={`absolute left-0 bottom-[-1px] w-full h-0.5 ${node.path === treeStore.activePath ? 'bg-blue-500' : ''}`}
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
-      {/*<Tooltip*/}
-      {/*  enterDelay={500}*/}
-      {/*  title={(*/}
-      {/*    <div className={'flex items-center space-x-1'}>*/}
-      {/*      <MetaKey/>*/}
-      {/*      <span>P</span>*/}
-      {/*    </div>*/}
-      {/*  )}*/}
-      {/*  placement={'bottom-end'}>*/}
-      {/*  <div*/}
-      {/*    className={'border-l dark:border-gray-100/10 border-gray-300 cursor-pointer items-center justify-center w-6 h-7 absolute z-10 right-0 top-0 flex hover:bg-white/50 bg-gray-200 dark:bg-zinc-800 dark:hover:bg-white/5'}*/}
-      {/*    onClick={(e) => {*/}
-      {/*      e.stopPropagation()*/}
-      {/*      stateStore.setStatusVisible('finderVisible', true)*/}
-      {/*    }}*/}
-      {/*  >*/}
-      {/*    <div className={'w-full h-full duration-200 text-violet-500 h-6 flex items-center justify-center'}>*/}
-      {/*      <FilterAltOutlinedIcon fontSize={'inherit'}/>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</Tooltip>*/}
+      <Tooltip
+        enterDelay={500}
+        title={(
+          <div className={'flex items-center space-x-1'}>
+            <MetaKey/>
+            <span>P</span>
+          </div>
+        )}
+        placement={'bottom-end'}>
+        <div
+          className={'border-1 border-l border-t border-b top-0 cursor-pointer items-center justify-center w-7 h-full absolute z-10 right-0 flex tab'}
+          onClick={(e) => {
+            e.stopPropagation()
+            stateStore.setStatusVisible('finderVisible', true)
+          }}
+        >
+          <div className={'w-full h-full duration-200 text-violet-500 h-full flex items-center justify-center'}>
+            <FilterAltOutlinedIcon fontSize={'inherit'}/>
+          </div>
+        </div>
+      </Tooltip>
     </div>
   )
 })

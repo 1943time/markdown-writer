@@ -45,7 +45,7 @@ export const FolderBar = observer(() => {
     }
   }, [state.menuVisible])
   return (
-    <div className={'w-full flex high-panel h-7 px-1 text-gray justify-between'}>
+    <div className={'w-full flex high-panel h-7 px-1 text-gray justify-between border-1 border-t border-b border-r dark:border-none'}>
       <div className={'flex items-center pl-2 cursor-pointer relative'} ref={box} onClick={() => setState({menuVisible: true})}>
         <FolderCopyOutlinedIcon fontSize={'inherit'} className={'text-cyan'}/>
         <span className={'ml-2 text-sm font-semibold'}>Project</span>

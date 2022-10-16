@@ -41,29 +41,14 @@ body{
 
 .ctx{
   background: var(--md-ctx-bg);
-  box-shadow: var(--md-ctx-shadow);
+  border: 1px solid var(--md-boder-2);
 }
 .tab {
   background: var(--md-tab-bg);
   position: relative;
-  &:hover{
-    &:after{
-      content: '';
-      display: block;
-      position: absolute;
-      left: 0;
-      top:0;
-      right:0;
-      bottom: 0;
-      z-index: 1;
-      background: var(--md-cover);
-      opacity: .5;
-    }
+  &:hover {
+    background: var(--md-tab-hover);
   }
   .close{}
 }
 
-#doc-container{
-  //background: var(--vp-c-bg);
-}
-//flex items-center ml-2 dark:hover:bg-blue-500 rounded-full dark:hover:text-gray-800 hover:bg-blue-400 hover:text-white/60

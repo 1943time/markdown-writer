@@ -1,7 +1,7 @@
 import {useCheckbox} from '@/Render/utils/useCheckbox'
 import {useLink} from '@/Render/utils/useLink'
 import {usePreview} from '@/Render/utils/usePreview'
-import {useMemo} from 'react'
+import {useMemo, useState} from 'react'
 import {parser} from '@/Render/ReactMark/utils/parser'
 import {ReactRenderer} from '@/Render/ReactMark/Renderer'
 import {useFootnote} from '@/Render/utils/useFootnote'

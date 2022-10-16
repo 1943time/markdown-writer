@@ -9,18 +9,9 @@ import {TreeContext} from '@/Tree/Context'
 import {observer} from 'mobx-react-lite'
 import {configStore} from '@/store/config'
 import {ScrollBox} from '@/components/ScrollBox'
-export const Tree = observer(() => {
-  const [ready, setReady] = useState(false)
-  const box = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    const dir = localStorage.getItem('lastOpenDir')
-    if (dir) {
-      treeStore.openDir(dir).then(() => setReady(true))
-    } else {
-      setReady(true)
-    }
-  }, [])
 
+export const Tree = observer(() => {
+  const box = useRef<HTMLDivElement>(null)
   return (
     <div className={'h-full'}>
       <FolderBar/>
@@ -39,30 +30,27 @@ export const Tree = observer(() => {
           onDrop={() => {
             treeStore.moveToFolder(treeStore.root!.path)
           }}>
-          {ready &&
-            <>
-              {!!treeStore.root &&
-                <div className={'relative'} ref={box}>
-                  <TreeRender node={treeStore.root}/>
-                  <TreeMark box={box}/>
-                  <TreeContext/>
-                </div>
-              }
-              {!treeStore.root &&
-                <div className={'mt-32 flex justify-center flex-col items-center'}>
-                  <span className={'text-gray-200 text-sm mb-4 px-6 text-center'}>{configStore.getI18nText('tree.openTip')}</span>
-                  <Button
-                    variant={'contained'}
-                    size={'small'}
-                    onClick={() => {
-                      treeStore.openSelectDir()
-                    }}
-                    startIcon={<CreateNewFolderOutlinedIcon/>}>
-                    {configStore.getI18nText('tree.openFolder')}
-                  </Button>
-                </div>
-              }
-            </>
+          {!!treeStore.root &&
+            <div className={'relative'} ref={box}>
+              <TreeRender node={treeStore.root}/>
+              <TreeMark box={box}/>
+              <TreeContext/>
+            </div>
+          }
+          {!treeStore.root &&
+            <div className={'mt-32 flex justify-center flex-col items-center'}>
+              <span
+                className={'text-gray-200 text-sm mb-4 px-6 text-center'}>{configStore.getI18nText('tree.openTip')}</span>
+              <Button
+                variant={'contained'}
+                size={'small'}
+                onClick={() => {
+                  treeStore.openSelectDir()
+                }}
+                startIcon={<CreateNewFolderOutlinedIcon/>}>
+                {configStore.getI18nText('tree.openFolder')}
+              </Button>
+            </div>
           }
         </div>
       </ScrollBox>

@@ -34,6 +34,8 @@ class TreeStore {
     observe(data, 'activePath', e => {
       if (e.newValue) localStorage.setItem(`${this.root?.path}:activePath`, e.newValue as string)
     })
+    const dir = localStorage.getItem('lastOpenDir')
+    if (dir && !location.href.includes('path=')) this.openDir(dir)
   }
   get activeNode() {
     return this.nodeMap.get(this.activePath || '')

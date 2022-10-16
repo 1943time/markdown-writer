@@ -2,7 +2,8 @@ import {makeAutoObservable, runInAction} from 'mobx'
 import {ElectronApi} from '@/utils/electronApi'
 import {i18n, I18nPath} from '@/utils/i18n'
 import {$db} from '@/database'
-
+import mermaid from 'mermaid'
+import * as codeThemes from 'react-syntax-highlighter/dist/esm/styles/prism'
 type GetField<T extends object> = {
   [P in keyof T & string]: T[P] extends Function ? never :
     P extends 'configMap' | 'visible' | 'theme' ? never : P
@@ -18,6 +19,8 @@ class Config {
   editor_autoSaveTime = 3
   render_smooth = true
   render_syncScroll = true
+  codeThemes = codeThemes
+  codeTheme:keyof typeof codeThemes= 'oneDark'
   render_codeTabSize = 4
   render_codeWordBreak = false
   render_lineNumber = false
@@ -27,6 +30,9 @@ class Config {
     makeAutoObservable(this)
   }
 
+  get curCodeTheme() {
+    return this.codeThemes[this.codeTheme]
+  }
   async setConfig<T extends GetField<typeof this>>(key: T, value: any) {
     if (!await $db.config.where('key').equals(key).count()) {
       await $db.config.add({key, value})
@@ -41,6 +47,9 @@ class Config {
   }
   setTheme(theme: 'dark' | 'light', save = true) {
     this.theme = theme
+    mermaid.initialize({
+      theme: theme === 'dark' ? 'dark' : 'default'
+    })
     if (this.theme === 'dark') {
       document.querySelector('html')!.classList.add('dark')
     } else {
@@ -70,8 +79,10 @@ class Config {
           }
           this.i18n = this.configMap.get('i18n') || (config.locale === 'zh-CN' ? 'zh' : 'en')
           this.setTheme(config.theme)
-          resolve(null)
         })
+        setTimeout(() => {
+          resolve(null)
+        }, 200)
       } catch (e) {
         console.error('config err', e)
         resolve(null)

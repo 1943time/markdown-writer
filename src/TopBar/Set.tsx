@@ -11,7 +11,10 @@ import {
   FormControlLabel,
   FormLabel,
   Radio,
-  RadioGroup
+  RadioGroup,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@mui/material'
 import {configStore} from '@/store/config'
 import {stateStore} from '@/store/state'
@@ -191,6 +194,22 @@ export const Set = observer(() => {
                   }}
                 />
               )} label={configStore.getI18nText('set.turnOn')}/>
+            </FormControl>
+          </div>
+          <div>
+            <FormControl variant="standard" className={'w-48'}>
+              <InputLabel>{configStore.getI18nText('set.renderer.codeTheme')}</InputLabel>
+              <Select
+                value={configStore.codeTheme}
+                onChange={e => {
+                  configStore.setConfig('codeTheme', e.target.value as any)
+                }}
+                label={configStore.getI18nText('set.renderer.codeTheme')}
+              >
+                {Object.keys(configStore.codeThemes).map(k =>
+                  <MenuItem value={k} key={k}>{k}</MenuItem>
+                )}
+              </Select>
             </FormControl>
           </div>
         </div>
