@@ -23,9 +23,15 @@ export function Table({node}: {
 }) {
   if (!node.children?.length) return null
   const head = node.children.slice(0, 1)
-  toTh(head)
-  setAlign(head[0]?.children, node.align)
-  setAlign(node.children.slice(1)[0]?.children, node.align)
+  try {
+    toTh(head)
+    setAlign(head[0]?.children, node.align)
+    for (let tr of node.children.slice(1)) {
+      setAlign(tr.children, node.align)
+    }
+  } catch (e) {
+    console.error('table align parser error')
+  }
   return (
     <table {...getPosAttr(node)}>
       <thead>

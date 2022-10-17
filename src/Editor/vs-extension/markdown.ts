@@ -7,6 +7,25 @@
 
 import {languages, editor} from "monaco-editor"
 import {begin_args, all} from "./latex";
+editor.defineTheme('md', {
+  base: 'vs',
+  inherit: true,
+  rules: [
+    { token: 'directive', foreground: '#06b6d4' },
+    {token: 'directive-label', foreground: '#f97316'},
+  ],
+  colors: {}
+})
+
+editor.defineTheme('md-dark', {
+  base: 'vs-dark',
+  inherit: true,
+  rules: [
+    { token: 'directive', foreground: '#0891b2' },
+    {token: 'directive-label', foreground: '#6366f1'},
+  ],
+  colors: {}
+})
 
 export const conf: languages.LanguageConfiguration = {
 	comments: {
@@ -62,8 +81,7 @@ export const language = <languages.IMonarchLanguage>{
 		root: [
 
 			// headers (with #)
-			[/^(\s{0,3})(#+)((?:[^\\#]|@escapes)+)((?:#+)?)/, ['white', 'keyword', 'keyword', 'keyword']],
-
+      [/^(\s{0,3})(#+)((?:[^\\#]|@escapes)+)((?:#+)?)/, ['white', 'keyword', 'keyword', 'keyword']],
 			// headers (with =)
 			[/^\s*(=+|\-+)\s*$/, 'keyword'],
 
@@ -83,14 +101,18 @@ export const language = <languages.IMonarchLanguage>{
 			[/^\s*~~~\s*((?:\w|[\/\-#])+)?\s*$/, { token: 'string', next: '@codeblock' }],
 
 			// github style code blocks (with backticks and language)
-			[/^\s*```\s*((?:\w|[\/\-#])+).*$/, { token: 'string', next: '@codeblockgh', nextEmbedded: '$1' }],
+      [/^\s*```\s*((?:\w|[\/\-#])+).*$/, { token: 'string', next: '@codeblockgh', nextEmbedded: '$1' }],
 
 			// github style code blocks (with backticks but no language)
 			[/^\s*```\s*$/, { token: 'string', next: '@codeblock' }],
 
 			//math
-			[/(^\${2})/, {token: 'comment.math', next: 'math', bracket: '@open'}],
+			[/(^\${2})/, {token: 'directive.math', next: 'math', bracket: '@open'}],
 
+      // containers
+      [/^(:{3})(info|warning|tip|danger|details)/, ['directive', 'directive-label']],
+      // [/^(:{2})(include)(\[[0-9\w\/\-.\u4e00-\u9fa5]+])\s*$/, ['directive', 'directive-label', 'string']],
+      [/^(\s*)(:{3})/, ['white', 'directive']],
 
 			// markup within lines
 			{ include: '@linecontent' },
@@ -128,13 +150,13 @@ export const language = <languages.IMonarchLanguage>{
 			[/(!?\[)((?:[^\]\\]|@escapes)*)(\])/, 'string.link'],
 
 			//inline math
-			[/(\$\$)([^$]*)(\$\$)/, [{token: 'comment.math', bracket: '@open'},
+			[/(\$\$)([^$]*)(\$\$)/, [{token: 'directive.math', bracket: '@open'},
 				{token: '@rematch', next: 'mathInline', goBack:2},
-				{token: 'comment.math', bracket: '@close'}]],
+				{token: 'directive.math', bracket: '@close'}]],
 
-			[/(\$)([^$]+)(\$)/, [{token: 'comment.math', bracket: '@open'},
+			[/(\$)([^$]+)(\$)/, [{token: 'directive.math', bracket: '@open'},
 				{token: '@rematch', next: 'mathInline', goBack:1},
-				{token: 'comment.math', bracket: '@close'}]],
+				{token: 'directive.math', bracket: '@close'}]],
 
 			// or html
 			{ include: 'html' },
@@ -205,12 +227,12 @@ export const language = <languages.IMonarchLanguage>{
 		],
 
 		math: [
-			[/(\${2})/, { token: 'comment.math', next: '@pop', bracket: '@close'}],
+			[/(\${2})/, { token: 'directive.math', next: '@pop', bracket: '@close'}],
 			{ include: 'latex' },
 		],
 
 		mathInline: [
-			[/\${1,2}/, { token: 'comment.math', next: '@pop', bracket: '@close'}],
+			[/\${1,2}/, { token: 'directive.math', next: '@pop', bracket: '@close'}],
 			{ include: 'latex' },
 		],
 

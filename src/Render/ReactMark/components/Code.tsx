@@ -1,5 +1,4 @@
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import {oneDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined'
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined'
 import {ElectronApi} from '@/utils/electronApi'
@@ -19,6 +18,7 @@ export const Code = observer(({node}: {node: IRenderNode}) => {
     copied: false,
     mermaidStr: '',
     lang: [] as string[],
+    visible: false
     // chartJson: {} as any
   })
   useLayoutEffect(() => {
@@ -51,6 +51,10 @@ export const Code = observer(({node}: {node: IRenderNode}) => {
       //   }, 300)
       // }
     }
+    // 代码块可能会导致卡顿
+    setTimeout(() => {
+      setState({visible: true})
+    },16)
   }, [node.value, configStore.theme])
   if (state().lang[0] === 'mermaid' && state().lang[1] === 'shape') {
     return (
@@ -89,23 +93,25 @@ export const Code = observer(({node}: {node: IRenderNode}) => {
           </>
         }
       </span>
-      <SyntaxHighlighter
-        children={node.value}
-        // @ts-ignore
-        style={configStore.curCodeTheme}
-        showLineNumbers={configStore.render_lineNumber}
-        customStyle={{
-          fontSize: 14,
-          margin: 0,
-          paddingTop: 16
-        }}
-        wrapLongLines={configStore.render_codeWordBreak}
-        CodeTag={'div'}
-        language={state().lang[0] || 'text'}
-        codeTagProps={{
-          className: 'inline-block',
-        }}
-      />
+      {state().visible &&
+        <SyntaxHighlighter
+          children={node.value}
+          // @ts-ignore
+          style={configStore.curCodeTheme}
+          showLineNumbers={configStore.render_lineNumber}
+          customStyle={{
+            fontSize: 14,
+            margin: 0,
+            paddingTop: 16
+          }}
+          wrapLongLines={configStore.render_codeWordBreak}
+          CodeTag={'div'}
+          language={state().lang[0] || 'text'}
+          codeTagProps={{
+            className: 'inline-block',
+          }}
+        />
+      }
     </div>
   )
 })

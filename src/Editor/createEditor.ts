@@ -15,7 +15,7 @@ export const createEditor = (el: HTMLDivElement, model: ITextModel, readonly = f
   const editor = monaco.editor.create(el, {
     value: '',
     fontSize: configStore.editor_fontSize,
-    theme: configStore.theme === 'dark' ? 'vs-dark' : 'vs',
+    theme: configStore.theme === 'dark' ? 'md-dark' : 'md',
     readOnly: readonly,
     renderLineHighlight: 'none',
     tabSize: configStore.editor_tabSize,
@@ -54,7 +54,7 @@ export const createEditor = (el: HTMLDivElement, model: ITextModel, readonly = f
         break
       case 'theme':
         editor.updateOptions({
-          theme: value === 'dark' ? 'vs-dark' : 'vs'
+          theme: value === 'dark' ? 'md-dark' : 'md'
         })
         break
     }

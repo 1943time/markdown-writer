@@ -15,6 +15,7 @@ export function ReactMark({code, readonly}: {
     footnoteMap.clear()
     return parser.parse(code).children as any[] || []
   }, [code])
+  // console.log('nodes', nodes)
   useCheckbox(readonly)
   useLink(readonly)
   usePreview(readonly)

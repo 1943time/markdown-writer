@@ -11,7 +11,9 @@ export const useEditorChange = () => {
   })
   let timer = useRef(0)
   useSubject(stateStore.renderNow$, code => {
-    setState({code})
+    setTimeout(() => {
+      setState({code})
+    }, 30)
   })
   useSubject(stateStore.editor$, editor => {
     editor.onDidChangeModelContent((e) => {
