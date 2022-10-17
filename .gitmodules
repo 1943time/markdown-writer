@@ -1,0 +1,3 @@
+[submodule "src/server"]
+	path = src/server
+	url = git@codeup.aliyun.com:619fb930cb55679b040c4b47/mdwriter-server.git
