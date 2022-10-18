@@ -100,7 +100,7 @@ export function TopBarPrint(props: {
                 download(res, treeStore.activeNode!.name.replace(/\.\w+/, '.pdf'))
               })
             }}
-          >{configStore.getI18nText('print')} PDF</Button>
+          >PDF</Button>
           <Button
             variant={'contained'} size={'small'} startIcon={<GetAppOutlinedIcon/>}
             onClick={() => {
@@ -110,7 +110,7 @@ export function TopBarPrint(props: {
                 }
               })
             }}
-          >{configStore.getI18nText('print')} HTML</Button>
+          >HTML</Button>
         </div>
       </div>
     </div>
