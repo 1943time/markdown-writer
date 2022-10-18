@@ -1,8 +1,8 @@
 import {extname} from 'path'
 import {readFileSync, existsSync} from 'fs'
+import {join} from 'path'
+import {readFile} from 'fs/promises'
 import {mediaType} from '@/utils/mediaType'
-import {ElectronApi} from '@/utils/electronApi'
-import * as monaco from 'monaco-editor'
 export const findTargetMenu = (e: PointerEvent | MouseEvent | DragEvent) => {
   const target = e.target as HTMLElement
   if (target.hasAttribute('data-menu')) return target
@@ -59,4 +59,34 @@ export const getClipboardFile = (ev: ClipboardEvent):null | File => {
     return dataTransferItem.getAsFile()
   }
   return null
+}
+
+export const outputHtml = async (html: string, name: string, theme: string) => {
+  const css = await readFile(join(String(process.env.PUBLIC), 'output.css'), {encoding: 'utf-8'})
+  html = `
+    <!doctype html>
+    <html lang="en" class="${theme}">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>${name.replace(/\.\w+$/, '')}</title>
+      <style>
+        ${css}
+      </style>
+    </head>
+    <body>
+      <div class="vp-doc" style="min-height: 100vh">
+        <div style="max-width: 800px; margin:auto;padding-top:20px">
+          ${html}
+        </div>
+      </div>
+    </body>
+    </html>
+  `
+  const link = document.createElement('a')
+  link.setAttribute('download', name.replace(/\.\w+$/, '.html'))
+  link.setAttribute('href', 'data:text/html'  +  ';charset=utf-8,' + encodeURIComponent(html))
+  link.click()
 }

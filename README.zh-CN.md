@@ -14,6 +14,7 @@
 ## 功能
 - Gfm 语法支持
 - 暗黑和明亮主题
+- 导出pdf 和 html文件
 - 标题导航
 - [脚注](https://github.blog/changelog/2021-09-30-footnotes-now-supported-in-markdown-fields/)
 - 表情
@@ -25,7 +26,6 @@
 - 自由调整文件树
 - 历史记录与回滚
 - 剪贴板文件直接拷贝入编辑器中
-- pdf 导出
 
 ## Mac 系统无法打开
 > 非常抱歉在项目的早期阶段，还没有进行mac 代码签名  

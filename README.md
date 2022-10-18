@@ -14,6 +14,7 @@ English | [简体中文](README.zh-CN.md)
 ## Functions
 - Gfm syntax support
 - dark and light theme
+- export pdf and html
 - heading map
 - [Footnote](https://github.blog/changelog/2021-09-30-footnotes-now-supported-in-markdown-fields/)
 - emoji
@@ -21,7 +22,6 @@ English | [简体中文](README.zh-CN.md)
 - [custom containers](#containers)
 - [katex and code completion](#katex)
 - [mermaid diagrams](#mermaid)   Related Links [github](https://github.com/mermaid-js/mermaid)
-- print pdf
 - Advanced Search and File lookup
 - Free adjustment of file tree
 - History and rollback

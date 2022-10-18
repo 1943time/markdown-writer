@@ -37,7 +37,7 @@ export const FootNote = observer(({node}: {
               Tooltip: Paper
             }}
             open={openTip}
-            title={openTip ? <div className={'py-2 px-3 max-w-[300px] f13 text-gray-100 bg-gray-700 rounded'}><ReactRenderer nodes={footnoteMap.get(node.identifier) || []}/></div> : ''}
+            title={openTip ? <div className={'py-2 px-3 max-w-[300px] text-xs text-gray-100 dark:bg-zinc-700 rounded bg-zinc-600 footnote'}><ReactRenderer nodes={footnoteMap.get(node.identifier) || []}/></div> : ''}
           >
             <sup
               onClick={(e) => {

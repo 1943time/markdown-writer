@@ -8,6 +8,7 @@ import {useCallback, useEffect, useRef} from 'react'
 import {ReactComponent as Fixed} from '@/assets/icons/nail.svg'
 import {editor} from 'monaco-editor'
 import IStandaloneCodeEditor = editor.IStandaloneCodeEditor
+import {runInAction} from 'mobx'
 
 export const DocList = observer(() => {
   const scrollTimer = useRef(0)
@@ -55,8 +56,12 @@ export const DocList = observer(() => {
     setTimeout(() => {
       const children = document.querySelector('#render')?.children
       if (children) {
+        const heads = Array.from(children).filter(e => /^h\d/.test(e.tagName.toLowerCase())) as HTMLElement[]
         setState({
-          heading: Array.from(children).filter(e => /^h\d/.test(e.tagName.toLowerCase())) as HTMLElement[]
+          heading: heads
+        })
+        runInAction(() => {
+          stateStore.headNodeCount = heads.length
         })
       }
     }, 100)
@@ -65,8 +70,12 @@ export const DocList = observer(() => {
     if (e.newValue) {
       const editor = e.newValue as IStandaloneCodeEditor
       getHeadNodes()
+      let timer = 0
       editor.onDidChangeModelContent(e => {
-        getHeadNodes()
+        clearTimeout(timer)
+        timer = window.setTimeout(() => {
+          getHeadNodes()
+        }, 500)
       })
     }
   })

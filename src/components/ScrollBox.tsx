@@ -82,7 +82,7 @@ export function ScrollBox({children, className, mode, containerId, smooth, verti
         onScroll={scroll}
       >
         <div
-          className={`inline-block ${mode !== 'y' ? 'min-w-full' : 'w-full'}`}
+          className={`inline-block align-top ${mode !== 'y' ? 'min-w-full' : 'w-full'}`}
           ref={contentRef}
         >
           {children}

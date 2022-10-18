@@ -32,8 +32,8 @@ export const i18n = {
     en: 'update'
   },
   print: {
-    zh: '打印 PDF',
-    en: 'print PDF'
+    zh: '打印',
+    en: 'print'
   },
   cancel: {
     zh: '取消',

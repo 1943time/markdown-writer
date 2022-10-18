@@ -9,14 +9,15 @@
   "main": "dist/electron/main/index.js",
   "scripts": {
     "dev": "vite",
-    "build:all": "npm run build:vite && npm run build:win && npm run build:mac",
+    "build:all": "npm run outputcss && npm run build:vite && npm run build:win && npm run build:mac",
     "dev:package": "npm run build:vite && npm run build:mac:arm64",
     "build:vite": "tsc && vite build",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "build:win": "electron-builder build -w --x64",
     "build:mac": "electron-builder build -m --arm64 --x64",
-    "build:mac:arm64": "electron-builder build -m --arm64"
+    "build:mac:arm64": "electron-builder build -m --arm64",
+    "outputcss": "rollup --config rollup.config.js && rm public/output.js"
   },
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
@@ -69,6 +70,8 @@
     "remark-math": "^5.1.1",
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
+    "rollup": "^3.2.3",
+    "rollup-plugin-postcss": "^4.0.2",
     "rxjs": "^7.5.6",
     "sass": "^1.55.0",
     "semver": "^7.3.8",

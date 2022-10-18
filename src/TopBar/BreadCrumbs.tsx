@@ -14,7 +14,7 @@ export const BreadCrumbs = observer(() => {
     return path
   }, [treeStore.activePath])
   return (
-    <div className={'leading-6 text-gray w-full overflow-x-auto hide-scrollbar'} style={{fontSize: 13}}>
+    <div className={'leading-6 text-gray max-w-[70vw] whitespace-nowrap overflow-x-auto hide-scrollbar'} style={{fontSize: 13}}>
       <span className={'font-semibold inline-block'}>{treeStore.root?.name || 'NoteBook'}</span>
       {path.map((n, i) =>
         <Fragment key={n.path}>

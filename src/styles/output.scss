@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./var.scss";
+@import '../Render/styles/vars.css';
+@import './color.scss';
+@import '../Render/styles/fonts.css';
+@import '../Render/styles/base.css';
+@import '../Render/styles/components/custom-block.css';
+@import '../Render/styles/components/vp-doc.css';

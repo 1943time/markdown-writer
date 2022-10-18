@@ -126,7 +126,7 @@ export const TopBar = observer(() => {
         icon: <SearchOutlinedIcon fontSize={'inherit'}/>
       },
       {
-        title: 'pdf',
+        title: 'export',
         className: 'text-yellow',
         icon: <FileDownloadIcon fontSize={'inherit'}/>,
         type: 'print'

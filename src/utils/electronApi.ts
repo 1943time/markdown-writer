@@ -24,6 +24,9 @@ export const ElectronApi = {
   getStore(key: string) {
     return ipcRenderer.invoke('getStore', key)
   },
+  runJs(webview: WebviewTag, code: string) {
+    return ipcRenderer.invoke('runJs', webview.getWebContentsId(), code)
+  },
   printPdf(webview: WebviewTag) {
     return ipcRenderer.invoke('printPdf', webview.getWebContentsId())
   },

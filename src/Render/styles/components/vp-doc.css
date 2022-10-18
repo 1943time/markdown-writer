@@ -243,7 +243,7 @@
   font-size: var(--vp-code-font-size);
 }
 
-.vp-doc :not(pre) > code {
+.vp-doc :not(pre) > code,.footnote code {
   border-radius: 4px;
   padding: 3px 6px;
   color: var(--vp-c-text-code);
@@ -287,10 +287,13 @@
   }
 }
 
-.vp-doc div[class*='language-'] + div[class*='language-'],
-.vp-doc div[class$='-api'] + div[class*='language-'],
-.vp-doc div[class*='language-'] + div[class$='-api'] > div[class*='language-'] {
-  margin-top: -8px;
+/*.vp-doc div[class*='language-'] + div[class*='language-'],*/
+/*.vp-doc div[class$='-api'] + div[class*='language-'],*/
+/*.vp-doc div[class*='language-'] + div[class$='-api'] > div[class*='language-'] {*/
+/*  margin-top: -8px;*/
+/*}*/
+.footnote a {
+  color: var(--md-text-blue);
 }
 .vp-doc.tab4 code{
   -moz-tab-size: 4;
@@ -335,61 +338,6 @@
   font-size: var(--vp-code-font-size);
   color: var(--vp-code-line-number-color);
   transition: border-color 0.5s, color 0.5s;
-}
-
-.vp-doc [class*='language-'] > button.copy {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 3;
-  display: block;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4px;
-  width: 40px;
-  height: 40px;
-  background-color: var(--vp-code-block-bg);
-  opacity: 0;
-  cursor: pointer;
-  background-image: var(--vp-icon-copy);
-  background-position: 50%;
-  background-size: 20px;
-  background-repeat: no-repeat;
-  transition: opacity 0.4s;
-}
-
-.vp-doc [class*='language-']:hover > button.copy,
-.vp-doc [class*='language-'] > button.copy:focus {
-  opacity: 1;
-}
-
-.vp-doc [class*='language-'] > button.copy:hover {
-  background-color: var(--vp-code-copy-code-hover-bg);
-}
-
-.vp-doc [class*='language-'] > button.copy.copied,
-.vp-doc [class*='language-'] > button.copy:hover.copied {
-  border-radius: 0 4px 4px 0;
-  background-color: var(--vp-code-copy-code-hover-bg);
-  background-image: var(--vp-icon-copied);
-}
-
-.vp-doc [class*='language-'] > button.copy.copied::before,
-.vp-doc [class*='language-'] > button.copy:hover.copied::before {
-  position: relative;
-  left: -65px;
-  display: block;
-  border-radius: 4px 0 0 4px;
-  padding-top: 8px;
-  width: 64px;
-  height: 40px;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--vp-code-copy-code-active-text);
-  background-color: var(--vp-code-copy-code-hover-bg);
-  white-space: nowrap;
-  content: 'Copied';
 }
 
 .vp-doc [class*='language-'] > span.lang {

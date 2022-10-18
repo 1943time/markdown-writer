@@ -32,11 +32,12 @@ export class StateStore {
   printVisible = false
   configVisible = false
   historyVisible = false
+  headNodeCount = 0
   setStatusVisible(key: 'treeOpen' | 'recentRecordVisible' | 'openSearch' | 'finderVisible' | 'printVisible' | 'configVisible' | 'historyVisible', value: boolean) {
     this[key] = value
   }
   get showSubNav() {
-    return this.viewWidth > 1000 || (this.viewState === 'view' && document.body.clientWidth > 1200)
+    return this.headNodeCount > 0 && (this.viewWidth > 1000 || (this.viewState === 'view' && document.body.clientWidth > 1200))
   }
   initialOpenKeys() {
     const keys = localStorage.getItem(`${treeStore.root!.path}:openKeys`)

@@ -126,7 +126,8 @@ ipcMain.handle('appInfo', (e) => {
     locale: app.getLocale(),
     version: app.getVersion(),
     appName: app.getName(),
-    theme: nativeTheme.themeSource
+    theme: nativeTheme.themeSource,
+    public: process.env.PUBLIC
   }
 })
 
@@ -134,6 +135,10 @@ ipcMain.handle('printPdf', (e, id: string) => {
   return webContents.fromId(+id).printToPDF({
     printBackground: true
   })
+})
+
+ipcMain.handle('runJs', (e, id: string, code: string) => {
+  return webContents.fromId(+id)?.executeJavaScript(code)
 })
 
 ipcMain.handle('saveStore', (e, key, value) => {

@@ -3,10 +3,11 @@ import {useEffect, useRef} from 'react'
 import {ElectronApi} from '@/utils/electronApi'
 import {treeStore} from '@/store/tree'
 import WebviewTag = Electron.WebviewTag
-import {Button, CircularProgress} from '@mui/material'
+import * as el from 'electron'
+import {Button, Radio,RadioGroup,FormControlLabel, CircularProgress} from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import GetAppOutlinedIcon from '@mui/icons-material/GetAppOutlined';
-import {download} from '@/utils/dom'
+import {download, outputHtml} from '@/utils/dom'
 import {configStore} from '@/store/config'
 export function TopBarPrint(props: {
   visible: boolean
@@ -15,7 +16,8 @@ export function TopBarPrint(props: {
   const [state, setState] = useSetState({
     info: {preload: '', index: ''},
     url: '',
-    loaded: false
+    loaded: false,
+    theme: configStore.theme
   })
   const webview = useRef<WebviewTag>(null)
   useEffect(() => {
@@ -37,6 +39,7 @@ export function TopBarPrint(props: {
 
   useEffect(() => {
     if (props.visible) {
+      setState({theme: configStore.theme})
       setState({
         url: state.info.index + `#/render?path=${treeStore.activeNode!.path}&root=${treeStore.root?.path}`
       })
@@ -64,10 +67,28 @@ export function TopBarPrint(props: {
           nodeintegration={'true'}
           webpreferences={'contextIsolation=false'}
           style={{opacity: state.loaded ? 1 : 0}}
-          className={'absolute left-0 top-8 h-[calc(100%_-_100px)] w-full'}
+          className={'absolute left-0 top-8 h-[calc(100%_-_150px)] w-full'}
           src={state.url}
         />
-        <div className={'left-1/2 bottom-5 -translate-x-1/2 absolute z-10 flex items-center space-x-5'}>
+        <div className={'left-1/2 bottom-16 -translate-x-1/2 absolute z-10 flex items-center space-x-5 justify-center w-96'}>
+          <RadioGroup
+            row={true}
+            onChange={e => {
+              setState({theme: e.target.value as any})
+              console.log(e.target.value)
+              if (e.target.value === 'dark') {
+                ElectronApi.runJs(webview.current!, `document.querySelector('html').classList.add('dark')`)
+              } else {
+                ElectronApi.runJs(webview.current!, `document.querySelector('html').classList.remove('dark')`)
+              }
+            }}
+            value={state.theme}
+          >
+            <FormControlLabel value="light" control={<Radio />} label="Light" />
+            <FormControlLabel value="dark" control={<Radio />} label="Dark" />
+          </RadioGroup>
+        </div>
+        <div className={'left-1/2 bottom-5 -translate-x-1/2 absolute z-10 flex items-center space-x-5 justify-center w-96'}>
           <Button variant={'outlined'} size={'small'} startIcon={<CloseOutlinedIcon/>} onClick={() => {
             setState({url: '', loaded: false})
             props.onClose()
@@ -79,7 +100,17 @@ export function TopBarPrint(props: {
                 download(res, treeStore.activeNode!.name.replace(/\.\w+/, '.pdf'))
               })
             }}
-          >{configStore.getI18nText('print')}</Button>
+          >{configStore.getI18nText('print')} PDF</Button>
+          <Button
+            variant={'contained'} size={'small'} startIcon={<GetAppOutlinedIcon/>}
+            onClick={() => {
+              ElectronApi.runJs(webview.current!, `document.querySelector('#pdf-render').innerHTML`).then(res => {
+                if (res) {
+                  outputHtml(res, treeStore.activeNode!.name.replace(/\.\w+/, '.html'), state.theme)
+                }
+              })
+            }}
+          >{configStore.getI18nText('print')} HTML</Button>
         </div>
       </div>
     </div>

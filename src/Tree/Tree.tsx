@@ -20,7 +20,7 @@ export const Tree = observer(() => {
         className={'border-1 border-r border-solid h-[calc(100%_-_28px)]'}
       >
         <div
-          className={'pb-20'}
+          className={'pb-20 min-h-[calc(100vh_-_60px)]'}
           onClick={(e) => {
             if ((e.target as HTMLElement).getAttribute('id') === 'tree' && treeStore.root) {
               treeStore.selectNode(treeStore.root, true)

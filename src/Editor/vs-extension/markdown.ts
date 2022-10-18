@@ -21,7 +21,7 @@ editor.defineTheme('md-dark', {
   base: 'vs-dark',
   inherit: true,
   rules: [
-    { token: 'directive', foreground: '#0891b2' },
+    { token: 'directive', foreground: '#0891b2'},
     {token: 'directive-label', foreground: '#6366f1'},
   ],
   colors: {}
@@ -227,6 +227,7 @@ export const language = <languages.IMonarchLanguage>{
 		],
 
 		math: [
+      [/^\s*%.*/, 'comment'],
 			[/(\${2})/, { token: 'directive.math', next: '@pop', bracket: '@close'}],
 			{ include: 'latex' },
 		],
