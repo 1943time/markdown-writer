@@ -31,11 +31,13 @@ export function TopBarPrint(props: {
     const finish = () => {
       setState({loaded: true})
     }
-    webview.current!.addEventListener('did-finish-load', finish)
+    if (props.visible) {
+      webview.current!.addEventListener('did-finish-load', finish)
+    }
     return () => {
       webview.current?.removeEventListener('did-finish-load', finish)
     }
-  }, [])
+  }, [props.visible])
 
   useEffect(() => {
     if (props.visible) {
@@ -43,6 +45,7 @@ export function TopBarPrint(props: {
       setState({
         url: state.info.index + `#/render?path=${treeStore.activeNode!.path}&root=${treeStore.root?.path}`
       })
+      webview.current!.src = state.info.index + `#/render?path=${treeStore.activeNode!.path}&root=${treeStore.root?.path}`
     }
   }, [props.visible, state.info.index])
   return (
@@ -60,16 +63,18 @@ export function TopBarPrint(props: {
             <CircularProgress color="secondary"/>
           </div>
         }
-        <webview
-          ref={webview}
-          // preload={`file://${state.info.preload}`}
-          // @ts-ignore
-          nodeintegration={'true'}
-          webpreferences={'contextIsolation=false'}
-          style={{opacity: state.loaded ? 1 : 0}}
-          className={'absolute left-0 top-8 h-[calc(100%_-_150px)] w-full'}
-          src={state.url}
-        />
+        {props.visible &&
+          <webview
+            ref={webview}
+            // preload={`file://${state.info.preload}`}
+            // @ts-ignore
+            nodeintegration={'true'}
+            webpreferences={'contextIsolation=false'}
+            style={{opacity: state.loaded ? 1 : 0}}
+            className={'absolute left-0 top-8 h-[calc(100%_-_150px)] w-full'}
+            // src={state.url}
+          />
+        }
         <div className={'left-1/2 bottom-16 -translate-x-1/2 absolute z-10 flex items-center space-x-5 justify-center w-96'}>
           <RadioGroup
             row={true}
