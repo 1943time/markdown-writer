@@ -11,8 +11,8 @@ editor.defineTheme('md', {
   base: 'vs',
   inherit: true,
   rules: [
-    { token: 'directive', foreground: '#06b6d4' },
-    {token: 'directive-label', foreground: '#f97316'},
+    { token: 'directive', foreground: '#0891b2' },
+    {token: 'directive-label', foreground: '#4f46e5'},
   ],
   colors: {}
 })
