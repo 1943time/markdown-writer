@@ -33,7 +33,7 @@
   line-height: 32px;
   font-size: 24px;
 }
-.vp-doc li > p {
+.vp-doc li > div {
   display: inline;
   margin: 0;
 }
