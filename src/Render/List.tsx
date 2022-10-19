@@ -1,7 +1,7 @@
 import {observer} from 'mobx-react-lite'
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined'
 import {useGetSetState} from 'react-use'
-import {useObserve, useObserveKey} from '@/utils/hooks'
+import {useObserve, useObserveKey, useSubject} from '@/utils/hooks'
 import {stateStore} from '@/store/state'
 import {treeStore} from '@/store/tree'
 import {useCallback, useEffect, useRef} from 'react'
@@ -53,19 +53,22 @@ export const DocList = observer(() => {
     }
   })
   const getHeadNodes = useCallback(() => {
-    setTimeout(() => {
-      const children = document.querySelector('#render')?.children
-      if (children) {
-        const heads = Array.from(children).filter(e => /^h\d/.test(e.tagName.toLowerCase())) as HTMLElement[]
-        setState({
-          heading: heads
-        })
-        runInAction(() => {
-          stateStore.headNodeCount = heads.length
-        })
-      }
-    }, 100)
+    const children = document.querySelector('#render')?.children
+    if (children) {
+      const heads = Array.from(children).filter(e => /^h\d/.test(e.tagName.toLowerCase())) as HTMLElement[]
+      setState({
+        heading: heads
+      })
+      runInAction(() => {
+        stateStore.headNodeCount = heads.length
+      })
+    }
   }, [])
+  useSubject(stateStore.renderNow$, () => {
+    setTimeout(() => {
+      getHeadNodes()
+    }, 100)
+  })
   useObserveKey(stateStore, 'editor', e => {
     if (e.newValue) {
       const editor = e.newValue as IStandaloneCodeEditor

@@ -23,9 +23,9 @@ export const offsetBody = (el: HTMLElement) => {
   return top
 }
 
-export const getUrl = (path?: string | null) => {
+export const getUrl = (path?: string | null, base64 = false) => {
   if (!path || !existsSync(path)) return ''
-  if (import.meta.env.MODE === 'development' && mediaType(path) === 'image') {
+  if ((import.meta.env.MODE === 'development' && mediaType(path) === 'image') || base64) {
     const res = readFileSync(path, {encoding: 'base64'})
     const type = extname(path).replace(/^\./, '')
     return `data:image/${type};base64,${res}`
@@ -63,6 +63,12 @@ export const getClipboardFile = (ev: ClipboardEvent):null | File => {
 
 export const outputHtml = async (html: string, name: string, theme: string) => {
   const css = await readFile(join(String(process.env.PUBLIC), 'output.css'), {encoding: 'utf-8'})
+  const div = document.createElement('div')
+  div.innerHTML = html
+  let katexLink = ''
+  if (div.querySelector('.katex')) {
+    katexLink = '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.2/katex.min.css" integrity="sha512-zMdfms08UF0gvJ3NDsaDXtmg9pY0QxEs1+y8x5lGYJ1HhgbxAqlGDRIsHnjIlOm3dYi5eCjp96ME9LlgXBfrjg==" crossorigin="anonymous" referrerpolicy="no-referrer" />'
+  }
   html = `
     <!doctype html>
     <html lang="en" class="${theme}">
@@ -72,13 +78,14 @@ export const outputHtml = async (html: string, name: string, theme: string) => {
             content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>${name.replace(/\.\w+$/, '')}</title>
+      ${katexLink}
       <style>
         ${css}
       </style>
     </head>
     <body>
       <div class="vp-doc" style="min-height: 100vh">
-        <div style="max-width: 800px; margin:auto;padding-top:20px">
+        <div style="max-width: 800px; margin:auto;padding-top:20px;padding-bottom: 40px">
           ${html}
         </div>
       </div>

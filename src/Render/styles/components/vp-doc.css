@@ -34,7 +34,7 @@
   font-size: 24px;
 }
 .vp-doc li > p {
-  display: inline-block;
+  display: inline;
   margin: 0;
 }
 .vp-doc h3 {
@@ -81,11 +81,12 @@
  * -------------------------------------------------------------------------- */
 
 .vp-doc p,
+.vp-doc .p,
 .vp-doc summary {
   margin: 16px 0;
 }
 
-.vp-doc p {
+.vp-doc p,.vp-doc .p {
   line-height: 28px;
 }
 

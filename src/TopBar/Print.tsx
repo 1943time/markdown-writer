@@ -3,7 +3,6 @@ import {useEffect, useRef} from 'react'
 import {ElectronApi} from '@/utils/electronApi'
 import {treeStore} from '@/store/tree'
 import WebviewTag = Electron.WebviewTag
-import * as el from 'electron'
 import {Button, Radio,RadioGroup,FormControlLabel, CircularProgress} from '@mui/material'
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import GetAppOutlinedIcon from '@mui/icons-material/GetAppOutlined';
@@ -15,7 +14,6 @@ export function TopBarPrint(props: {
 }) {
   const [state, setState] = useSetState({
     info: {preload: '', index: ''},
-    url: '',
     loaded: false,
     theme: configStore.theme
   })
@@ -42,9 +40,6 @@ export function TopBarPrint(props: {
   useEffect(() => {
     if (props.visible) {
       setState({theme: configStore.theme})
-      setState({
-        url: state.info.index + `#/render?path=${treeStore.activeNode!.path}&root=${treeStore.root?.path}`
-      })
       webview.current!.src = state.info.index + `#/render?path=${treeStore.activeNode!.path}&root=${treeStore.root?.path}`
     }
   }, [props.visible, state.info.index])
@@ -53,7 +48,7 @@ export function TopBarPrint(props: {
       hidden={!props.visible}
       className={'fixed inset-0 z-50 bg-black/70'}
       onClick={() => {
-        setState({url: '', loaded: false})
+        setState({loaded: false})
         props.onClose()
       }}
     >
@@ -95,7 +90,7 @@ export function TopBarPrint(props: {
         </div>
         <div className={'left-1/2 bottom-5 -translate-x-1/2 absolute z-10 flex items-center space-x-5 justify-center w-96'}>
           <Button variant={'outlined'} size={'small'} startIcon={<CloseOutlinedIcon/>} onClick={() => {
-            setState({url: '', loaded: false})
+            setState({loaded: false})
             props.onClose()
           }}>{configStore.getI18nText('close')}</Button>
           <Button

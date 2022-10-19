@@ -11,6 +11,7 @@ import {Katex} from '@/Render/ReactMark/components/Katex/Katex'
 import {Html} from '@/Render/ReactMark/components/Html'
 import {combineHtml} from '@/Render/ReactMark/utils/combineHtml'
 import {FootNote, footnoteMap} from '@/Render/ReactMark/components/FootNote'
+import {Paragraph} from '@/Render/ReactMark/components/Paragraph'
 
 export type IRenderNode = {
   type: string
@@ -48,6 +49,8 @@ function RenderNode({node}: {
   node: IRenderNode
 }) {
   switch (node.type) {
+    case 'paragraph':
+      return createElement(Paragraph, {node})
     case 'heading':
       return createElement(Heading, {node})
     case 'containerDirective':
