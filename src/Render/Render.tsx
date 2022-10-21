@@ -21,7 +21,7 @@ export const Render = observer(() => {
             className={`relative px-10 max-w-[780px] w-full inline-block text-left min-h-screen
             ${configStore.render_codeTabSize === 4 ? 'tab4' : 'tab2'} ${configStore.render_codeWordBreak ? 'pre-wrap' : ''}`}
             id={'content'}
-            style={{transform: `translateX(${stateStore.showSubNav ? -100 : 0}px)`}}
+            style={{transform: `translateX(${stateStore.viewState === 'view' ? -100 : 0}px)`}}
           >
             <ReactMark code={code}/>
           </div>

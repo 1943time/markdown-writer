@@ -7,6 +7,7 @@ import {treeStore} from '@/store/tree'
 import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined'
 import {MetaKey} from '@/utils/Widget'
 import {observer} from 'mobx-react-lite'
+import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined';
 export const Empty = observer(() => {
   return (
     <div className={'h-full w-full dark:bg-zinc-800 bg-gray-200 flex items-center justify-center'}>
@@ -43,6 +44,20 @@ export const Empty = observer(() => {
               <CreateNewFolderOutlinedIcon fontSize={'small'}/>
               <span className={'ml-1'}>
                 {configStore.getI18nText('treeTopBar.openFolder')}
+              </span>
+            </div>
+          </div>
+          <div
+            className={'px-3 duration-200 dark:text-blue-400 cursor-pointer dark:hover:text-blue-600 w-72 text-blue-500 hover:text-blue-400'}
+            onClick={(e) => {
+              e.stopPropagation()
+              treeStore.openFile()
+            }}
+          >
+            <div className={'flex items-center'}>
+              <PostAddOutlinedIcon fontSize={'small'}/>
+              <span className={'ml-1'}>
+                {configStore.getI18nText('treeTopBar.openFile')}
               </span>
             </div>
           </div>

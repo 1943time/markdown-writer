@@ -12,7 +12,8 @@ monaco.languages.registerLinkProvider('markdown-math', {
     const content = model.getValue()
     const matchHttp = content.matchAll(/https?:\/\/(%|\w|=|\?|\.|\/|&|-)+/g)
     const matchLocalLink = content.matchAll(/(?<=\[[^\[\]]*\]\()([%\s\w\/\-.#\u4e00-\u9fa5]*)/g)
-    const machAll = [...matchHttp, ...matchLocalLink]
+    const matchIncludeLink = content.matchAll(/(?<=::include\[)([%\s\w\/\-.#\u4e00-\u9fa5]*)/g)
+    const machAll = [...matchHttp, ...matchLocalLink, ...matchIncludeLink]
     if (machAll.length) {
       for (let m of machAll) {
         const lines = content.slice(0, m.index).split('\n')

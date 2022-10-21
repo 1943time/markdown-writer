@@ -1,5 +1,5 @@
 import {makeAutoObservable, observable, observe, runInAction} from 'mobx'
-import {basename, join, sep} from 'path'
+import {basename, join, sep, dirname} from 'path'
 import {appendFile, lstat, mkdir, readdir, rename, stat} from 'fs/promises'
 import {Subject} from 'rxjs'
 import {ElectronApi} from '@/utils/electronApi'
@@ -192,18 +192,22 @@ class TreeStore {
       this.activePath = this.tabs[0]?.path
     }
   }
+  pushTab(node: TreeNode) {
+    if (!this.tabs.includes(node)) {
+      if (this.tabs.length > 9) {
+        this.tabs.shift()
+      }
+      this.tabs.push(node)
+    }
+  }
+
   async selectNode(node: TreeNode, view = false) {
     await this.checkExist(node)
     runInAction(() => {
       this.selectPath = node.path
       if (node.type === 'file') {
         this.activePath = node.path
-        if (!this.tabs.includes(node)) {
-          if (this.tabs.length > 9) {
-            this.tabs.shift()
-          }
-          this.tabs.push(node)
-        }
+        this.pushTab(node)
         this.cacheTabs()
       } else {
         if (!view) stateStore.toggleOpenKeys(node.path)
@@ -360,7 +364,12 @@ class TreeStore {
         this.activePath = this.tabs[index === 0 ? 0 : index - 1]?.path
       }
     }
-    this.cacheTabs()
+    // delete node other than root
+    if (!node.path.startsWith(this.root!.path)) {
+      this.nodeMap.delete(node.path)
+    } else {
+      this.cacheTabs()
+    }
   }
   setActivePath(path?: string) {
     this.activePath = path
@@ -404,6 +413,28 @@ class TreeStore {
         await this.openDir(path)
         await $db.recentFolder.where('path').equals(path).delete()
         $db.recentFolder.add({path})
+      }
+    })
+  }
+  openFile() {
+    ElectronApi.openDialog('showOpenDialog', {
+      properties: ['openFile'],
+      filters: [
+        {extensions: ['md', 'markdown'], name: ''}
+      ]
+    }).then(res => {
+      if (res.filePaths[0]) {
+        const path = res.filePaths[0]
+        const node:TreeNode = observable({
+          name: basename(path),
+          path: path,
+          type: 'file',
+          parentPath: dirname(path)
+        })
+        this.nodeMap.set(node.path, node)
+        this.pushTab(node)
+        this.activePath = node.path
+        this.selectPath = undefined
       }
     })
   }

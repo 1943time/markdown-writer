@@ -25,10 +25,15 @@ export const FolderBar = observer(() => {
     const open = () => {
       treeStore.openSelectDir()
     }
+    const openFile = () => {
+      treeStore.openFile()
+    }
     ipcRenderer.on('openFolder', open)
+    ipcRenderer.on('openFile', openFile)
     ipcRenderer.on('openRecent', openRecent)
     return () => {
       ipcRenderer.off('openFolder', open)
+      ipcRenderer.off('openFile', openFile)
       ipcRenderer.off('openRecent', openRecent)
     }
   }, [])
@@ -87,6 +92,21 @@ export const FolderBar = observer(() => {
                 <CreateNewFolderOutlinedIcon fontSize={'inherit'}/>
                 <span className={'ml-1'}>
                 {configStore.getI18nText('treeTopBar.openFolder')}
+              </span>
+              </div>
+            </div>
+            <div
+              className={'px-3 flex items-center justify-between duration-200 dark:hover:bg-sky-500 hover:bg-sky-300 dark:text-gray-100 text-gray-600 group'}
+              onClick={(e) => {
+                e.stopPropagation()
+                setState({menuVisible: false})
+                treeStore.openFile()
+              }}
+            >
+              <div className={'flex items-center'}>
+                <PostAddOutlinedIcon fontSize={'inherit'}/>
+                <span className={'ml-1'}>
+                {configStore.getI18nText('treeTopBar.openFile')}
               </span>
               </div>
             </div>

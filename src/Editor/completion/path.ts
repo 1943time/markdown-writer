@@ -7,11 +7,15 @@ import CompletionItemKind = languages.CompletionItemKind
 
 export const pathCompletion:ProvideCompletion = (model, pos, lineText) => {
   let suggestions:CompletionItem[] = []
-  const path = lineText.match(/(?<=((?:\]\()|(?:\]\:))[ \t\f\v]*)[0-9\w\/\-.#\u4e00-\u9fa5]*$/)?.[0]
+  let path = lineText.match(/(?<=((?:\]\()|(?:\]\:))[ \t\f\v]*)[0-9\w\/\-.#\u4e00-\u9fa5]*$/)?.[0]
+  let startColumn = lineText.replace(/\([^(]*$/, '')
+  if (lineText.startsWith(':')) {
+    path = lineText.match(/\[([0-9\w\/\-.#\u4e00-\u9fa5]*)]?$/)?.[1]
+    startColumn = lineText.replace(/\[[^\[]*$/, '')
+  }
   if (!path) return suggestions
   if (/https?:/.test(path)) return suggestions
   if (!treeStore.activePath) return suggestions
-  const startColumn = lineText.replace(/\([^(]*$/, '')
   const isImage = /!\[[^\[\]]*?\](?:(?:\([^\)]*)|(?:\:[ \t\f\v]*\S*))$/.test(lineText)
   const paths = path.split('/')
   const dir = paths.slice(0, paths.length - 1)
@@ -42,7 +46,7 @@ export const pathCompletion:ProvideCompletion = (model, pos, lineText) => {
   for (let n of nodes) {
     const file = `${dir.length ? dir.join('/') + '/' : ''}${n.name}`
     const mt = mediaType(n.name)
-    if (n.type === 'file' && isImage && mt !== 'image') continue
+    if (n.type === 'file' && isImage && ['markdown', 'lang'].includes(mt)) continue
     suggestions.push({
       label: n.name,
       kind: n.type === 'folder' ? CompletionItemKind.Folder : mt === 'markdown' ? CompletionItemKind.Reference : CompletionItemKind.File,

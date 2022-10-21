@@ -37,6 +37,12 @@ export const createMenu = (win: BrowserWindow) => {
           }
         },
         {
+          label: 'Open File',
+          click: () => {
+            win.webContents.send('openFile')
+          }
+        },
+        {
           label: 'Open Recent Project',
           accelerator: 'CmdOrCtrl+Shift+L',
           click: () => {

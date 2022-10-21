@@ -5,7 +5,7 @@ export function Paragraph({node}: {
   node: IRenderNode
 }) {
   return (
-    <div {...getPosAttr(node)} className={'p'}>
+    <div {...getPosAttr(node)} className={'p whitespace-pre-wrap'}>
       <ReactRenderer nodes={node.children}/>
     </div>
   )

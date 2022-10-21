@@ -9,7 +9,10 @@ export function Link({node}: {
       {...getPosAttr(node)}
       href={node.url}
     >
-      <ReactRenderer nodes={node.children}/>
+      {!!node.children.length ?
+        <ReactRenderer nodes={node.children}/> :
+        <>{node.url}</>
+      }
     </a>
   )
 }

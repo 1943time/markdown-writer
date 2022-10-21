@@ -3,6 +3,8 @@ import {createMenu} from './menu'
 process.env.DIST = join(__dirname, '../..')
 process.env.PUBLIC = app.isPackaged ? process.env.DIST : join(process.env.DIST, '../public')
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
+import log from 'electron-log'
+
 import {app, BrowserWindow, shell, ipcMain, dialog, webContents, nativeTheme} from 'electron'
 import Store from 'electron-store'
 const store = new Store()
@@ -71,6 +73,13 @@ async function createWindow() {
 }
 
 app.whenReady().then(createWindow)
+
+app.on('open-file', (e, path) => {
+  log.info('open-file', path)
+})
+app.on('open-url', (e, path) => {
+  log.info('open-url', path)
+})
 
 app.on('window-all-closed', () => {
   win = null

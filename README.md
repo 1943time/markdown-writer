@@ -22,6 +22,7 @@ English | [简体中文](README.zh-CN.md)
 - [custom containers](#containers)
 - [katex and code completion](#katex)
 - [mermaid diagrams](#mermaid)   Related Links [github](https://github.com/mermaid-js/mermaid)
+- [include file](#include)
 - Advanced Search and File lookup
 - Free adjustment of file tree
 - History and rollback
@@ -63,3 +64,6 @@ C -->|Two| E[Result 2]
 ```
 
 ![](./help/mermaid.png)
+
+## include
+![](./help/include.png)

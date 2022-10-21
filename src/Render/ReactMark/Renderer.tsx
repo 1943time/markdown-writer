@@ -12,6 +12,7 @@ import {Html} from '@/Render/ReactMark/components/Html'
 import {combineHtml} from '@/Render/ReactMark/utils/combineHtml'
 import {FootNote, footnoteMap} from '@/Render/ReactMark/components/FootNote'
 import {Paragraph} from '@/Render/ReactMark/components/Paragraph'
+import {Directive} from '@/Render/ReactMark/components/Directive'
 
 export type IRenderNode = {
   type: string
@@ -51,6 +52,8 @@ function RenderNode({node}: {
   switch (node.type) {
     case 'paragraph':
       return createElement(Paragraph, {node})
+    case 'leafDirective':
+      return createElement(Directive, {node})
     case 'heading':
       return createElement(Heading, {node})
     case 'containerDirective':

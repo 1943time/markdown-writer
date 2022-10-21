@@ -21,6 +21,7 @@
 - [定制容器](#containers)
 - [katex语法以及代码补全](#katex)
 - [mermaid 画图](#mermaid)   相关链接 [github](https://github.com/mermaid-js/mermaid)
+- [文件引入](#include)
 - 同步滚动
 - 高级搜索与文件查找
 - 自由调整文件树
@@ -61,3 +62,6 @@ C -->|One| D[Result 1]
 C -->|Two| E[Result 2]
 ```
 ![](./help/mermaid.png)
+
+## include
+![](./help/include.png)

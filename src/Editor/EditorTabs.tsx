@@ -5,14 +5,36 @@ import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import {Tooltip} from '@mui/material'
 import {MetaKey} from '@/utils/Widget'
 import {stateStore} from '@/store/state'
+import {useObserveKey} from '@/utils/hooks'
+import {useCallback, useRef} from 'react'
 
 export const EditorTabs = observer((props: {
   treeWidth: number
 }) => {
+  const scroll = useRef<HTMLDivElement>(null)
+  const computedScrollLeft = useCallback(() => {
+    setTimeout(() => {
+      const tab = document.querySelector(`[data-tab="${treeStore.activePath}"]`) as HTMLElement
+      if (tab) {
+        const left = tab.offsetLeft
+        if (left > scroll.current!.scrollLeft + scroll.current!.clientWidth - tab.clientWidth - 28) {
+          scroll.current!.scrollLeft = left - (scroll.current!.clientWidth - tab.clientWidth - 28)
+        }
+        if (left < scroll.current!.scrollLeft) {
+          scroll.current!.scrollLeft = left
+        }
+      }
+    })
+  }, [])
+  useObserveKey(treeStore, 'activePath', e => {
+    computedScrollLeft()
+  })
   return (
     <div className={'h-7 w-full relative'}>
       <div
-        className={'w-full overflow-x-auto hide-scrollbar h-full whitespace-nowrap'}>
+        className={'w-full overflow-x-auto hide-scrollbar h-full whitespace-nowrap relative'}
+        ref={scroll}
+      >
         <div className={'h-full border-b border-t border-1 whitespace-nowrap inline-block pr-7 min-w-full'}>
           <div className={'flex h-full'}>
             {treeStore.tabs.map((node) =>

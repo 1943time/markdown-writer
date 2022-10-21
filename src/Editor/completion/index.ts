@@ -4,6 +4,7 @@ import {langCompletion} from '@/Editor/completion/lang'
 import {pathCompletion} from '@/Editor/completion/path'
 import {emojiCompletion} from '@/Editor/completion/emoji'
 import ITextModel = editor.ITextModel
+import {directiveCompletion} from '@/Editor/completion/directive'
 
 const inFence = (model: ITextModel, pos: Position) => {
   const value = model.getValue()
@@ -33,11 +34,14 @@ languages.registerCompletionItemProvider('markdown-math', {
       return {suggestions: containerCompletion(model, position, lineText)}
     }
 
+    if (/^:{2}(\w+)?$/.test(lineText)) {
+      return {suggestions: directiveCompletion(model, position, lineText)}
+    }
     if (/^`{3}(\w+?)$/.test(lineText)) {
       return {suggestions: langCompletion(model, position, lineText)}
     }
 
-    if (/\[[^\[\]]*?\](?:(?:\([^\)]*)|(?:\:[ \t\f\v]*\S*))$/.test(lineText)) {
+    if (/\[[^\[\]]*?\](?:(?:\([^\)]*)|(?:\:[ \t\f\v]*\S*))$/.test(lineText) || lineText.startsWith('::include[')) {
       return {suggestions: pathCompletion(model, position, lineText)}
     }
     const emojiMatch = lineText.match(/:\w*$/)

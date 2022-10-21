@@ -141,6 +141,10 @@ export const i18n = {
     openFolder: {
       zh: '打开文件夹',
       en: 'Open Folder'
+    },
+    openFile: {
+      zh: '打开文件',
+      en: 'Open File'
     }
   },
   search: {

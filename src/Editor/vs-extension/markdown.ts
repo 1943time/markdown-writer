@@ -111,7 +111,7 @@ export const language = <languages.IMonarchLanguage>{
 
       // containers
       [/^(:{3})(info|warning|tip|danger|details)/, ['directive', 'directive-label']],
-      // [/^(:{2})(include)(\[[0-9\w\/\-.\u4e00-\u9fa5]+])\s*$/, ['directive', 'directive-label', 'string']],
+      [/^(:{2})(include)(\[[0-9\w\/\-.\u4e00-\u9fa5]*])\s*$/, ['directive', 'directive-label', 'string']],
       [/^(\s*)(:{3})/, ['white', 'directive']],
 
 			// markup within lines
