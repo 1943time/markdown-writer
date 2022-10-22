@@ -7,10 +7,9 @@ import {MetaKey} from '@/utils/Widget'
 import {stateStore} from '@/store/state'
 import {useObserveKey} from '@/utils/hooks'
 import {useCallback, useRef} from 'react'
+import {ElectronApi} from '@/utils/electronApi'
 
-export const EditorTabs = observer((props: {
-  treeWidth: number
-}) => {
+export const EditorTabs = observer(() => {
   const scroll = useRef<HTMLDivElement>(null)
   const computedScrollLeft = useCallback(() => {
     setTimeout(() => {
@@ -52,6 +51,7 @@ export const EditorTabs = observer((props: {
                       e.stopPropagation()
                       treeStore.removeTab(node)
                     }}
+                    title={`${ElectronApi.isMac ? 'cmd' : 'ctrl'} + w`}
                     className={'flex items-center ml-2 dark:hover:bg-blue-500 rounded-full dark:hover:text-gray-800 hover:bg-blue-400 hover:text-white/60'}
                     style={{padding: '0.5px'}}>
                     <CloseOutlinedIcon fontSize={'inherit'}/>

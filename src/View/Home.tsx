@@ -122,7 +122,7 @@ export const Home = observer(() => {
           }
           {!!treeStore.root &&
             <>
-              <EditorTabs treeWidth={state.treeWidth}/>
+              <EditorTabs/>
               <div className={`flex h-[calc(100%_-_30px)] ${!['markdown', 'lang'].includes(mediaType(treeStore.activeNode?.name)) ? 'hidden' : ''}`}>
                 <div
                   className={`flex-1 h-full ${stateStore.viewState === 'view' ? 'hidden' : ''}`}>

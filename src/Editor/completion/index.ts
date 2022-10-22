@@ -30,23 +30,24 @@ languages.registerCompletionItemProvider('markdown-math', {
       endLineNumber: position.lineNumber,
       endColumn: position.column
     })
-    if (/^:{3}(\w+)?$/.test(lineText)) {
+    const inCode = inFence(model, position)
+    if (/^:{3}(\w+)?$/.test(lineText) && !inCode) {
       return {suggestions: containerCompletion(model, position, lineText)}
     }
 
-    if (/^:{2}(\w+)?$/.test(lineText)) {
+    if (/^:{2}(\w+)?$/.test(lineText) && !inCode) {
       return {suggestions: directiveCompletion(model, position, lineText)}
     }
     if (/^`{3}(\w+?)$/.test(lineText)) {
       return {suggestions: langCompletion(model, position, lineText)}
     }
 
-    if (/\[[^\[\]]*?\](?:(?:\([^\)]*)|(?:\:[ \t\f\v]*\S*))$/.test(lineText) || lineText.startsWith('::include[')) {
+    if (!inCode && (/\[[^\[\]]*?\](?:(?:\([^\)]*)|(?:\:[ \t\f\v]*\S*))$/.test(lineText) || lineText.startsWith('::include['))) {
       return {suggestions: pathCompletion(model, position, lineText)}
     }
     const emojiMatch = lineText.match(/:\w*$/)
     if (emojiMatch) {
-      if (inFence(model, position)) return {suggestions: []}
+      if (inCode) return {suggestions: []}
       return {suggestions: emojiCompletion(model, position, emojiMatch[0])}
     }
   }
